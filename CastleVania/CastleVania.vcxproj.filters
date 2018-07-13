@@ -16,14 +16,17 @@
     <ClCompile Include="GAudio.cpp">
       <Filter>FrameWork\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>WinMain</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>FrameWork\Game</Filter>
     </ClCompile>
     <ClCompile Include="Global.cpp" />
-    <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="dsutil.cpp">
+      <Filter>FrameWork\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -45,8 +48,17 @@
       <Filter>FrameWork\Game</Filter>
     </ClInclude>
     <ClInclude Include="Global.h" />
-    <ClInclude Include="dsutil.h" />
-    <ClInclude Include="dxutil.h" />
+    <ClInclude Include="dxutil.h">
+      <Filter>FrameWork\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>FrameWork\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumManager.h" />
+    <ClInclude Include="SweptAABB.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
@@ -64,11 +76,17 @@
     <Filter Include="FrameWork\GameUI">
       <UniqueIdentifier>{3acd348d-21ba-4ef3-9b19-404f75125d60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WinMain">
-      <UniqueIdentifier>{98507159-985b-4dce-8d55-f1f885c7deec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Game">
       <UniqueIdentifier>{e4691cc1-3452-4892-92a3-45f53c80ff6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{d9a01e2f-eed8-41d9-a052-dbdf9bf3ab0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\StaticObjects">
+      <UniqueIdentifier>{6395d284-1097-4634-be05-691b9f98a12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\ActiveObjects">
+      <UniqueIdentifier>{10df57b0-f83b-4a51-922a-e20eda17135a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
