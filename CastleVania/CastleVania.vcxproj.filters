@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Font.cpp">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GCamera.cpp">
+      <Filter>FrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GSprite.cpp">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GTexture.cpp">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GAudio.cpp">
+      <Filter>FrameWork\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>FrameWork\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="dsutil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Font.h">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GCamera.h">
+      <Filter>FrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GSprite.h">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GTexture.h">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GAudio.h">
+      <Filter>FrameWork\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>FrameWork\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="dsutil.h" />
+    <ClInclude Include="dxutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{5f1e0f4d-cec7-496a-8fc9-ee512bcd3957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Camera">
+      <UniqueIdentifier>{83e13508-e66a-4361-856a-00741b9e70d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Sound">
+      <UniqueIdentifier>{db9ab292-b057-480d-b3ba-8d315001df03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Graphics">
+      <UniqueIdentifier>{d9beba72-dc4b-417d-8716-34e4d866f132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameUI">
+      <UniqueIdentifier>{3acd348d-21ba-4ef3-9b19-404f75125d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinMain">
+      <UniqueIdentifier>{98507159-985b-4dce-8d55-f1f885c7deec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Game">
+      <UniqueIdentifier>{e4691cc1-3452-4892-92a3-45f53c80ff6e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
