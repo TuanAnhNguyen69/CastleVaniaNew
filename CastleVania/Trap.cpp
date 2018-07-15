@@ -6,8 +6,8 @@ Trap::Trap() : GameObject()
 {
 }
 
-Trap::Trap(float _posX, float _posY, float _max = TRAP_MAX, float _min = TRAP_MIN, 
-	float _vUp = TRAP_SPEED_UP, float _vDown = TRAP_SPEED_DOWN, int _animationRate = TRAP_RATE)
+Trap::Trap(float _posX, float _posY, float _max, float _min, 
+	float _vUp, float _vDown, int _animationRate)
 	: GameObject(_posX, _posY, EnumID::Trap_ID)
 {
 	vX = 0;
@@ -22,6 +22,16 @@ Trap::Trap(float _posX, float _posY, float _max = TRAP_MAX, float _min = TRAP_MI
 
 Trap::~Trap()
 {
+}
+
+void Trap::GoUp()
+{
+	vY = vUp;
+}
+
+void Trap::GoDown()
+{
+	vY = -vDown;
 }
 
 int Trap::Round(float _number)

@@ -48,7 +48,6 @@
     <ClCompile Include="Fire.cpp">
       <Filter>Objects\StaticObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Trap.cpp" />
     <ClCompile Include="HitEffect.cpp">
       <Filter>Objects\StaticObjects</Filter>
     </ClCompile>
@@ -57,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="MovingPlatform.cpp">
       <Filter>Objects\ActiveObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp">
+      <Filter>Objects\StaticObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +113,6 @@
     <ClInclude Include="Fire.h">
       <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Trap.h" />
     <ClInclude Include="HitEffect.h">
       <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
@@ -120,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="MovingPlatform.h">
       <Filter>Objects\ActiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h">
+      <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
