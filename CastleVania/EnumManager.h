@@ -43,7 +43,7 @@ enum EnumID
 	TeleUp_ID,
 	TeleDown_ID,
 	OpenDoor_ID,
-	TrapDoor_ID,
+	Trap_ID,
 	CastleGate_ID,
 	BreakableBrick_ID,
 
@@ -54,7 +54,7 @@ enum EnumID
 	//other
 	Water_ID,
 	Fire_ID,
-	FireBossDie_ID,
+	HitEffect_ID,
 	HP_ID,
 	GameUI_ID,
 

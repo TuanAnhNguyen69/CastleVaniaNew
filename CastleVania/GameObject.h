@@ -12,14 +12,22 @@ class GameObject
 public:
 	GSprite* sprite;
 	//posX, posY -> toa do center
-	float posX, posY;
+	float posX;
+	float posY;
+	//cao, rong hit box
 	int width;
 	int height;
+	//huong di chuyen
 	float vX, vY;
 	ObjectType type;
+
 	bool canMove;
 	bool canBeKilled;
+
+	//co dang hoat dong
 	bool active;
+
+	//da chet hay chua
 	bool death;
 	
 	//Cac thong so

@@ -45,6 +45,19 @@
     <ClCompile Include="Barrier.cpp">
       <Filter>Objects\ActiveObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="HitEffect.cpp">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveObject.cpp">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -93,6 +106,19 @@
       <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
     <ClInclude Include="Barrier.h">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h" />
+    <ClInclude Include="HitEffect.h">
+      <Filter>Objects\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveObject.h">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
       <Filter>Objects\ActiveObjects</Filter>
     </ClInclude>
   </ItemGroup>
