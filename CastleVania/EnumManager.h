@@ -12,8 +12,8 @@ static enum ESceneState
 enum EnumID
 {
 	None_ID,
-	Player_ID,
-	PlayerDeath_ID,
+	Simon_ID,
+	SimonDeath_ID,
 
 	Brick_ID,
 	Barrier_ID,
@@ -21,15 +21,18 @@ enum EnumID
 	LargeCandle_ID,
 
 	//enemy
-	MedusaHeads_ID,
-	Bats_ID,
-	SpearMan_ID,
+	Zombie_ID,
+	MedusaHead_ID,
+	Bat_ID,
+	SpearGuard_ID,
 	BonePillar_ID,
 	Ghost_ID,
 	VampireBat_ID,
-	Eagle_ID,
-	Skeletons_ID,
-	Fleaman_ID,
+	//Eagle_ID,
+	//Skeletons_ID,
+	Merman_ID,
+	Panther_ID,
+
 
 	//ground
 	MovingPlatform_ID,
@@ -56,7 +59,7 @@ enum EnumID
 	Fire_ID,
 	HitEffect_ID,
 	HP_ID,
-	GameUI_ID,
+	Score_ID,
 
 	//Item
 	VampireKiller_ID,
@@ -78,12 +81,25 @@ enum EnumID
 	TripleShot_ID,
 	SpiritBall_ID,
 	OneUp_ID,
+	Cross_ID,
+
+	RewardItem_ID,
+
+	Item_Axe_ID,
+	Item_Boomerang_ID,
+	Item_Dagger_ID,
+	Item_HolyWater_ID,
+	Item_StoWatch_ID,
+
+	Item_ChainWhip,
+	Item_MorningStar,
+
 
 	//weapon
+	Axe_ID,
+	Boomerang_ID,
 	Dagger_ID,
-	Throw_Axe_ID,
 	HolyWater_ID,
-	Cross_ID,
 	StopWatch_ID,
 };
 enum EStairType

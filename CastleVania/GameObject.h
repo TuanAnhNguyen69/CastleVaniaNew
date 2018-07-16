@@ -3,6 +3,7 @@
 
 #include "GSprite.h"
 #include "EnumManager.h"
+#include "TextureManager.h"
 #include "GCamera.h"
 #include "SweptAABB.h"
 #include <list>
