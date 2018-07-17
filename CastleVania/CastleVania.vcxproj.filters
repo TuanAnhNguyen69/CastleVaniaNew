@@ -45,9 +45,6 @@
     <ClCompile Include="Barrier.cpp">
       <Filter>Objects\ActiveObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Fire.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
     <ClCompile Include="HitEffect.cpp">
       <Filter>Objects\StaticObjects</Filter>
     </ClCompile>
@@ -65,6 +62,33 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>FrameWork\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Objects\ActiveObjects\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
+      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Panther.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="MedusaHead.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,9 +140,6 @@
     <ClInclude Include="Barrier.h">
       <Filter>Objects\ActiveObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Fire.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
     <ClInclude Include="HitEffect.h">
       <Filter>Objects\StaticObjects</Filter>
     </ClInclude>
@@ -136,6 +157,33 @@
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>FrameWork\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Objects\ActiveObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Objects\ActiveObjects\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
+      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Panther.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="MedusaHead.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +225,9 @@
     </Filter>
     <Filter Include="Objects\ActiveObjects\Weapons">
       <UniqueIdentifier>{c8002b52-d72d-4c74-afc2-6936e675dbf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\ActiveObjects\Weapons\Sub_Weapons">
+      <UniqueIdentifier>{ef45f8da-ffea-4298-8c51-70929a831e3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

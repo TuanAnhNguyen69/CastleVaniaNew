@@ -84,8 +84,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return Axe;
 	case EnumID::Boomerang_ID:
 		return Boomerang;
-	case EnumID::Dagger_ID:
-		return Dagger;
+	case EnumID::Knife_ID:
+		return Knife;
 	case EnumID::HolyWater_ID:
 		return HolyWater;
 	case EnumID::StopWatch_ID:
@@ -102,8 +102,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return Item_Axe;
 	case EnumID::Item_Boomerang_ID:
 		return Item_Boomerang;
-	case EnumID::Item_Dagger_ID:
-		return Item_Dagger;
+	case EnumID::Item_Knife_ID:
+		return Item_Knife;
 	case EnumID::Item_HolyWater_ID:
 		return Item_HolyWater;
 	case EnumID::Item_StoWatch_ID:

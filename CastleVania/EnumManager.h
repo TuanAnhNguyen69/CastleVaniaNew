@@ -87,7 +87,7 @@ enum EnumID
 
 	Item_Axe_ID,
 	Item_Boomerang_ID,
-	Item_Dagger_ID,
+	Item_Knife_ID,
 	Item_HolyWater_ID,
 	Item_StoWatch_ID,
 
@@ -98,7 +98,7 @@ enum EnumID
 	//weapon
 	Axe_ID,
 	Boomerang_ID,
-	Dagger_ID,
+	Knife_ID,
 	HolyWater_ID,
 	StopWatch_ID,
 };

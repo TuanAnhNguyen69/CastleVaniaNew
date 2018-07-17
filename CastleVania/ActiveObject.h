@@ -12,7 +12,11 @@ public:
 	virtual Box GetBox();
 
 	virtual void Draw(GCamera* camera);
-	virtual void Collision(list<GameObject*> obj, int deltaTime);
+
+	bool IntoScreen(float _posX, float _posY, GCamera* camera);
+
+	//Va cham, chua dinh nghia
+	virtual void Collision();
 
 	virtual void SetActive(float _vX, float _vy);
 	virtual void ReceiveDamage(int damage);

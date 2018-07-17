@@ -33,6 +33,7 @@ public:
 	~Trap();
 	void Update(int deltaTime);
 	void Draw(GCamera* camera);
-	void Collision(list<GameObject*> obj, int deltaTime);
+	//Va cham, chua dinh nghia
+	void Collision();
 };
 

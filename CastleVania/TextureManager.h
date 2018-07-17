@@ -36,7 +36,7 @@ private:
 	//Sub-Weapon
 	GTexture* Axe;
 	GTexture* Boomerang;
-	GTexture* Dagger;
+	GTexture* Knife;
 	GTexture* HolyWater;
 	GTexture* StopWatch;
 	
@@ -47,7 +47,7 @@ private:
 	//Item
 	GTexture* Item_Axe;
 	GTexture* Item_Boomerang;
-	GTexture* Item_Dagger;
+	GTexture* Item_Knife;
 	GTexture* Item_HolyWater;
 	GTexture* Item_StopWatch;
 

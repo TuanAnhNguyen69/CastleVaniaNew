@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include "ActiveObject.h"
 #include "EnumManager.h"
 
 //Lua ban ra tu Bone Pillar
 class Fire :
-	public GameObject
+	public ActiveObject
 {
 	int lifeTime;
 public:
@@ -13,6 +13,8 @@ public:
 	~Fire();
 	void Update(int deltaTime);
 	void Draw(GCamera *camera);
-	void Collision(list<GameObject*> obj, int deltaTime);
+
+	//Va cham, chua dinh nghia
+	void Collision();
 };
 

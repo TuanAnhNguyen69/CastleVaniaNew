@@ -62,7 +62,7 @@ void Trap::Draw(GCamera* camera)
 	//chua dinh nghia
 }
 
-void Trap::Collision(list<GameObject*> obj, int deltaTime)
+void Trap::Collision()
 {
 	//chua dinh nghia
 }

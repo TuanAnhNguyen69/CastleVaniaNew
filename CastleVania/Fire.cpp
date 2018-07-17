@@ -7,7 +7,7 @@ Fire::Fire()
 }
 
 Fire::Fire(float _posX, float _posY, EnumID id) :
-	GameObject(_posX, _posY, id)
+	ActiveObject(_posX, _posY, 0.5f, 0, id)
 {
 	lifeTime = 0;
 	active = true;
@@ -30,10 +30,10 @@ void Fire::Update(int deltaTime)
 
 void Fire::Draw(GCamera *camera)
 {
-	//Chua dinh nghia
+	ActiveObject::Draw(camera);
 }
 
-void Fire::Collision(list<GameObject*> obj, int deltaTime)
+void Fire::Collision()
 {
 	//Chua dinh nghia
 }

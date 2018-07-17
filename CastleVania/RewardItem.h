@@ -22,6 +22,8 @@ public:
 	~RewardItem();
 
 	void Update(int deltaTime);
-	void Coliision(list<GameObject*> obj, int deltaTime);
+
+	//Va cham, chua dinh nghia
+	void Coliision();
 };
 

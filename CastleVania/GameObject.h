@@ -19,7 +19,8 @@ public:
 	int width;
 	int height;
 	//huong di chuyen
-	float vX, vY;
+	float vX;
+	float vY;
 	ObjectType type;
 
 	bool canMove;
