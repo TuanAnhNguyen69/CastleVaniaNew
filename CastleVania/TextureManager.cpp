@@ -23,10 +23,77 @@ TextureManager* TextureManager::getInstance()
 
 TextureManager::TextureManager(void)
 {
-	//Vi du
-	Simon = new GTexture("Resources/player.png", 8, 3, 24);
-	SimonDeath = new GTexture("Resources/Playerdeath.png", 1, 1, 1);
-	MorningStar = new GTexture("Resources/morningstar.png", 3, 3, 9);
+	//Simon
+	Simon = new GTexture("Resources/sprites/Simon/Simon.png", 8, 3, 24);
+	SimonDeath = new GTexture("Resource/sprites/Simon/Simon_Death.png", 1, 1, 1);
+	Weapon = new GTexture("Resource/sprites/Weapon/Weapon.png", 3, 3, 9);
+
+	//Enemy
+	Zombie = new GTexture("Resource/sprites/Enemies/Zombie.png", 2, 1, 2);
+	Bat = new GTexture("Resource/sprites/Enemies/Bat.png", 4, 1, 4);
+	BonePillar = new GTexture("Resource/sprites/Enemies/Bone_Pillar.png", 1, 1, 1);
+	Merman = new GTexture("Resource/sprites/Enemies/Merman.png", 3, 1, 3);
+	MedusaHead = new GTexture("Resource/sprites/Enemies/Medusa_Head.png", 2, 1, 2);
+	SpearGuard = new GTexture("Resource/sprites/Enemies/Spear_Guard.png", 4, 1, 4);
+	Panther = new GTexture("Resource/sprites/Enemies/Panther.png", 4, 1, 4);
+	Fire = new GTexture("Resource/sprites/Enemies/Fire.png", 1, 1, 1);
+	Ghost = new GTexture("Resource/sprites/Enemies/Ghost.png", 2, 1, 2);
+
+	//Boss
+		//Ban lai
+	Medusa = new GTexture("Resource/sprites/Bosses/Medusa.png", 5, 1, 5);
+
+	VampireBat = new GTexture("Resource/sprites/Bosses/Vampire_Bat.png", 3, 1, 3);
+
+	//Ground
+	Brick = new GTexture("Resource/sprites/Ground/Brick.png", 1, 1, 1);
+
+		//Xem lai
+	BreakableBrick = new GTexture("Resource/sprites/Ground/Brick.png", 1, 1, 1);
+
+	Candle = new GTexture("Resource/sprites/Ground/1.png", 2, 1, 2);
+	LargeCandle = new GTexture("Resource/sprites/Ground/0.png", 2, 1, 2);
+	MovingPlatform = new GTexture("Resource/sprites/Ground/9.png", 1, 1, 1);
+	OpenDoor = new GTexture("Resource/sprites/Ground/Gate_new.png", 2, 1, 2);
+	Trap = new GTexture("Resource/sprites/Ground/7_rope.png", 2, 1, 2);
+
+	//Sub-Weapon
+	Axe = new GTexture("Resource/sprites/Sub_Weapons/Axe.png", 4, 1, 4);
+	Boomerang = new GTexture("Resource/sprites/Sub_Weapons/Boomerang.png", 3, 1, 3);
+	Knife = new GTexture("Resource/sprites/Sub_Weapons/Knife.png", 1, 1, 1);
+	HolyWater = new GTexture("Resource/sprites/Sub_Weapons/HolyWater.png", 3, 1, 3);
+	//StopWatch khong co animation su dung
+
+	//Weapon
+	Weapon = new GTexture("Resource/sprites/Weapon/Weapon.png", 3, 3, 9);
+
+	//Item
+	Item_Axe = new GTexture("Resource/sprites/Sub_Weapons/Axe_Item.png", 1, 1, 1);
+	Item_Boomerang = new GTexture("Resource/sprites/Sub_Weapons/Boomerang_Item.png", 1, 1, 1);
+	Item_Knife = new GTexture("Resource/sprites/Sub_Weapons/Knife_Item.png", 1, 1, 1);
+	Item_HolyWater = new GTexture("Resource/sprites/Sub_Weapons/HolyWater_Item.png", 1, 1, 1);
+	Item_StopWatch = new GTexture("Resource/sprites/Sub_Weapons/StopWatch_Item.png", 1, 1, 1);
+
+	Item_MorningStar = new GTexture("Resource/sprites/Items/MorningStar.png", 1, 1, 1);
+
+	SmallHeart = new GTexture("Resource/sprites/Items/Small_Heart.png", 1, 1, 1);
+	BigHeart = new GTexture("Resource/sprites/Items/Big_Heart.png", 1, 1, 1);
+	RedMoneyBag = new GTexture("Resource/sprites/Items/Red_Money_Bag.png", 1, 1, 1);
+	WhiteMoneyBag = new GTexture("Resource/sprites/Items/White_Money_Bag.png", 1, 1, 1);
+	BlueMoneyBag = new GTexture("Resource/sprites/Items/Blue_Money_Bag.png", 1, 1, 1);
+	ExtraMoneyBag = new GTexture("Resource/sprites/Items/Extra_Money_Bag.png", 3, 1, 3);
+	Roast = new GTexture("Resource/sprites/Items/Roast.png", 1, 1, 1);
+	Cross = new GTexture("Resource/sprites/Items/Cross.png", 1, 1, 1);
+	SpiritBall = new GTexture("Resource/sprites/Items/SpiritBall.png", 1, 1, 1);
+	Crown = new GTexture("Resource/sprites/Items/Crown.png", 4, 1, 4);
+
+	//Other
+	HitEffect = new GTexture("Resource/sprites/Effect/0.png", 1, 1, 1);
+	Water = new GTexture("Resource/sprites/Effect/1.png", 1, 1, 1);
+	
+	//HP
+	//Score
+
 }
 
 GTexture* TextureManager::getTexture(EnumID id)
@@ -92,6 +159,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return StopWatch;
 
 	//Weapon
+	case EnumID::Weapon_ID:
+		return Weapon;
 	case EnumID::ChainWhip_ID:
 		return ChainWhip;
 	case EnumID::MorningStar_ID:
@@ -114,16 +183,16 @@ GTexture* TextureManager::getTexture(EnumID id)
 	case EnumID::Item_MorningStar:
 		return Item_MorningStar;
 	
-	case EnumID::LargeHeart_ID:
-		return LargeHeart;
+	case EnumID::BigHeart_ID:
+		return BigHeart;
 	case EnumID::SmallHeart_ID:
 		return SmallHeart;
 	case EnumID::RedMoneyBag_ID:
 		return RedMoneyBag;
 	case EnumID::WhiteMoneyBag_ID:
 		return WhiteMoneyBag;
-	case EnumID::PurpleMoneyBag_ID:
-		return PurpleMoneyBag;
+	case EnumID::BlueMoneyBag_ID:
+		return BlueMoneyBag;
 	case EnumID::ExtraMonneyBag_ID:
 		return ExtraMoneyBag;
 	case EnumID::Crown_ID:

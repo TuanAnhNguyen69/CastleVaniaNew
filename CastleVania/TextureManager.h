@@ -41,6 +41,7 @@ private:
 	GTexture* StopWatch;
 	
 	//Weapon
+	GTexture* Weapon;
 	GTexture* ChainWhip;
 	GTexture* MorningStar;
 
@@ -54,11 +55,11 @@ private:
 	GTexture* Item_ChainWhip;
 	GTexture* Item_MorningStar;
 
-	GTexture* LargeHeart;
+	GTexture* BigHeart;
 	GTexture* SmallHeart;
 	GTexture* RedMoneyBag;
 	GTexture* WhiteMoneyBag;
-	GTexture* PurpleMoneyBag;
+	GTexture* BlueMoneyBag;
 	GTexture* ExtraMoneyBag;
 	GTexture* Crown;
 	GTexture* Cross;

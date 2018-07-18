@@ -66,9 +66,9 @@ enum EnumID
 	MorningStar_ID,
 	ChainWhip_ID,
 	SmallHeart_ID,
-	LargeHeart_ID,
+	BigHeart_ID,
 	WhiteMoneyBag_ID,
-	PurpleMoneyBag_ID,
+	BlueMoneyBag_ID,
 	RedMoneyBag_ID,
 	ExtraMonneyBag_ID,
 	Roast_ID,
@@ -101,6 +101,8 @@ enum EnumID
 	Knife_ID,
 	HolyWater_ID,
 	StopWatch_ID,
+
+	Weapon_ID,
 };
 enum EStairType
 {
