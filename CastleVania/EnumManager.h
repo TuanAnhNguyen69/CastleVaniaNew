@@ -112,6 +112,20 @@ enum EStairType
 	DownLeft,
 	None_Kind
 };
+
+enum Enum_RewardItem_ID
+{
+	RI_Crown,
+	RI_Cross,
+	RI_Roast,
+	RI_RedBagMoney,
+	RI_WhiteBagMoney,
+	RI_BlueBagMoney,
+	RI_ExtraBagMoney,
+	RI_SmallHeart,
+	RI_BigHeart,
+};
+
 enum ObjectType {
 	None,
 	Item,
@@ -120,7 +134,7 @@ enum ObjectType {
 };
 enum Action
 {
-	Idle,
+	Stand,
 	Run_Right,
 	Run_Left,
 	Jump,
@@ -128,6 +142,22 @@ enum Action
 	Sit,
 	Fall,
 	IntoCastle
+};
+
+enum SimonAction
+{
+	SimonStand,
+	SimonMove,
+	SimonUpStair,
+	SimonDownStair,
+	SimonSit,
+	SimonJump,
+	SimonThrow,
+	SimonAttack,
+	SimonHit,
+	SimonDie,
+	SimonUpgrade
+
 };
 
 enum ECollisionDirection

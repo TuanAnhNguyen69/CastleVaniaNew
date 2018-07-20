@@ -91,10 +91,12 @@ void GameObject::SetActive()
 		active = true;
 }
 
+/*
 void GameObject::Pause() {
 	vX = 0;
 	vY = 0;
 }
+*/
 
 ECollisionDirection GameObject::GetCollisionDirect(float normalx, float normaly)
 {

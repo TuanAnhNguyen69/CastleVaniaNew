@@ -6,9 +6,10 @@ RewardItem::RewardItem() : ActiveObject()
 {
 }
 
-RewardItem::RewardItem(float _posX, float _posY) :
+RewardItem::RewardItem(float _posX, float _posY, EnumID _typeReward) :
 	ActiveObject(_posX, _posY, 0, -0.4f, EnumID::RewardItem_ID)
 {
+	typeReward = _typeReward;
 	lifeTime = 0;
 	active = true;
 	type = ObjectType::Item;

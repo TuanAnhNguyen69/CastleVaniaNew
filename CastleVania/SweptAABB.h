@@ -4,9 +4,18 @@
 #include <cmath>
 #include <algorithm>
 #include <limits>
-// describes an axis-aligned rectangle with a velocity
+// mot GameObject la 1 Box (hinh chu nhat) co cac thuoc tinh
 struct Box
 {
+	// toa do top-left cua Box
+	float x, y;
+
+	// kich thuoc cua Box
+	float w, h;
+
+	// van toc cua Box
+	float vx, vy;
+
 	Box(float _x, float _y, float _w, float _h, float _vx, float _vy)
 	{
 		x = _x;
@@ -27,16 +36,11 @@ struct Box
 		vy = 0.0f;
 	}
 
-	// position of top-left corner
-	float x, y;
-
-	// dimensions
-	float w, h;
-
-	// velocity
-	float vx, vy;
+	
 };
 
+
+//Kiem tra 2 doi tuong co giao nhau khong
 static bool AABBCheck(Box b1, Box b2)
 {
 	return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y - b1.h > b2.y || b1.y < b2.y - b2.h);
@@ -68,8 +72,9 @@ static bool AABB(Box b1, Box b2, float& moveX, float& moveY)
 	return true;
 }
 
-// returns a box the spans both a current box and the destination box
-// t?o 1 hình ch? nh?t d?a trên v? trí ban ??u và k? ti?p, sau ?ó l?y hình ch? nh?t ?ó xét xem có ch?ng lên v?i hình kia không. N?u có thì va ch?m, còn không thì ch?c ch?n không th? nên không c?n xét ti?p.
+// tra ve 1 Box keo dai tu Box truoc va cham den Box sau va cham
+// de sau nay lay Box do xet xem co chong len Object bi va cham khong
+// neu khong thi khong can phai xet tiep
 static Box GetSweptBroadphaseBox(Box b, int dt)
 {
 	Box broadphasebox(0.0f, 0.0f, 0.0f, 0.0f);
@@ -82,9 +87,11 @@ static Box GetSweptBroadphaseBox(Box b, int dt)
 	return broadphasebox;
 }
 
-// performs collision detection on moving box b1 and static box b2
-// returns the time that the collision occured (where 0 is the start of the movement and 1 is the destination)
-// getting the new position can be retrieved by box.x = box.x + box.vx * collisiontime
+// Xet va cham giua Box1 di chuyen va Box2 tinh
+// Tra ve thoi gian va cham (>0 va <1)
+// Neu <= 0, la 2 Box dang di ra xa nhau
+// Neu >= 1, la 2 Box chua va cham
+// vi tri moi duoc tinh bang: box.x = box.x + box.vx * collision_time
 // normalx and normaly return the normal of the collided surface (this can be used to do a response)
 static float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, int dt)
 {

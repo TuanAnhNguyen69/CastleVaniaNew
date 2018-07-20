@@ -60,7 +60,7 @@ public:
 	virtual void Remove();
 
 
-	virtual void Pause();
+	//virtual void Pause();
 	GameObject(void);
 	GameObject(float posX, float posY, EnumID id);
 	~GameObject(void);

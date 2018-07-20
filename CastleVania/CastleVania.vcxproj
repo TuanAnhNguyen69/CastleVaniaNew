@@ -112,6 +112,7 @@
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="RewardItem.cpp" />
+    <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Trap.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Panther.h" />
     <ClInclude Include="RewardItem.h" />
+    <ClInclude Include="Simon.h" />
     <ClInclude Include="Stair.h" />
     <ClInclude Include="SweptAABB.h" />
     <ClInclude Include="TextureManager.h" />

@@ -10,13 +10,15 @@ class RewardItem :
 	//thuoc tinh quyet dinh RewardItem co phai la Crown khong
 	bool isCrown;
 
+	EnumID typeReward;
+
 	int lifeTime;
 
 public:
 	RewardItem();
 
 	//Khoi tao RewardItem khong phai la Crown
-	RewardItem(float _posX, float _posY);
+	RewardItem(float _posX, float _posY, EnumID _typeReward);
 	//Khoi tao RewardItem Crown
 	RewardItem(float _posX, float _posY, bool _isCrown);
 	~RewardItem();

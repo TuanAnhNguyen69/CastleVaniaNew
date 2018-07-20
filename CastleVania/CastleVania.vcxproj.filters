@@ -90,6 +90,9 @@
     <ClCompile Include="MedusaHead.cpp">
       <Filter>Objects\ActiveObjects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>Objects\ActiveObjects\Simon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="MedusaHead.h">
       <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Simon.h">
+      <Filter>Objects\ActiveObjects\Simon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
