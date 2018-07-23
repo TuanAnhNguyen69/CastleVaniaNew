@@ -38,6 +38,13 @@ void Bat::Update(int deltaTime)
 		this->MovePath(deltaTime);
 		sprite->Update(deltaTime);
 	}
+
+	if (hp <= 0)
+	{
+		Score += point;
+		isDeath = true;
+		return;
+	}
 }
 
 void Bat::SetActive(float _posX_Simon, float _posY_Simon)

@@ -30,7 +30,7 @@ public:
 	bool active;
 
 	//da chet hay chua
-	bool death;
+	bool isDeath;
 	
 	//Cac thong so
 	EnumID id;

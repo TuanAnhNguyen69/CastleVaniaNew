@@ -12,7 +12,11 @@ Simon::Simon(int _posX, int _posY)
 	action = Action::Stand;
 	giatoc = GIATOC;
 	isDie = false;
+	isJump = false;
+	isSit = false;
+	isStop = false;
 
+	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 }
 
 Simon::~Simon()

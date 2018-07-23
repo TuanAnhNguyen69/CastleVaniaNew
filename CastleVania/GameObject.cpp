@@ -65,7 +65,7 @@ void GameObject::ReceiveDamage(int damage)
 		hp -= damage;
 	}
 	else {
-		death = true;
+		isDeath = true;
 	}
 }
 void GameObject::Collision(list<GameObject*> obj, int dt)
@@ -74,7 +74,7 @@ void GameObject::Collision(list<GameObject*> obj, int dt)
 void GameObject::Remove()
 {
 	active = false;
-	death = true;
+	isDeath = true;
 }
 Box GameObject::GetBox()
 {

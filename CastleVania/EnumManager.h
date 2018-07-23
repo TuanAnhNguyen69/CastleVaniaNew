@@ -2,12 +2,13 @@
 #ifndef _EnumManager_H_
 #define _EnumManager_H_
 
-static enum ESceneState
+static enum EnumSceneState
 {
 	Scene_Menu,
+	State_1,
 	Scene_Game,
 	Scene_End
-} EnumSceneState;
+};
 
 enum EnumID
 {

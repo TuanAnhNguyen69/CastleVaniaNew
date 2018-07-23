@@ -93,6 +93,21 @@
     <ClCompile Include="Simon.cpp">
       <Filter>Objects\ActiveObjects\Simon</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="State_1.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneControl.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SpearGuard.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BonePillar.cpp">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -191,6 +206,21 @@
     <ClInclude Include="Simon.h">
       <Filter>Objects\ActiveObjects\Simon</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="State_1.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneControl.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SpearGuard.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BonePillar.h">
+      <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
@@ -234,6 +264,9 @@
     </Filter>
     <Filter Include="Objects\ActiveObjects\Weapons\Sub_Weapons">
       <UniqueIdentifier>{ef45f8da-ffea-4298-8c51-70929a831e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Scene">
+      <UniqueIdentifier>{6a4a1134-f688-4b73-8110-27590cf46d94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

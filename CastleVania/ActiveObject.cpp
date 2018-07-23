@@ -23,7 +23,13 @@ ActiveObject::~ActiveObject()
 
 void ActiveObject::Update(int deltaTime)
 {
-	//chua dinh nghia
+	if (sprite == NULL || !active)
+		return;
+	posX += vX * deltaTime;
+	if (posX <= width / 2 + 2 || posX >= G_MapWidth - (width / 2 - 2))
+		vX = -vX;
+	posY += vY * deltaTime;
+	sprite->Update(deltaTime);
 }
 
 void ActiveObject::Update(Box playerBox, int deltaTime)

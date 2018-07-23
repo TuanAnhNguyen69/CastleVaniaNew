@@ -65,6 +65,7 @@ protected:
 	bool isJump;
 	bool isStop;
 	bool isSit;
+	bool immortal;
 
 	Action action;
 	float vLast;
@@ -72,14 +73,11 @@ protected:
 
 public:
 	Simon();
-	static Simon* GetInstance();
-	bool _immortal;
+	~Simon();
+
 	void Draw(GCamera* camera);
 	void Update(int deltaTime);
 	Simon(int _posX, int _posY);
-	void run();
-	static int _pointcount;
-	static int _life;
 
 	void RunLeft();
 	void RunRight();
@@ -91,13 +89,7 @@ public:
 	Box GetBox();
 	void Jump();
 	void ChangeAction();
-	void ChangeDirection();
-	void Move();
-	void UpdateKey();
-	void Attack();
-	void Dead();
-	//void onInterSerct(BaseObject* obj);
-	~Simon();
+	
 };
 
 

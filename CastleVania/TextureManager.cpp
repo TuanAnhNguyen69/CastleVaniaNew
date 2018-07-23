@@ -30,7 +30,7 @@ TextureManager::TextureManager(void)
 
 	//Enemy
 	Zombie = new GTexture("Resource/sprites/Enemies/Zombie.png", 2, 1, 2);
-	Bat = new GTexture("Resource/sprites/Enemies/Bat.png", 4, 1, 4);
+	Bat = new GTexture("Resource\\sprites\\Enemies\\Bat.png", 4, 1, 4);
 	BonePillar = new GTexture("Resource/sprites/Enemies/Bone_Pillar.png", 1, 1, 1);
 	Merman = new GTexture("Resource/sprites/Enemies/Merman.png", 3, 1, 3);
 	MedusaHead = new GTexture("Resource/sprites/Enemies/Medusa_Head.png", 2, 1, 2);

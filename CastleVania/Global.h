@@ -72,6 +72,8 @@ extern LPDIRECTINPUT8				G_DirectInput;		// The DirectInput object
 extern LPDIRECTINPUTDEVICE8			G_KeyBoard;			// The keyboard device 
 extern LPD3DXSPRITE					G_SpriteHandler;	// spriteHandler to draw texture
 
+extern int							Score;				//Diem toan game
+
 //GLOBAL METHOD
 
 //write string to a tracing file
