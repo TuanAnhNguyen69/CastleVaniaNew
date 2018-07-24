@@ -23,6 +23,7 @@ private:
 	//Boss
 	GTexture* VampireBat;
 	GTexture* Medusa;
+	GTexture* Snake;
 
 	//Ground
 	GTexture* Brick;

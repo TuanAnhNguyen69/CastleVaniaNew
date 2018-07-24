@@ -108,6 +108,15 @@
     <ClCompile Include="BonePillar.cpp">
       <Filter>Objects\ActiveObjects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="VampireBat.cpp">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
+    </ClCompile>
+    <ClCompile Include="Medusa.cpp">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -220,6 +229,15 @@
     </ClInclude>
     <ClInclude Include="BonePillar.h">
       <Filter>Objects\ActiveObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="VampireBat.h">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="Medusa.h">
+      <Filter>Objects\ActiveObjects\Bosses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,7 @@ enum EnumID
 	//boss
 	Medusa_ID,
 	Count_Dracula_ID,
+	Snake_ID,
 
 	//other
 	Water_ID,
@@ -71,7 +72,7 @@ enum EnumID
 	WhiteMoneyBag_ID,
 	BlueMoneyBag_ID,
 	RedMoneyBag_ID,
-	ExtraMonneyBag_ID,
+	ExtraMoneyBag_ID,
 	Roast_ID,
 	Rosary_ID,
 	InvisibilityPotion_ID,
@@ -90,7 +91,7 @@ enum EnumID
 	Item_Boomerang_ID,
 	Item_Knife_ID,
 	Item_HolyWater_ID,
-	Item_StoWatch_ID,
+	Item_StopWatch_ID,
 
 	Item_ChainWhip,
 	Item_MorningStar,

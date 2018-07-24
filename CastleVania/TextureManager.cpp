@@ -45,6 +45,8 @@ TextureManager::TextureManager(void)
 
 	VampireBat = new GTexture("Resource/sprites/Bosses/Vampire_Bat.png", 3, 1, 3);
 
+	Snake = new GTexture("Resource/sprites/Bosses/Snake.png", 2, 1, 2);
+
 	//Ground
 	Brick = new GTexture("Resource/sprites/Ground/Brick.png", 1, 1, 1);
 
@@ -131,6 +133,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return VampireBat;
 	case EnumID::Medusa_ID:
 		return Medusa;
+	case EnumID::Snake_ID:
+		return Snake;
 
 	//Ground
 	case EnumID::Brick_ID:
@@ -175,7 +179,7 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return Item_Knife;
 	case EnumID::Item_HolyWater_ID:
 		return Item_HolyWater;
-	case EnumID::Item_StoWatch_ID:
+	case EnumID::Item_StopWatch_ID:
 		return Item_StopWatch;
 
 	case EnumID::Item_ChainWhip:
@@ -193,7 +197,7 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return WhiteMoneyBag;
 	case EnumID::BlueMoneyBag_ID:
 		return BlueMoneyBag;
-	case EnumID::ExtraMonneyBag_ID:
+	case EnumID::ExtraMoneyBag_ID:
 		return ExtraMoneyBag;
 	case EnumID::Crown_ID:
 		return Crown;

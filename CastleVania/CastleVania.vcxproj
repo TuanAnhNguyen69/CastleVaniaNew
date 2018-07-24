@@ -109,6 +109,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GTexture.cpp" />
+    <ClCompile Include="Medusa.cpp" />
     <ClCompile Include="MedusaHead.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Panther.cpp" />
@@ -116,11 +117,13 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneControl.cpp" />
     <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SpearGuard.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="State_1.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="VampireBat.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
@@ -149,6 +152,7 @@
     <ClInclude Include="GTexture.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="LargeCandle.h" />
+    <ClInclude Include="Medusa.h" />
     <ClInclude Include="MedusaHead.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Panther.h" />
@@ -156,12 +160,14 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneControl.h" />
     <ClInclude Include="Simon.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="SpearGuard.h" />
     <ClInclude Include="Stair.h" />
     <ClInclude Include="State_1.h" />
     <ClInclude Include="SweptAABB.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Trap.h" />
+    <ClInclude Include="VampireBat.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
