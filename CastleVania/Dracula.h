@@ -1,10 +1,10 @@
 #pragma once
 #include "ActiveObject.h"
-class VampireBat :
+class Dracula :
 	public ActiveObject
 {
 public:
-	VampireBat();
-	~VampireBat();
+	Dracula();
+	~Dracula();
 };
 

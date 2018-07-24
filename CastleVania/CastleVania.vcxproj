@@ -87,7 +87,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActiveObject.cpp" />
-    <ClCompile Include="Barrier.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BackgroundController.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BonePillar.cpp" />
     <ClCompile Include="Boomerang.cpp" />
@@ -105,31 +106,36 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="Knife.cpp" />
-    <ClCompile Include="LargeCandle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GTexture.cpp" />
     <ClCompile Include="Medusa.cpp" />
     <ClCompile Include="MedusaHead.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
-    <ClCompile Include="Panther.cpp" />
+    <ClCompile Include="PhantomBat.cpp" />
+    <ClCompile Include="QGameObject.cpp" />
+    <ClCompile Include="QNode.cpp" />
     <ClCompile Include="RewardItem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneControl.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SpearGuard.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="State_1.cpp" />
+    <ClCompile Include="Tele.cpp" />
+    <ClCompile Include="Tele.h" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Trap.cpp" />
-    <ClCompile Include="VampireBat.cpp" />
+    <ClCompile Include="Dracula.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActiveObject.h" />
-    <ClInclude Include="Barrier.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="BackgroundController.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BonePillar.h" />
     <ClInclude Include="Boomerang.h" />
@@ -139,6 +145,7 @@
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="dxutil.h" />
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="HeaderObj.h" />
     <ClInclude Include="HitEffect.h" />
     <ClInclude Include="EnumManager.h" />
     <ClInclude Include="Fire.h" />
@@ -151,14 +158,16 @@
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GTexture.h" />
     <ClInclude Include="Knife.h" />
-    <ClInclude Include="LargeCandle.h" />
     <ClInclude Include="Medusa.h" />
     <ClInclude Include="MedusaHead.h" />
     <ClInclude Include="MovingPlatform.h" />
-    <ClInclude Include="Panther.h" />
+    <ClInclude Include="PhantomBat.h" />
+    <ClInclude Include="QGameObject.h" />
+    <ClInclude Include="QNode.h" />
     <ClInclude Include="RewardItem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneControl.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="SpearGuard.h" />
@@ -167,9 +176,9 @@
     <ClInclude Include="SweptAABB.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Trap.h" />
-    <ClInclude Include="VampireBat.h" />
+    <ClInclude Include="Dracula.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
