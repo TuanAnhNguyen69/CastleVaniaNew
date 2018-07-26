@@ -17,6 +17,7 @@ Fire::Fire(float _posX, float _posY, EnumID id) :
 }
 
 
+
 Fire::~Fire()
 {
 }

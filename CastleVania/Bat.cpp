@@ -14,6 +14,7 @@ Bat::Bat(float _posX, float _posY)
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
 	getUp = false;
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 0, 3, 100);
 }
 
 Bat::~Bat()

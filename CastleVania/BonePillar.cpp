@@ -14,6 +14,7 @@ BonePillar::BonePillar(float _posX, float _posY) : ActiveObject(_posX, _posY, 0,
 	active = true;
 	lifeTime = 0;
 	canBeKilled = true;
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::BonePillar_ID), 12);
 }
 
 BonePillar::~BonePillar()

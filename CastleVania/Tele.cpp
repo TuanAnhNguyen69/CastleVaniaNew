@@ -9,6 +9,7 @@ Tele::Tele(float _posX, float _posY, int _width, int _height) : GameObject(_posX
 {
 	width = _width;
 	height = _height;
+	sprite = NULL;
 }
 
 Tele::~Tele()

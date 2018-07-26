@@ -2,12 +2,12 @@
 
 
 
-RewardItem::RewardItem() : ActiveObject()
+RewardItem::RewardItem() : GameObject()
 {
 }
 
 RewardItem::RewardItem(float _posX, float _posY, EnumID _typeReward) :
-	ActiveObject(_posX, _posY, 0, -0.4f, _typeReward)
+	GameObject(_posX, _posY, _typeReward)
 {
 	typeReward = _typeReward;
 	lifeTime = 0;
@@ -16,10 +16,9 @@ RewardItem::RewardItem(float _posX, float _posY, EnumID _typeReward) :
 	id = _typeReward;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(_typeReward), 1000);
 	point = 1000;
-
 }
 
-RewardItem::RewardItem(float _posX, float _posY, int _width, int _height, EnumID _typeReward)
+RewardItem::RewardItem(float _posX, float _posY, int _width, int _height, EnumID _typeReward) : GameObject(_posX, _posY, _typeReward)
 {
 	typeReward = _typeReward;
 	lifeTime = 0;

@@ -13,6 +13,8 @@ Ghost::Ghost(float _posX, float _posY) : ActiveObject(_posX, _posY, 0.08f, 0, En
 	canBeKilled = true;
 	posY0 = posY;
 	deltaPhi = 0;
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Ghost_ID), 0, 1, 1000);
+
 }
 
 Ghost::~Ghost(void)

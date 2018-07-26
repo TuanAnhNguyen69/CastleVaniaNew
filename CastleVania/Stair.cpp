@@ -12,6 +12,7 @@ Stair::Stair(float _posX, float _posY, int _width, int _height, EnumID _id) :
 	width = _width;
 	height = _height;
 	type = _id == EnumID::StairUpLeft_ID ? EStairType::UpLeft : EStairType::UpRight;
+	sprite = NULL;
 }
 
 

@@ -12,6 +12,7 @@ Candle::Candle(float _posX, float _posY) :
 	canBeKilled = true;
 	hp = 1;
 	point = 5;
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Candle_ID), 0, 1, 1000);
 }
 
 

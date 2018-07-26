@@ -5,7 +5,7 @@
 #include <random>
 
 class RewardItem :
-	public ActiveObject
+	public GameObject
 {
 	EnumID typeReward;
 	int lifeTime;

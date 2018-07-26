@@ -39,7 +39,7 @@ TextureManager::TextureManager(void)
 		//Ban lai
 	medusa = new GTexture("Resource/sprites/Bosses/medusa.png", 5, 1, 5);
 
-	dracula = new GTexture("Resource/sprites/Bosses/Vampire_Bat.png", 3, 1, 3);
+	//dracula = new GTexture("Resource/sprites/Bosses/Vampire_Bat.png", 3, 1, 3);
 
 	snake = new GTexture("Resource/sprites/Bosses/Snake.png", 2, 1, 2);
 
@@ -51,7 +51,7 @@ TextureManager::TextureManager(void)
 
 	candle = new GTexture("Resource/sprites/Ground/candle.png", 2, 1, 2);
 	movingPlatform = new GTexture("Resource/sprites/Ground/movingPlatform.png", 1, 1, 1);
-	door = new GTexture("Resource/sprites/Ground/Gate_new.png", 2, 1, 2);
+	door = new GTexture("Resource/sprites/Ground/Door.png", 4, 1, 4);
 	trap = new GTexture("Resource/sprites/Ground/7_rope.png", 2, 1, 2);
 
 	//Sub-Weapon

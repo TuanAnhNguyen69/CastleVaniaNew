@@ -13,6 +13,7 @@ MedusaHead::MedusaHead(float _posX, float _posY)
 	active = true;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MedusaHead_ID), 0, 1, 1000);
 }
 
 MedusaHead::~MedusaHead()

@@ -65,7 +65,9 @@ void GameObject::CreateSprite()
 	case EnumID::Door_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 0, 10);
 		break;
-
+	case EnumID::SpearGuard_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 10);
+		break;
 	case EnumID::Skeleton_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 500);
 		break;

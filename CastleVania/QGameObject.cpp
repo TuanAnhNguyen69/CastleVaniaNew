@@ -105,19 +105,19 @@ QGameObject::QGameObject(string fileName)
 				_dynamicObject->push_back(new MovingPlatform(posX, posY));
 				break;
 			case EnumID::Ghost_ID:
-				_staticObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new Ghost(posX, posY));
 			break;
 			case EnumID::Bat_ID:
-				_staticObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new Ghost(posX, posY));
 				break;
 			case EnumID::BonePillar_ID:
-				_staticObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new Ghost(posX, posY));
 				break;
 			case EnumID::Eagle_ID:
 				/*_staticObject->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
 				break;
 			case EnumID::PhantomBat_ID:
-				_staticObject->push_back(new PhantomBat(posX, posY));
+				_dynamicObject->push_back(new PhantomBat(posX, posY));
 				break;
 			case EnumID::Pleaman_ID:
 				/*_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
