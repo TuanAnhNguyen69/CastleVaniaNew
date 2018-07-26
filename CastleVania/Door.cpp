@@ -6,12 +6,10 @@ Door::Door()
 {
 }
 
-Door::Door(float _posX, float _posY, int _width, int _height, EnumID _id) :
-	GameObject(_posX, _posY, _id)
+Door::Door(float _posX, float _posY) :
+	GameObject(_posX, _posY, EnumID::Door_ID)
 {
-	width = _width;
-	height = _height;
-	sprite = NULL;
+	isOpen = false;
 }
 
 Door::~Door()

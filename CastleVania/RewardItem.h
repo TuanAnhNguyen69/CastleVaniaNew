@@ -15,6 +15,7 @@ public:
 
 	//Khoi tao RewardItem khong phai la Crown
 	RewardItem(float _posX, float _posY, EnumID _typeReward);
+	RewardItem(float _posX, float _posY, int _width, int _height, EnumID _typeReward);
 	//Khoi tao RewardItem Crown
 	~RewardItem();
 

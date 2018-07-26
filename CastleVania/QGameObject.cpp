@@ -52,7 +52,7 @@ QGameObject::QGameObject(string fileName)
 
 	if (map.is_open())
 	{
-		float posX, posY; int width, height, value;
+		float posX, posY; int width, height;
 		int count;
 		map >> count >> width >> height;
 		int id;
@@ -60,14 +60,15 @@ QGameObject::QGameObject(string fileName)
 		// duyệt từng dòng của file Stage
 		for (int i = 0; i < count; i++)
 		{
-			map >> id >> value >> posX >> posY >> width >> height;
+			float enumValue;
+			map >> id >> posX >> posY >> width >> height;
 
 			// ứng với giá trị value tương ứng để khởi tạo các object tương tứng
-			switch (value)
+			switch (id)
 			{
 
 			case EnumID::Brick_ID:
-				_staticObject->push_back(new Brick(posX, posY, width, height));
+				_staticObject->push_back(new Brick(posX, posY, width, height, false));
 				break;
 			case EnumID::StairUpLeft_ID:
 				_staticObject->push_back(new Stair(posX, posY, width + 32, height, EnumID::StairUpLeft_ID));
@@ -75,90 +76,75 @@ QGameObject::QGameObject(string fileName)
 			case EnumID::StairUpRight_ID:
 				_staticObject->push_back(new Stair(posX, posY, width + 32, height, EnumID::StairUpRight_ID));
 				break;
-			case 5:
-				_staticObject->push_back(new LargeCandle(posX, posY));
-				break;
-			case 6:
+			case EnumID::Candle_ID:
 				_staticObject->push_back(new Candle(posX, posY));
 				break;
-			case 7:
-				_dynamicObject->push_back(new Panthers(posX, posY));
+			case EnumID::Breakable_ID:
+				_staticObject->push_back(new Brick(posX, posY, width, height, true));
 				break;
-		
-			case 9:
-				_dynamicObject->push_back(new Bats(posX, posY));
+			case EnumID::Door_ID:
+				_staticObject->push_back(new Door(posX, posY));
 				break;
-			case 10:
-				_dynamicObject->push_back(new Ghouls(posX, posY));
+			case EnumID::MovingPlatform_ID:
+				_dynamicObject->push_back(new MovingPlatform(posX, posY));
 				break;
-			case 11:
-				_dynamicObject->push_back(new Ghosts(posX, posY));
+			case EnumID::Tele_ID:
+				_staticObject->push_back(new Tele(posX, posY, width, height));
 				break;
-			case 12:
-				_dynamicObject->push_back(new MedusaHeads(posX, posY));
+			case EnumID::Trap_ID:
+				_dynamicObject->push_back(new Trap(posX, posY));
 				break;
-			case 13:
-				_dynamicObject->push_back(new AxeKnights(posX, posY));
+			case EnumID::Count_Dracula_ID:
+				_dynamicObject->push_back(new BonePillar(posX, posY));
 				break;
-			case 14:
-				_dynamicObject->push_back(new BoneTowers(posX, posY));
-				break;
-			case 15:
+			case EnumID::Medusa_ID:
 				_medusa = new Medusa(posX, posY, EnumID::Medusa_ID);
 				_dynamicObject->push_back(_medusa);
 				break;
-			case 16:
-			_dynamicObject->push_back(new MovingPlatform(posX, posY));
+			case EnumID::MedusaHead_ID:
+				_dynamicObject->push_back(new MovingPlatform(posX, posY));
 				break;
-			case 17:
-			{
-	          _staticObject->push_back(new TrapDoor(posX, posY, 1040, 900 + (x % 3) * 8));
-				x++;
-			}
+			case EnumID::Ghost_ID:
+				_staticObject->push_back(new Ghost(posX, posY));
 			break;
-			case 18:
-				G_LeftCamera = posX;
+			case EnumID::Bat_ID:
+				_staticObject->push_back(new Ghost(posX, posY));
 				break;
-			case 19:
-				G_RightCamera = posX;
+			case EnumID::BonePillar_ID:
+				_staticObject->push_back(new Ghost(posX, posY));
 				break;
-			case 21:
-				_staticObject->push_back(new Door(posX, posY, width, height, EnumID::DoorLeft_ID));
+			case EnumID::Eagle_ID:
+				/*_staticObject->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
 				break;
-			case 22:
-				_staticObject->push_back(new Door(posX, posY, width, height, EnumID::DoorRight_ID));
+			case EnumID::PhantomBat_ID:
+				_staticObject->push_back(new PhantomBat(posX, posY));
 				break;
-			case 23:
-				_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));
+			case EnumID::Pleaman_ID:
+				/*_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
 				break;
-			case 24:
-				_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
+			case EnumID::Skeleton_ID:
+				//_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
 				break;
-			case 25:
-				posDoor.x = posX;
-				posDoor.y = posY;
+			case EnumID::SpearGuard_ID:
+				_dynamicObject->push_back(new SpearGuard(posX, posY));
 				break;
-		
-		
-			case 30:
-				_staticObject->push_back(new Barrier(posX, posY, width, height));
-				break;
-			case 31:
-				_dynamicObject->push_back(new Fleaman(posX, posY));
-				break;
-			case 32:
-				_staticObject->push_back(new BreakableBrick(posX, posY));
-				break;
-			case 33:
-				_dynamicObject->push_back(new Skeletons(posX, posY));
-				break;
-			case 34:
-				_dynamicObject->push_back(new Ravens(posX, posY));
-				break;
-			case 35:
-				_dynamicObject->push_back(new Mummy(posX, posY));
-				break;
-			default:
+			case EnumID::Axe_ID:
+			case EnumID::BigHeart_ID:
+			case EnumID::Boomerang_ID:
+			case EnumID::Knife_ID:
+			case EnumID::Cross_ID:
+			case EnumID::Crown_ID:
+			case EnumID::DoubleShot_ID:
+			case EnumID::FireBomb_ID:
+			case EnumID::MoneyBag400_ID:
+			case EnumID::MoneyBag700_ID:
+			case EnumID::MorningStar_ID:
+			case EnumID::PorkChop_ID:
+			case EnumID::SmallHeart_ID:
+			case EnumID::SpiritBall_ID:
+			case EnumID::StopWatch_ID:
+			case EnumID::TreasureChest_ID:
+				_staticObject->push_back(new RewardItem(posX, posY, width, height, static_cast<EnumID>(id)));
 				break;
 			}
 		}
@@ -238,7 +224,7 @@ void QGameObject::Update(int deltaTime)
 			{
 				if (((Medusa*)*it)->StateCancel())
 				{
-					_dynamicObject->push_back(new MagicalBall((*it)->posX, (*it)->posY));
+					//_dynamicObject->push_back(new ((*it)->posX, (*it)->posY));
 					_dynamicObject->erase(it++);
 				}
 				else ++it;
@@ -279,7 +265,7 @@ void QGameObject::Update(int playerX, int playerY, int deltaTime)
 			{
 				if (((Medusa*)*it)->StateCancel())
 				{
-					_dynamicObject->push_back(new MagicalBall((*it)->posX, (*it)->posY));
+					/*_dynamicObject->push_back(new MagicalBall((*it)->posX, (*it)->posY));*/
 					_dynamicObject->erase(it++);
 				}
 				else ++it;

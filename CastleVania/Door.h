@@ -4,8 +4,9 @@ class Door :
 	public GameObject
 {
 public:
+	bool isOpen;
 	Door();
-	Door(float _posX, float _posY, int _width, int _height, EnumID _id);
+	Door(float _posX, float _posY);
 	~Door();
 };
 

@@ -21,7 +21,7 @@ enum EnumID
 	Ghost_ID,
 	PhantomBat_ID,
 	Eagle_ID,
-	Skeletons_ID,
+	Skeleton_ID,
 	Pleaman_ID,
 
 
@@ -53,8 +53,6 @@ enum EnumID
 	TripleShot_ID,
 	SpiritBall_ID,
 	Cross_ID,
-
-	//weapon
 	Axe_ID,
 	Boomerang_ID,
 	Knife_ID,
@@ -63,15 +61,28 @@ enum EnumID
 
 	// Simon
 	Simon_ID,
+	SimonDeath_ID,
+
+	//weapon
+	Axe_Weapon_ID,
+	Boomerang_Weapon_ID,
+	Knife_Weapon_ID,
+	FireBomb_Weapon_ID,
+	StopWatch_Weapon_ID,
+
+	//Effect
+	HitEffect_ID,
+
+	//Bullet
+	Snake_ID,
+	Fire_ID
+
 };
 
 enum EStairType
 {
 	UpRight,
 	UpLeft,
-	DownRight,
-	DownLeft,
-	None_Kind
 };
 
 enum ObjectType {

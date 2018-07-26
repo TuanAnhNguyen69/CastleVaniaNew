@@ -23,6 +23,8 @@
 #include "Bat.h"
 #include "BonePillar.h"
 #include "Medusa.h"
+#include "SpearGuard.h"
+
 
 // Item
 #include "RewardItem.h"

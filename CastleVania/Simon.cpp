@@ -6,7 +6,7 @@ Simon::Simon():ActiveObject()
 {
 }
 
-Simon::Simon(int _posX, int _posY)
+Simon::Simon(int _posX, int _posY) : ActiveObject(_posX, _posY, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 40;
 	action = Action::Stand;

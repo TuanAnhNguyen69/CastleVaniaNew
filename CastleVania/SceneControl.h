@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-#include "State_1.h"
+#include "SceneGame.h"
 #include "EnumManager.h"
 
 class SceneControl :

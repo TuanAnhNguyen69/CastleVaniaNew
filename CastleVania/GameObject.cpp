@@ -39,7 +39,46 @@ GameObject::GameObject(float _posX, float _posY, EnumID _id)
 
 void GameObject::CreateSprite()
 {
-	
+	switch (id)
+	{
+	case EnumID::Brick_ID:
+	case EnumID::StairUpRight_ID:
+	case EnumID::StairUpLeft_ID:
+	case EnumID::Tele_ID:
+		sprite = NULL;
+		break;
+	case EnumID::Simon_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 100);
+		break;
+	case EnumID::Candle_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 100);
+		break;
+	case EnumID::Breakable_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 0, 100);
+		break;
+	case EnumID::MedusaHead_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 1, 100);
+		break;
+	case EnumID::Bat_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 100);
+		break;
+	case EnumID::Door_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 0, 10);
+		break;
+
+	case EnumID::Skeleton_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 500);
+		break;
+	case EnumID::BonePillar_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 12);
+		break;
+	case EnumID::Boomerang_Weapon_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
+	default:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 100);
+		break;
+	}
 }
 
 

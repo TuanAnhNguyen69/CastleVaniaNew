@@ -6,80 +6,66 @@ class TextureManager
 {
 private:
 	//Simon
-	GTexture* Simon;
-	GTexture* SimonDeath;
+	GTexture* simon;
+	GTexture* deadSimon;
 
 	//Enemy
-	GTexture* Zombie;
-	GTexture* Bat;
-	GTexture* Panther;
-	GTexture* Merman;
-	GTexture* SpearGuard;
-	GTexture* MedusaHead;
-	GTexture* Ghost;
-	GTexture* BonePillar;
-	GTexture* Fire;
+	GTexture* bat;
+	GTexture* spearGuard;
+	GTexture* medusaHead;
+	GTexture* ghost;
+	GTexture* bonePillar;
+	GTexture* fire;
 
 	//Boss
-	GTexture* VampireBat;
-	GTexture* Medusa;
-	GTexture* Snake;
+	GTexture* dracula;
+	GTexture* medusa;
+	GTexture* snake;
 
 	//Ground
-	GTexture* Brick;
-	GTexture* BreakableBrick;
-	GTexture* Candle;
-	GTexture* LargeCandle;
-	GTexture* MovingPlatform;
-	GTexture* OpenDoor;
-	GTexture* Trap;
+	GTexture* brick;
+	GTexture* breakableBrick;
+	GTexture* candle;
+	GTexture* movingPlatform;
+	GTexture* door;
+	GTexture* trap;
 
 	//Sub-Weapon
-	GTexture* Axe;
-	GTexture* Boomerang;
-	GTexture* Knife;
-	GTexture* HolyWater;
-	GTexture* StopWatch;
+	GTexture* axe;
+	GTexture* boomerang;
+	GTexture* knife;
+	GTexture* fireBomb;
+	GTexture* stopWatch;
 	
 	//Weapon
-	GTexture* Weapon;
-	GTexture* ChainWhip;
-	GTexture* MorningStar;
+	GTexture* weapon;
+	GTexture* chainWhip;
+	GTexture* morningStar;
 
 	//Item
-	GTexture* Item_Axe;
-	GTexture* Item_Boomerang;
-	GTexture* Item_Knife;
-	GTexture* Item_HolyWater;
-	GTexture* Item_StopWatch;
+	GTexture* item_Axe;
+	GTexture* item_Boomerang;
+	GTexture* item_Knife;
+	GTexture* item_FireBomb;
+	GTexture* item_StopWatch;
 
-	GTexture* Item_ChainWhip;
-	GTexture* Item_MorningStar;
+	GTexture* item_ChainWhip;
+	GTexture* item_MorningStar;
 
-	GTexture* BigHeart;
-	GTexture* SmallHeart;
-	GTexture* RedMoneyBag;
-	GTexture* WhiteMoneyBag;
-	GTexture* BlueMoneyBag;
-	GTexture* ExtraMoneyBag;
-	GTexture* Crown;
-	GTexture* Cross;
-	GTexture* SpiritBall;
-	GTexture* Roast;
+	GTexture* bigHeart;
+	GTexture* smallHeart;
+	GTexture* moneyBag400;
+	GTexture* moneyBag700;
+	GTexture* crown;
+	GTexture* cross;
+	GTexture* magicBall;
+	GTexture* porkChop;
 
 	//Other
-	GTexture* HitEffect;
-	GTexture* Water;
-	GTexture* Barrier;
-	GTexture* BgMenu;
-	GTexture* Score;
-	GTexture* HP;
-	GTexture* RewardItem;
+	GTexture* hitEffect;
+	GTexture* rewardItem;
 
-	static TextureManager *single;
-	
-
-
+	static TextureManager *single; 
 
 public:
 	static TextureManager* getInstance();

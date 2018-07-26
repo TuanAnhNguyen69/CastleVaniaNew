@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Font.cpp">
-      <Filter>FrameWork\GameUI</Filter>
+      <Filter>GameUI</Filter>
     </ClCompile>
     <ClCompile Include="GCamera.cpp">
       <Filter>FrameWork\Camera</Filter>
@@ -19,108 +19,125 @@
     <ClCompile Include="Game.cpp">
       <Filter>FrameWork\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Global.cpp" />
     <ClCompile Include="dsutil.cpp">
       <Filter>FrameWork\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Candle.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="LargeCandle.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Door.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Stair.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Barrier.cpp">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="HitEffect.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="ActiveObject.cpp">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingPlatform.cpp">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Trap.cpp">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="RewardItem.cpp">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>FrameWork\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Fire.cpp">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Objects\ActiveObjects\Weapons</Filter>
+      <Filter>Objects\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Boomerang.cpp">
-      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Knife.cpp">
-      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Bat.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Panther.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="MedusaHead.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Simon.cpp">
-      <Filter>Objects\ActiveObjects\Simon</Filter>
+      <Filter>Objects\Simon</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="State_1.cpp">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneControl.cpp">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="SpearGuard.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="BonePillar.cpp">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="VampireBat.cpp">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Snake.cpp">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Bosses</Filter>
     </ClCompile>
     <ClCompile Include="Medusa.cpp">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Bosses</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="QGameObject.cpp">
+      <Filter>Quad</Filter>
+    </ClCompile>
+    <ClCompile Include="QNode.cpp">
+      <Filter>Quad</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Candle.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Tele.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Tele.h">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp">
+      <Filter>Objects\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="PhantomBat.cpp">
+      <Filter>Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dracula.cpp">
+      <Filter>Objects\Bosses</Filter>
+    </ClCompile>
+    <ClCompile Include="HitEffect.cpp">
+      <Filter>Objects\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="RewardItem.cpp">
+      <Filter>Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tile.cpp">
+      <Filter>Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
-      <Filter>FrameWork\GameUI</Filter>
+      <Filter>GameUI</Filter>
     </ClInclude>
     <ClInclude Include="GCamera.h">
       <Filter>FrameWork\Camera</Filter>
@@ -137,7 +154,6 @@
     <ClInclude Include="Game.h">
       <Filter>FrameWork\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h" />
     <ClInclude Include="dxutil.h">
       <Filter>FrameWork\Sound</Filter>
     </ClInclude>
@@ -147,97 +163,116 @@
     <ClInclude Include="GameObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="EnumManager.h" />
-    <ClInclude Include="SweptAABB.h" />
-    <ClInclude Include="Brick.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Candle.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="LargeCandle.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Door.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Stair.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Barrier.h">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="HitEffect.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="ActiveObject.h">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingPlatform.h">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Trap.h">
-      <Filter>Objects\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="RewardItem.h">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>FrameWork\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Fire.h">
-      <Filter>Objects\ActiveObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Objects\ActiveObjects\Weapons</Filter>
+      <Filter>Objects\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Boomerang.h">
-      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Knife.h">
-      <Filter>Objects\ActiveObjects\Weapons\Sub_Weapons</Filter>
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Bat.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Panther.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="MedusaHead.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Simon.h">
-      <Filter>Objects\ActiveObjects\Simon</Filter>
+      <Filter>Objects\Simon</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="State_1.h">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneControl.h">
-      <Filter>FrameWork\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="SpearGuard.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="BonePillar.h">
-      <Filter>Objects\ActiveObjects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="VampireBat.h">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Bosses</Filter>
     </ClInclude>
     <ClInclude Include="Medusa.h">
-      <Filter>Objects\ActiveObjects\Bosses</Filter>
+      <Filter>Objects\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="SweptAABB.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="QNode.h">
+      <Filter>Quad</Filter>
+    </ClInclude>
+    <ClInclude Include="QGameObject.h">
+      <Filter>Quad</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderObj.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Candle.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h">
+      <Filter>Objects\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="PhantomBat.h">
+      <Filter>Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dracula.h">
+      <Filter>Objects\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEffect.h">
+      <Filter>Objects\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="RewardItem.h">
+      <Filter>Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Background</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,38 +288,53 @@
     <Filter Include="FrameWork\Graphics">
       <UniqueIdentifier>{d9beba72-dc4b-417d-8716-34e4d866f132}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\GameUI">
-      <UniqueIdentifier>{3acd348d-21ba-4ef3-9b19-404f75125d60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Game">
       <UniqueIdentifier>{e4691cc1-3452-4892-92a3-45f53c80ff6e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{d9a01e2f-eed8-41d9-a052-dbdf9bf3ab0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\StaticObjects">
-      <UniqueIdentifier>{6395d284-1097-4634-be05-691b9f98a12a}</UniqueIdentifier>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{920a1808-e672-4e47-be8c-c93bf2dcc7e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects">
-      <UniqueIdentifier>{10df57b0-f83b-4a51-922a-e20eda17135a}</UniqueIdentifier>
+    <Filter Include="GameUI">
+      <UniqueIdentifier>{3acd348d-21ba-4ef3-9b19-404f75125d60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects\Bosses">
+    <Filter Include="Helper">
+      <UniqueIdentifier>{d859e5c2-d9af-4fd2-88f3-083f75b9493f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quad">
+      <UniqueIdentifier>{6e86a2f4-ce12-4eb2-b3dd-573d73cb159e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Background">
+      <UniqueIdentifier>{ce335e4a-de1e-4936-923d-07fc951ad5dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{6a4a1134-f688-4b73-8110-27590cf46d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Bosses">
       <UniqueIdentifier>{50377ff6-bfd3-4e7e-a5a7-55091420c738}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects\Enemies">
+    <Filter Include="Objects\Enemies">
       <UniqueIdentifier>{9908f17e-a1ae-4797-adee-c2a8f53e8663}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects\Simon">
+    <Filter Include="Objects\Simon">
       <UniqueIdentifier>{05dd8b09-5493-440f-bad8-47496cc3dbb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects\Weapons">
+    <Filter Include="Objects\Weapons">
       <UniqueIdentifier>{c8002b52-d72d-4c74-afc2-6936e675dbf8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ActiveObjects\Weapons\Sub_Weapons">
+    <Filter Include="Objects\Weapons\Sub_Weapons">
       <UniqueIdentifier>{ef45f8da-ffea-4298-8c51-70929a831e3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\Scene">
-      <UniqueIdentifier>{6a4a1134-f688-4b73-8110-27590cf46d94}</UniqueIdentifier>
+    <Filter Include="Objects\Ground">
+      <UniqueIdentifier>{5c694fcc-bba1-4896-8a3d-ad467a7f4366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Others">
+      <UniqueIdentifier>{cd74a974-352b-4382-9a86-550803f9f92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Item">
+      <UniqueIdentifier>{a7604164-1065-465d-8399-240a356db729}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

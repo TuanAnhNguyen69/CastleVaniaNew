@@ -1,4 +1,4 @@
-#include "BackgroundController.h"
+#include "Background.h"
 
 BackgroundController::BackgroundController(void)
 {
@@ -14,10 +14,10 @@ BackgroundController::BackgroundController(int level)
 	switch (level)
 	{
 	case 1:
-		fileName = "Resources\\Maps\\Level1.txt";
+		fileName = "Resource/map/Level1.txt";
 		break;
 	case 2:
-		fileName = "Resources\\Maps\\Level2.txt";
+		fileName = "Resource\\map\\Level2.txt";
 		break;
 	default:
 		break;
@@ -36,10 +36,10 @@ BackgroundController::BackgroundController(int level)
 		switch (level )
 		{ 
 		case 1:
-			bgSprite = new GSprite(new GTexture("Resources\\Maps\\Level1.png", count, 1, count), 1000);
+			bgSprite = new GSprite(new GTexture("Resource\\map\\Level1.png", count, 1, count), 1000);
 			break;
 		case 2:
-			bgSprite = new GSprite(new GTexture("Resources\\Maps\\Level2.png", count, 1, count), 1000);
+			bgSprite = new GSprite(new GTexture("Resource\\map\\Level2.png", count, 1, count), 1000);
 			break;
 		default:
 			break;

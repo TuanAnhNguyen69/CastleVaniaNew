@@ -1,17 +1,14 @@
 #include "Scene.h"
 
-
-
 Scene::Scene()
-{
-
-}
-
-Scene::Scene(EnumSceneState _sceneState)
 {
 	background = NULL;
 	camera = NULL;
-	sceneState = _sceneState;
+}
+
+Scene::Scene(EnumSceneState sceneState) : Scene()
+{
+	this->sceneState = sceneState;
 }
 
 

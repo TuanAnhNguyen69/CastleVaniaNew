@@ -21,7 +21,7 @@ class QGameObject
 protected:
 	
 	D3DXVECTOR2 posDoor;
-	//Medusa *_medusa;
+	Medusa *_medusa;
 public:
 	
 

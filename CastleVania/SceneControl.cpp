@@ -3,8 +3,8 @@
 
 SceneControl::SceneControl(int _nCmdShow) : CGame(_nCmdShow)
 {
-	sceneNow = new State1();
-	currentStateScene = EnumSceneState::State_1;
+	sceneNow = new SceneGame();
+	currentStateScene = EnumSceneState::Scene_Game;
 
 }
 
@@ -12,7 +12,7 @@ void SceneControl::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t)
 {
 	if (sceneNow->sceneState != currentStateScene)
 	{
-		sceneNow = new State1();
+		sceneNow = new SceneGame();
 		currentStateScene = sceneNow->sceneState;
 	}
 	sceneNow->RenderFrame(d3ddv, t);

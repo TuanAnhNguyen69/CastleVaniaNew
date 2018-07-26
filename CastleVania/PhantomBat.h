@@ -2,7 +2,8 @@
 #include "ActiveObject.h";
 
 
-class PhantomBat : ActiveObject {
+class PhantomBat : public ActiveObject {
+public:
 	bool getUp;
 
 	PhantomBat();

@@ -17,7 +17,7 @@
 #define HURT_STATE 25
 
 #define SPEED_X 0.3f
-#define SPEED_Y 0.4f
+#define SPEED_Y 0.0f
 #define SPEED_FALL -0.6f
 #define MAX_HEIGHT 70.0f
 #define GIATOC 0.005f

@@ -88,7 +88,6 @@
   <ItemGroup>
     <ClCompile Include="ActiveObject.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="BackgroundController.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BonePillar.cpp" />
     <ClCompile Include="Boomerang.cpp" />
@@ -127,6 +126,7 @@
     <ClCompile Include="Tele.cpp" />
     <ClCompile Include="Tele.h" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Trap.cpp" />
     <ClCompile Include="Dracula.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClInclude Include="ActiveObject.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="BackgroundController.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BonePillar.h" />
     <ClInclude Include="Boomerang.h" />
@@ -175,6 +174,7 @@
     <ClInclude Include="State_1.h" />
     <ClInclude Include="SweptAABB.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Trap.h" />
     <ClInclude Include="Dracula.h" />
     <ClInclude Include="Utils.h" />
