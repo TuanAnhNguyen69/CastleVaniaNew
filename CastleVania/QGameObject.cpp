@@ -54,7 +54,7 @@ QGameObject::QGameObject(string fileName)
 	{
 		float posX, posY; int width, height;
 		int count;
-		map >> count >> width >> height;
+		map >> count;
 		int id;
 		int x = 0;
 		// duyệt từng dòng của file Stage
@@ -71,10 +71,10 @@ QGameObject::QGameObject(string fileName)
 				_staticObject->push_back(new Brick(posX, posY, width, height, false));
 				break;
 			case EnumID::StairUpLeft_ID:
-				_staticObject->push_back(new Stair(posX, posY, width + 32, height, EnumID::StairUpLeft_ID));
+				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpLeft_ID));
 				break;
 			case EnumID::StairUpRight_ID:
-				_staticObject->push_back(new Stair(posX, posY, width + 32, height, EnumID::StairUpRight_ID));
+				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
 				break;
 			case EnumID::Candle_ID:
 				_staticObject->push_back(new Candle(posX, posY));

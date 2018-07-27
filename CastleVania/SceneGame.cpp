@@ -43,11 +43,11 @@ void SceneGame::LoadLevel(int level)
 	
 	camera->viewport.y = 485;
 	bg = new BackgroundController(level);
-	bg->LoadQuadTreeFromFile();
+	//bg->LoadQuadTreeFromFile();
 	//player = new Player(345, 1310); //-> Stage 6
 	//player = new Player(287, 1310);
 
-	player = new Simon(3776, 96); // stage 1
+	player = new Simon(3776 / 2, 96 / 2); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
 
@@ -71,12 +71,6 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			camera->UpdateCamera(player->posX);
 		}
 
-		d3ddv->StretchRect(
-			background,
-			NULL,
-			G_BackBuffer,
-			NULL,
-			D3DTEXF_NONE);
 		qGameObject->Update(player->posX, player->posY, t);
 		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
 		if (G_Device->BeginScene())
@@ -98,7 +92,6 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			G_SpriteHandler->End();
 			G_Device->EndScene();
 		}
-
 		
 }
 
@@ -106,7 +99,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new QGameObject("Resource/map/Stage1.txt");
+	qGameObject = new QGameObject("Resource/map/State1.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

@@ -11,7 +11,9 @@ class QNode
 public:
 	int left;
 	int top;
-	int size;
+	int width;
+	int height;
+	bool hasNode;
 	list<int> listObject;
 	QNode *leftTop;
 	QNode *rightTop;
@@ -20,7 +22,7 @@ public:
 
 	void Insert(int key);
 	QNode(void);
-	QNode(int, int, int, list<int>);
+	QNode(int, int, int, int, bool, list<int>);
 	QNode(const QNode &);
 	~QNode(void);
 };
