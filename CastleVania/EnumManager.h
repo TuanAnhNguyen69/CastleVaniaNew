@@ -98,7 +98,7 @@ enum Action
 	Run_Right,
 	Run_Left,
 	Jump,
-	Fight,
+	Attack,
 	Sit,
 	Fall,
 	IntoCastle

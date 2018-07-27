@@ -50,6 +50,9 @@ void Bat::Update(int deltaTime)
 
 void Bat::SetActive(float _posX_Simon, float _posY_Simon)
 {
+	getUp = true;
+	vX = BAT_SPEED;
+	/*
 	if (abs(posX - _posX_Simon) <= 300 && abs(posY - _posY_Simon) <= 300)
 	{
 		getUp = true;
@@ -59,6 +62,8 @@ void Bat::SetActive(float _posX_Simon, float _posY_Simon)
 			vX = BAT_SPEED;
 		sprite->_start = 1;
 	}
+	*/
+	
 }
 
 void Bat::Collision()

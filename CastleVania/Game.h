@@ -38,7 +38,7 @@ protected:
 
 	int IsKeyDown(int KeyCode);
 
-	void GameDraw(int deltaTime);
+	//void GameDraw(int deltaTime);
 
 	void RenderFrame();
 

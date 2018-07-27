@@ -10,13 +10,15 @@ Simon::Simon(int _posX, int _posY) : ActiveObject(_posX, _posY, 0, -SPEED_Y, Enu
 {
 	hp = 40;
 	action = Action::Stand;
-	giatoc = GIATOC;
+	g = GRAVITATIONAL;
 	isDie = false;
 	isJump = false;
 	isSit = false;
 	isStop = false;
+	isAttack = false;
 
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
+	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000/SIMON_FIGHT_RATE);
 }
 
 Simon::~Simon()
@@ -42,11 +44,28 @@ void Simon::Draw(GCamera* camera)
 	{
 		if (vLast > 0)
 		{
+			if (action == Action::Attack)
+			{
+				simonAttack->DrawFlipX(center.x, center.y);
+				return;
+			}
 			sprite->DrawFlipX(center.x, center.y);
 		}
 		else
+		{
+			if (action == Action::Attack)
+			{
+				simonAttack->Draw(center.x, center.y);
+				return;
+			}
 			sprite->Draw(center.x, center.y);
+		}
+			
+
+
 	}
+
+	
 
 }
 
@@ -60,7 +79,8 @@ void Simon::Update(int deltaTime)
 	case Action::Run_Left:
 		sprite->Update(deltaTime);
 		break;
-	case Action::Fight:
+	case Action::Attack:
+		this->OnAttack(deltaTime);
 		break;
 	default:
 		break;
@@ -70,9 +90,9 @@ void Simon::Update(int deltaTime)
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
-		posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * giatoc;
+		posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		if (vY > SPEED_FALL)
-			vY += giatoc * deltaTime;
+			vY += g * deltaTime;
 		return;
 	}
 	else
@@ -112,8 +132,8 @@ void Simon::Jump()
 {
 	if (!isJump)
 	{
-		giatoc = -GIATOC;
-		vY = sqrt(-2 * giatoc * MAX_HEIGHT);
+		g = -g;
+		vY = sqrt(-2 * g * MAX_HEIGHT);
 		sprite->SelectIndex(4);
 		action = Action::Jump;
 		isJump = true;
@@ -126,7 +146,7 @@ void Simon::Sit()
 {
 	if (!isJump)
 	{
-		posY -= 16;
+		//posY -= 5;
 		sprite->SelectIndex(4);
 		vX = 0;
 		//vY = -(SPEED_Y + 0.3f);
@@ -136,13 +156,36 @@ void Simon::Sit()
 	}
 }
 
+void Simon::Attack()
+{
+	if (action == Action::Run_Left || action == Action::Run_Right)
+		return;
+	if (action == Action::Attack)
+		return;
+	if (!isJump)
+		vX = 0;
+
+	action = Action::Attack;
+}
+
+void Simon::OnAttack(int deltaTime)
+{
+	isAttack = true;
+	simonAttack->Update(deltaTime);
+	if (!isSit && simonAttack->GetIndex() >= 8)
+	{
+		action = Action::Stand;
+		simonAttack->Reset();
+	}
+}
+
 void Simon::Stop()
 {
 	vX = 0;
 	switch (action)
 	{
 		case Action::Stand:
-		case Action::Fight:
+		case Action::Attack:
 		case Action::Fall:
 			return;
 	}
@@ -223,7 +266,7 @@ void Simon::StandGround(list<GameObject*> &obj, float dt)
 				*/
 				vY = 0;
 				vX = 0;
-				giatoc = 0;
+				g = 0;
 				//_allowPress = true;
 				sprite->SelectIndex(0);
 			}

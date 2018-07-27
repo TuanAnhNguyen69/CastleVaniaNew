@@ -11,19 +11,28 @@ using namespace std;
 class GameObject
 {
 public:
+	
 	GSprite* sprite;
+
 	//posX, posY -> toa do center
 	float posX;
 	float posY;
+
 	//cao, rong hit box
 	int width;
 	int height;
+
 	//huong di chuyen
 	float vX;
 	float vY;
+
+	//Loai object
 	ObjectType type;
 
+	//Co the di chuyen khong
 	bool canMove;
+
+	//Co the bi tieu diet / pha huy ko
 	bool canBeKilled;
 
 	//co dang hoat dong
@@ -31,6 +40,9 @@ public:
 
 	//da chet hay chua
 	bool isDeath;
+
+	//Object co phu thuoc vao vi tri cua Simon khong
+	bool neededPlayerPosition;
 	
 	//Cac thong so
 	EnumID id;
@@ -38,7 +50,7 @@ public:
 	int hp;
 	int damage;
 	int point;
-	bool neededPlayerPosition;
+	
 
 
 	virtual void Update(int dt);
@@ -47,16 +59,28 @@ public:
 
 	virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int t);
 	virtual void OnKeyDown(int KeyCode);
+
+	//Tao bien sprite
 	virtual void CreateSprite();
+
+	//Thay doi gia tri bien active
 	virtual void SetActive(float x, float y);
 	virtual void SetActive();
 	
 	
-
+	//Va cham
 	virtual void Collision(list<GameObject*> obj, int dt);
-	virtual Box GetBox();
-	virtual void ReceiveDamage(int damage);
+
+	//Tra ve kieu va cham
 	ECollisionDirection GetCollisionDirect(float normalx, float normaly);
+
+	//Lay thuoc tinh cua Box
+	virtual Box GetBox();
+
+	//Nhan damage
+	virtual void ReceiveDamage(int damage);
+
+	//Xoa object
 	virtual void Remove();
 
 

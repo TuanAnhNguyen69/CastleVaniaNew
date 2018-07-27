@@ -14,9 +14,18 @@ SpearGuard::SpearGuard(float _posX, float _posY) : ActiveObject(_posX, _posY, SP
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 1000);
-
+	posX0 = posX;
 }
 
 SpearGuard::~SpearGuard()
 {
+}
+
+void SpearGuard::Update(int deltaTime)
+{
+	if (abs(posX0 - posX) >= SPEARGUARD_RANGE)
+	{
+		vX = -vX;
+	}
+	sprite->Update(deltaTime);
 }

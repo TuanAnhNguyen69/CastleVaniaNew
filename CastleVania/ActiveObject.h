@@ -4,15 +4,18 @@ class ActiveObject :
 	public GameObject
 {
 public:
-	ActiveObject();
-	ActiveObject(float _posX, float _posY, float _vX, float _vY, EnumID id);
-	~ActiveObject();
+	
 	virtual void Update(int deltaTime);
+
+	//Update phu thuoc vao Simon
 	virtual void Update(Box playerBox, int deltaTime);
-	virtual Box GetBox();
 
 	virtual void Draw(GCamera* camera);
 
+
+	virtual Box GetBox();
+
+	//Tra ve gia tri the hien Object co o trong man hinh khong
 	bool IntoScreen(float _posX, float _posY, GCamera* camera);
 
 	//Va cham, chua dinh nghia
@@ -20,5 +23,9 @@ public:
 
 	virtual void SetActive(float _vX, float _vy);
 	virtual void ReceiveDamage(int damage);
+
+	ActiveObject();
+	ActiveObject(float _posX, float _posY, float _vX, float _vY, EnumID id);
+	~ActiveObject();
 };
 
