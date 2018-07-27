@@ -13,6 +13,7 @@ public:
 
 
 	void Update(int deltaTime);
+	void Draw(GCamera* camera);
 
 	SpearGuard();
 	SpearGuard(float _posX, float _posY, int _width, int _height);

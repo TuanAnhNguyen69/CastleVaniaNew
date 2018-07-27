@@ -99,6 +99,35 @@ void GSprite::Draw(int X, int Y)
 	);
 }
 
+void GSprite::DrawScale(int x, int y, float scaleX, float scaleY)
+{
+	RECT srect;
+
+	int width = scaleX * _texture->FrameWidth;
+	int height = scaleY * _texture->FrameHeight;
+
+	srect.left = (_index % _texture->Cols)*(width);// + 1;
+	srect.top = (_index / _texture->Cols)*(height);// + 1;
+	srect.right = srect.left + width;
+	srect.bottom = srect.top + height;// + 1;
+
+													 //D3DXVECTOR3 position((float)X, (float)Y, 0);
+	D3DXVECTOR3 position(0, 0, 0);
+	D3DXVECTOR3 center(0, 0, 0);
+	position.x = x - width / 2;
+	position.y = y - height / 2;
+	G_SpriteHandler->Draw(
+		_texture->Texture,
+		&srect,
+		&center,
+		&position,
+		//0x0000000
+		0xFFFFFFFF //color
+	);
+}
+
+
+
 void GSprite::DrawFlipX(int x, int y)
 {
 	D3DXMATRIX oldMt;
@@ -137,6 +166,24 @@ void GSprite::DrawFlipXScale(int x, int y, float scaleX, float scaleY)
 	G_SpriteHandler->SetTransform(&oldMt);
 }
 
+void GSprite::DrawFlipYScale(int x, int y, float scaleX, float scaleY)
+{
+	D3DXMATRIX oldMt;
+	G_SpriteHandler->GetTransform(&oldMt);
+
+	D3DXMATRIX newMt;
+	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
+	D3DXVECTOR2 rotate = D3DXVECTOR2(scaleX, -scaleY);
+
+	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
+	D3DXMATRIX finalMt = newMt * oldMt ;
+	G_SpriteHandler->SetTransform(&finalMt);
+
+	this->Draw(x, y);
+
+	G_SpriteHandler->SetTransform(&oldMt);
+}
+
 void GSprite::DrawFlipY(int x, int y)
 {
 	D3DXMATRIX oldMt;
@@ -147,7 +194,7 @@ void GSprite::DrawFlipY(int x, int y)
 	D3DXVECTOR2 rotate = D3DXVECTOR2(1, -1);
 
 	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
-	D3DXMATRIX finalMt = newMt * oldMt ;
+	D3DXMATRIX finalMt = newMt * oldMt;
 	G_SpriteHandler->SetTransform(&finalMt);
 
 	this->Draw(x, y);

@@ -35,14 +35,16 @@ public:
 
 	// Render current sprite at location (X,Y) at the target surface
 	void Draw(int x, int y);
+	void DrawScale(int x, int y, float scaleX, float scaleY);
 	
 	//Render with scale (-1, 1)
 	void DrawFlipX(int x, int y);
+	void DrawFlipXScale(int x, int y, float scaleX, float scaleY);
 
 	//render with scale (1, -1)
 	void DrawFlipY(int x, int y);
-
-	void DrawFlipXScale(int x, int y, float scaleX, float scaleY);
+	void DrawFlipYScale(int x, int y, float scaleX, float scaleY);
+	
 
 	//Render Rect of texture at (x,y)
 	void DrawRect(int X, int Y, RECT SrcRect);

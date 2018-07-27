@@ -14,7 +14,7 @@ Bat::Bat(float _posX, float _posY, int _width, int _height)
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
 	getUp = false;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 0, 3, 100);
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 1, 3, 100);
 }
 
 Bat::~Bat()
@@ -24,28 +24,40 @@ Bat::~Bat()
 void Bat::MovePath(int deltaTime)
 {
 	posX += vX * deltaTime;
-	posY = sin(posX*3.14/180);
 }
 
 void Bat::Draw(GCamera* camera)
 {
-	ActiveObject::Draw(camera);
+	if (sprite == NULL || !active)
+		return;
+	if (posX + width / 2 <= camera->viewport.x || posX - width / 2 >= camera->viewport.x + G_ScreenWidth)
+	{
+		active = false;
+		return;
+	}
+	D3DXVECTOR2 center = camera->Transform(posX, posY);
+	if (vX > 0)
+		sprite->DrawFlipX(center.x, center.y);
+	else
+		sprite->Draw(center.x, center.y);
 }
 
 void Bat::Update(int deltaTime)
 {
-	if (getUp)
+	// (getUp)
 	{
 		this->MovePath(deltaTime);
 		sprite->Update(deltaTime);
 	}
-
+	/*
 	if (hp <= 0)
 	{
 		Score += point;
 		isDeath = true;
 		return;
 	}
+	*/
+	
 }
 
 void Bat::SetActive(float _posX_Simon, float _posY_Simon)
