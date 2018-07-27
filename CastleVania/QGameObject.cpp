@@ -176,7 +176,7 @@ void QGameObject::Draw(GCamera *camera)
 	}
 
 	for (list<GameObject*>::iterator i = _dynamicObject->begin(); i != _dynamicObject->end(); i++)
-	{
+	{ 
 		GameObject* obj = (*i);
 	
 		if (obj->active)

@@ -71,25 +71,35 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			camera->UpdateCamera(player->posX);
 		}
 
-		qGameObject->Update(player->posX, player->posY, t);
-		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
-
-		player->Update(t);
-		/*player->Collision(*(qGameObject->_staticObject), t);
-		player->Collision(*(qGameObject->_dynamicObject), t);*/
-		//qGameObject->Collision(t);
-		G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-		bg->Draw(camera);
-		qGameObject->Draw(camera);		
-		player->Draw(camera);
-		G_SpriteHandler->End();
-
 		d3ddv->StretchRect(
 			background,
 			NULL,
 			G_BackBuffer,
 			NULL,
 			D3DTEXF_NONE);
+		qGameObject->Update(player->posX, player->posY, t);
+		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
+		if (G_Device->BeginScene())
+		{
+			// Clear back buffer with BLACK
+			G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
+			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+			//----- start drawing
+
+			player->Update(t);
+			/*player->Collision(*(qGameObject->_staticObject), t);
+			player->Collision(*(qGameObject->_dynamicObject), t);*/
+			//qGameObject->Collision(t);
+			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+			bg->Draw(camera);
+			qGameObject->Draw(camera);
+			player->Draw(camera);
+			//---- end drawing
+			G_SpriteHandler->End();
+			G_Device->EndScene();
+		}
+
+		
 }
 
 
