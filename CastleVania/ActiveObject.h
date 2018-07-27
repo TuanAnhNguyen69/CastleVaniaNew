@@ -16,7 +16,7 @@ public:
 	bool IntoScreen(float _posX, float _posY, GCamera* camera);
 
 	//Va cham, chua dinh nghia
-	virtual void Collision();
+	virtual void Collision(list<GameObject*> obj, int dt);
 
 	virtual void SetActive(float _vX, float _vy);
 	virtual void ReceiveDamage(int damage);

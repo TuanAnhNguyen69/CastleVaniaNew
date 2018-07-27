@@ -83,6 +83,13 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 		qGameObject->Draw(camera);		
 		player->Draw(camera);
 		G_SpriteHandler->End();
+
+		d3ddv->StretchRect(
+			background,
+			NULL,
+			G_BackBuffer,
+			NULL,
+			D3DTEXF_NONE);
 }
 
 
@@ -218,7 +225,12 @@ void SceneGame::ProcessInput(int KeyCode) {
 	{
 	case DIK_RIGHT:
 		player->RunRight();
+	case DIK_D:
+		player->RunRight();
+		break;
 	case DIK_LEFT:
+		player->RunLeft();
+	case DIK_A:
 		player->RunLeft();
 		break;
 	case DIK_DOWN:

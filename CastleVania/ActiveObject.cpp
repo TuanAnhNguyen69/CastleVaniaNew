@@ -59,9 +59,46 @@ void ActiveObject::Draw(GCamera* camera)
 		sprite->DrawFlipX(center.x, center.y);
 }
 
-void ActiveObject::Collision()
+void ActiveObject::Collision(list<GameObject*> obj, int dt)
 {
-	//chua dinh nghia
+	list<GameObject*>::iterator _itBegin;
+	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
+	{
+		float moveX = 0;
+		float moveY = 0;
+		float normalx;
+		float normaly;
+		GameObject* other = (*_itBegin);
+		if (other->id == EnumID::Brick_ID)
+		{
+			Box box = this->GetBox();
+			Box boxOther = other->GetBox();
+
+			if (AABB(box, boxOther, moveX, moveY) == true)
+			{
+				if (vY < 0)
+				{
+					posY += moveY + 20;
+					vY = 0;
+					return;
+				}
+				if ((posX - width / 2 + 10) - (other->posX - other->width / 2) <= 0
+					|| (posX + width / 2 - 10) - (other->posX + other->width / 2) >= 0)
+					vX = -vX;
+			}
+			else
+				if (AABB(box, boxOther, moveX, moveY) == false)
+				{
+					if (other->canMove == true)
+					{
+						box.vx -= boxOther.vx;
+						box.vy -= boxOther.vy;
+						boxOther.vx = 0;
+						boxOther.vy = 0;
+					}
+				}
+		}
+	}
 
 }
 

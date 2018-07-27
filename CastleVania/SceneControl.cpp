@@ -20,8 +20,8 @@ void SceneControl::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t)
 
 void SceneControl::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta)
 {
-	/*
-	if (currentStateScene == ESceneState::Scene_Game)
+	
+	if (currentStateScene == EnumSceneState::Scene_Game)
 	{
 		if (IsKeyDown(DIK_RIGHT) || IsKeyDown(DIK_D))
 		{
@@ -52,7 +52,7 @@ void SceneControl::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta)
 			sceneNow->ProcessInput(DIK_0);
 		}
 	}
-	*/
+	
 }
 
 void SceneControl::LoadResources(LPDIRECT3DDEVICE9 d3ddv)

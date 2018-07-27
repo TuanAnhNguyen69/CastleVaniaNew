@@ -40,7 +40,7 @@ void Simon::Draw(GCamera* camera)
 	}
 	else
 	{
-		if (vX > 0 && vLast > 0)
+		if (vLast > 0)
 		{
 			sprite->DrawFlipX(center.x, center.y);
 		}
@@ -52,7 +52,20 @@ void Simon::Draw(GCamera* camera)
 
 void Simon::Update(int deltaTime)
 {
-	sprite->Update(deltaTime);
+	switch (action)
+	{
+	case Action::Run_Right:
+		sprite->Update(deltaTime);
+		break;
+	case Action::Run_Left:
+		sprite->Update(deltaTime);
+		break;
+	case Action::Fight:
+		break;
+	default:
+		break;
+	}
+	//sprite->Update(deltaTime);
 
 	if (isJump)
 	{
@@ -64,6 +77,9 @@ void Simon::Update(int deltaTime)
 	}
 	else
 		vY = 0;
+
+	posX += vX * deltaTime;
+
 }
 
 void Simon::RunLeft()
@@ -165,4 +181,59 @@ Box Simon::GetBox()
 		return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
 	}
 	return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
+}
+
+void Simon::StandGround(list<GameObject*> &obj, float dt)
+{
+	float moveX = 0;
+	float moveY = 0;
+	float normalx;
+	float normaly;
+	if (vY < 0 && moveY < 26)
+	{
+
+
+		if (moveY > 0) {
+			
+			posY += moveY;
+
+			if (isJump)
+			{
+				isJump = false;
+				/*
+				if (_hasKnockBack)
+				{
+					if (!_hidden)
+					{
+						_hidden = true;
+						_startToHiddenTime = GetTickCount();
+						if (hp > 0)
+						{
+							if (hp <= 3)
+							{
+								hp -= 1;
+							}
+							else
+								hp -= other->damage;
+						}
+
+					}
+					_hasKnockBack = false;
+				}
+				*/
+				vY = 0;
+				vX = 0;
+				giatoc = 0;
+				//_allowPress = true;
+				sprite->SelectIndex(0);
+			}
+
+		}
+	}
+}
+
+void Simon::Collision(list<GameObject*> &obj, float dt)
+{
+	ActiveObject::Collision(obj, dt);
+	StandGround(obj, dt);
 }

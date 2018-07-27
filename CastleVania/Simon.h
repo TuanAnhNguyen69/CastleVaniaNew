@@ -75,8 +75,9 @@ public:
 	Simon();
 	~Simon();
 
-	void Draw(GCamera* camera);
-	void Update(int deltaTime);
+	virtual void Draw(GCamera* camera);
+	virtual void Update(int deltaTime);
+	virtual void Collision(list<GameObject*> &obj, float dt);
 	Simon(int _posX, int _posY);
 
 	void RunLeft();
@@ -89,6 +90,8 @@ public:
 	Box GetBox();
 	void Jump();
 	void ChangeAction();
+
+	void StandGround(list<GameObject*> &obj, float dt);
 	
 };
 
