@@ -7,8 +7,8 @@ Boomerang::Boomerang() : Weapon()
 	active = true;
 }
 
-Boomerang::Boomerang(float _posX, float _posY, float _direction)
-	: Weapon(_posX, _posY, _direction, EnumID::Boomerang_ID)
+Boomerang::Boomerang(float _posX, float _posY, int _width, int _height, float _direction)
+	: Weapon(_posX, _posY, _width, _height, _direction, EnumID::Boomerang_ID)
 {
 	active = true;
 }

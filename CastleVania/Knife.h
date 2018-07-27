@@ -5,7 +5,7 @@ class Knife :
 {
 public:
 	Knife();
-	Knife(float _posX, float _posY, float _direction);
+	Knife(float _posX, float _posY, int _width, int _height, float _direction);
 	~Knife();
 };
 

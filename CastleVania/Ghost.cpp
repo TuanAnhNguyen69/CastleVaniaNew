@@ -4,7 +4,7 @@ Ghost::Ghost(void) : ActiveObject()
 {
 }
 
-Ghost::Ghost(float _posX, float _posY) : ActiveObject(_posX, _posY, 0.08f, 0, EnumID::Ghost_ID)
+Ghost::Ghost(float _posX, float _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0.08f, 0, EnumID::Ghost_ID)
 {
 	type = ObjectType::Enemy_Type;
 	point = 300;

@@ -60,7 +60,7 @@ public:
 
 
 	Medusa();
-	Medusa(float posX, float posY, EnumID id);
+	Medusa(float posX, float posY, int _width, int _height);
 	~Medusa();
 
 	virtual void Update(int deltaTime_);

@@ -8,7 +8,7 @@ class SpearGuard :
 {
 public:
 	SpearGuard();
-	SpearGuard(float _posX, float _posY);
+	SpearGuard(float _posX, float _posY, int _width, int _height);
 	~SpearGuard();
 };
 

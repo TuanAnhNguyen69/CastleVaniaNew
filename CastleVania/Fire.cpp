@@ -6,8 +6,8 @@ Fire::Fire()
 {
 }
 
-Fire::Fire(float _posX, float _posY, EnumID id) :
-	ActiveObject(_posX, _posY, 0.5f, 0, id)
+Fire::Fire(float _posX, float _posY, int _width, int _height) :
+	ActiveObject(_posX, _posY, _width, _height, 0.5f, 0, EnumID::Fire_ID)
 {
 	lifeTime = 0;
 	active = true;

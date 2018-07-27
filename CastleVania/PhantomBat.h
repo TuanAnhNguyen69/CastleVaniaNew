@@ -5,9 +5,8 @@
 class PhantomBat : public ActiveObject {
 public:
 	bool getUp;
-
 	PhantomBat();
-	PhantomBat(float _posX, float _posY);
+	PhantomBat(float _posX, float _posY, int _width, int _height);
 	~PhantomBat();
 
 	void MovePath(int deltaTime);

@@ -6,7 +6,7 @@ Simon::Simon():ActiveObject()
 {
 }
 
-Simon::Simon(int _posX, int _posY) : ActiveObject(_posX, _posY, 0, -SPEED_Y, EnumID::Simon_ID)
+Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 40;
 	action = Action::Stand;
@@ -16,6 +16,7 @@ Simon::Simon(int _posX, int _posY) : ActiveObject(_posX, _posY, 0, -SPEED_Y, Enu
 	isSit = false;
 	isStop = false;
 
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 }
 

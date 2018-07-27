@@ -6,7 +6,7 @@ class Door :
 public:
 	bool isOpen;
 	Door();
-	Door(float _posX, float _posY);
+	Door(float _posX, float _posY, int _width, int _height);
 	~Door();
 };
 

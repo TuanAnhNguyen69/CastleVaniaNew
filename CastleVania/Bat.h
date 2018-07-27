@@ -13,7 +13,7 @@ public:
 	bool getUp;
 
 	Bat();
-	Bat(float _posX, float _posY);
+	Bat(float _posX, float _posY, int _width, int _height);
 	~Bat();
 
 	void MovePath(int deltaTime);

@@ -7,8 +7,8 @@ Bat::Bat() : ActiveObject()
 	active = true;
 }
 
-Bat::Bat(float _posX, float _posY)
-	: ActiveObject(_posX, _posY, BAT_SPEED, 0, EnumID::Bat_ID)
+Bat::Bat(float _posX, float _posY, int _width, int _height)
+	: ActiveObject(_posX, _posY, _width, _height, BAT_SPEED, 0, EnumID::Bat_ID)
 {
 	active = true;
 	canBeKilled = true;

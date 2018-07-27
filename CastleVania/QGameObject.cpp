@@ -57,15 +57,20 @@ QGameObject::QGameObject(string fileName)
 		map >> count;
 		int id;
 		int x = 0;
+
+
 		// duyệt từng dòng của file Stage
 		for (int i = 0; i < count; i++)
 		{
-			float enumValue;
-			map >> id >> posX >> posY >> width >> height;
-
-			// ứng với giá trị value tương ứng để khởi tạo các object tương tứng
-			switch (id)
-			{
+		float enumValue;
+		map >> id >> posX >> posY >> width >> height;
+		posY = G_MapHeight - posY;
+		if (id > 20) {
+			int a = 0;
+		}
+		// ứng với giá trị value tương ứng để khởi tạo các object tương tứng
+		switch (id)
+		{
 
 			case EnumID::Brick_ID:
 				_staticObject->push_back(new Brick(posX, posY, width, height, false));
@@ -77,47 +82,47 @@ QGameObject::QGameObject(string fileName)
 				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
 				break;
 			case EnumID::Candle_ID:
-				_staticObject->push_back(new Candle(posX, posY));
+				_staticObject->push_back(new Candle(posX, posY, width, height));
 				break;
 			case EnumID::Breakable_ID:
 				_staticObject->push_back(new Brick(posX, posY, width, height, true));
 				break;
 			case EnumID::Door_ID:
-				_staticObject->push_back(new Door(posX, posY));
+				_staticObject->push_back(new Door(posX, posY, width, height));
 				break;
 			case EnumID::MovingPlatform_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY));
+				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
 				break;
 			case EnumID::Tele_ID:
 				_staticObject->push_back(new Tele(posX, posY, width, height));
 				break;
 			case EnumID::Trap_ID:
-				_dynamicObject->push_back(new Trap(posX, posY));
+				//_dynamicObject->push_back(new Trap(posX, posY, width, height));
 				break;
 			case EnumID::Count_Dracula_ID:
-				_dynamicObject->push_back(new BonePillar(posX, posY));
+				//_dynamicObject->push_back(new Medusa(posX, posY, width, height));
 				break;
 			case EnumID::Medusa_ID:
-				_medusa = new Medusa(posX, posY, EnumID::Medusa_ID);
-				_dynamicObject->push_back(_medusa);
+				//_medusa = new Medusa(posX, posY, width, height);
+				//_dynamicObject->push_back(_medusa);
 				break;
 			case EnumID::MedusaHead_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY));
+				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
 				break;
 			case EnumID::Ghost_ID:
-				_dynamicObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new Ghost(posX, posY, width, height));
 			break;
 			case EnumID::Bat_ID:
-				_dynamicObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new Bat(posX, posY, width, height));
 				break;
 			case EnumID::BonePillar_ID:
-				_dynamicObject->push_back(new Ghost(posX, posY));
+				_dynamicObject->push_back(new BonePillar(posX, posY, width, height));
 				break;
 			case EnumID::Eagle_ID:
 				/*_staticObject->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
 				break;
 			case EnumID::PhantomBat_ID:
-				_dynamicObject->push_back(new PhantomBat(posX, posY));
+				_dynamicObject->push_back(new PhantomBat(posX, posY, width, height));
 				break;
 			case EnumID::Pleaman_ID:
 				/*_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
@@ -126,7 +131,7 @@ QGameObject::QGameObject(string fileName)
 				//_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
 				break;
 			case EnumID::SpearGuard_ID:
-				_dynamicObject->push_back(new SpearGuard(posX, posY));
+				_dynamicObject->push_back(new SpearGuard(posX, posY, width, height));
 				break;
 			case EnumID::Axe_ID:
 			case EnumID::BigHeart_ID:
@@ -147,7 +152,7 @@ QGameObject::QGameObject(string fileName)
 				_staticObject->push_back(new RewardItem(posX, posY, width, height, static_cast<EnumID>(id)));
 				break;
 			}
-		}
+			}
 	}
 	_pausing = false;
 	_startToPauseTime = 0;
@@ -155,7 +160,7 @@ QGameObject::QGameObject(string fileName)
 
 Medusa* QGameObject::getMedusa()
 {
-	return _medusa;
+	return NULL;
 }
 
 D3DXVECTOR2 QGameObject::GetPosDoor()
@@ -220,27 +225,11 @@ void QGameObject::Update(int deltaTime)
 	while (it != _dynamicObject->end())
 	{
 		if  (!IsPausing() || (IsPausing() && (*it)->type != ObjectType::Enemy_Type)) {
-			if ((*it)->id == EnumID::Medusa_ID)
-			{
-				if (((Medusa*)*it)->StateCancel())
-				{
-					//_dynamicObject->push_back(new ((*it)->posX, (*it)->posY));
-					_dynamicObject->erase(it++);
-				}
-				else ++it;
-			}
-			else {
-
-				if ((*it)->active)
-				{
-
-					
-						(*it)->Update(deltaTime);
-					
+				if ((*it)->active) {
+				
+					(*it)->Update(deltaTime);
 				}
 				it++;
-
-			}
 		}
 		else 
 		++it;

@@ -4,7 +4,7 @@ PhantomBat::PhantomBat()
 {
 }
 
-PhantomBat::PhantomBat(float _posX, float _posY)
+PhantomBat::PhantomBat(float _posX, float _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0.0f, 0.0f, EnumID::PhantomBat_ID)
 {
 
 }

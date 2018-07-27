@@ -29,6 +29,7 @@ private:
 	GTexture* movingPlatform;
 	GTexture* door;
 	GTexture* trap;
+	GTexture* transparentSprite;
 
 	//Sub-Weapon
 	GTexture* axe;
@@ -52,12 +53,15 @@ private:
 	GTexture* item_ChainWhip;
 	GTexture* item_MorningStar;
 
+	GTexture* trippleShot;
 	GTexture* bigHeart;
+	GTexture* doubleShot;
 	GTexture* smallHeart;
 	GTexture* moneyBag400;
 	GTexture* moneyBag700;
 	GTexture* crown;
 	GTexture* cross;
+	GTexture* tresureChest;
 	GTexture* magicBall;
 	GTexture* porkChop;
 

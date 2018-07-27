@@ -7,8 +7,8 @@ MedusaHead::MedusaHead() : ActiveObject()
 	active = true;
 }
 
-MedusaHead::MedusaHead(float _posX, float _posY)
-	: ActiveObject(_posX, _posY, MEDUSAHEAD_SPEED, 0, EnumID::MedusaHead_ID)
+MedusaHead::MedusaHead(float _posX, float _posY, int _width, int _height)
+	: ActiveObject(_posX, _posY, _width, _height, MEDUSAHEAD_SPEED, 0, EnumID::MedusaHead_ID)
 {
 	active = true;
 	canBeKilled = true;

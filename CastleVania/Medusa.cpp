@@ -36,11 +36,11 @@ Medusa::Medusa()
 	this->Initialize();
 }
 
-Medusa::Medusa(float posX_, float posY_, EnumID id_) :ActiveObject(posX_, posY_, MEDUSA_SPEED, 0, id_)
+Medusa::Medusa(float posX_, float posY_, int _width, int _height) :ActiveObject(posX_, posY_, _width, _height, MEDUSA_SPEED, 0, EnumID::Medusa_ID)
 {
 	Initialize();
-	sleepSprite = new GSprite(TextureManager::getInstance()->getTexture(id_), 4, 4, 1000 / MEDUSA_SLEEP_STATE);
-	fightSprite = new GSprite(TextureManager::getInstance()->getTexture(id_), 0, 3, 1000 / MEDUSA_FIGHT_STATE);
+	sleepSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Medusa_ID), 4, 4, 1000 / MEDUSA_SLEEP_STATE);
+	fightSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Medusa_ID), 0, 3, 1000 / MEDUSA_FIGHT_STATE);
 	deadSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::HitEffect_ID), 0, 2, 1000 / MEDUSA_DIE_RATE);
 }
 
@@ -78,7 +78,7 @@ void Medusa::Stoping(int deltaTime)
 			_previousStopPos = _currentStopPos;
 			_currentStopPos = 0;
 			
-			listSnake->push_back(new Snake(posX, posY, snake_vX, -0.2f, EnumID::Snake_ID));	//Tha Snake
+			listSnake->push_back(new Snake(posX, posY, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID));	//Tha Snake
 		}
 		break;
 		case 2:
@@ -102,7 +102,7 @@ void Medusa::Stoping(int deltaTime)
 		{
 			_previousStopPos = _currentStopPos;
 			_currentStopPos = 4;
-			listSnake->push_back(new Snake(posX, posY, snake_vX, -0.2f, EnumID::Snake_ID)); //Tha Snake
+			listSnake->push_back(new Snake(posX, posY, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID)); //Tha Snake
 		}
 		break;
 		case 4:

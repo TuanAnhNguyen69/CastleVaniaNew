@@ -5,7 +5,7 @@ class ActiveObject :
 {
 public:
 	ActiveObject();
-	ActiveObject(float _posX, float _posY, float _vX, float _vY, EnumID id);
+	ActiveObject(float _posX, float _posY, int _width, int _height, float _vX, float _vY, EnumID id);
 	~ActiveObject();
 	virtual void Update(int deltaTime);
 	virtual void Update(Box playerBox, int deltaTime);

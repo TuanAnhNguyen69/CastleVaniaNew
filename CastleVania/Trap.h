@@ -28,7 +28,7 @@ protected:
 	void GoDown();
 public:
 	Trap();
-	Trap(float _posX, float _posY, float _max = TRAP_MAX, float _min = TRAP_MIN, 
+	Trap(float _posX, float _posY, int _width, int _height, float _max = TRAP_MAX, float _min = TRAP_MIN,
 	float _vUp = TRAP_SPEED_UP, float _vDown = TRAP_SPEED_DOWN, int _animationRate = TRAP_RATE);
 	~Trap();
 	void Update(int deltaTime);

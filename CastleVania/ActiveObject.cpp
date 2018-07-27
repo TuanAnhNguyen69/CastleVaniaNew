@@ -7,8 +7,8 @@ ActiveObject::ActiveObject() : GameObject()
 	canBeKilled = true;
 }
 
-ActiveObject::ActiveObject(float _posX, float _posY, float _vX, float _vY, EnumID id) :
-	GameObject(_posX, _posY, id)
+ActiveObject::ActiveObject(float _posX, float _posY, int _width, int _height, float _vX, float _vY, EnumID id) :
+	GameObject(_posX, _posY, _width, _height, id)
 {
 	vX = _vX;
 	vY = _vY;

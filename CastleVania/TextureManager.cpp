@@ -44,10 +44,10 @@ TextureManager::TextureManager(void)
 	snake = new GTexture("Resource/sprites/Bosses/Snake.png", 2, 1, 2);
 
 	//Ground
-	brick = new GTexture("Resource/sprites/Ground/Brick.png", 1, 1, 1);
-
+	brick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
+	transparentSprite = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 		//Xem lai
-	breakableBrick = new GTexture("Resource/sprites/Ground/Brick.png", 1, 1, 1);
+	breakableBrick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 
 	candle = new GTexture("Resource/sprites/Ground/candle.png", 2, 1, 2);
 	movingPlatform = new GTexture("Resource/sprites/Ground/movingPlatform.png", 1, 1, 1);
@@ -70,9 +70,7 @@ TextureManager::TextureManager(void)
 	item_Knife = new GTexture("Resource/sprites/Sub_Weapons/Knife.png", 1, 1, 1);
 	item_FireBomb = new GTexture("Resource/sprites/Sub_Weapons/HolyWater_Item.png", 1, 1, 1);
 	item_StopWatch = new GTexture("Resource/sprites/Sub_Weapons/StopWatch.png", 1, 1, 1);
-
 	item_MorningStar = new GTexture("Resource/sprites/Items/MorningStar.png", 1, 1, 1);
-
 	smallHeart = new GTexture("Resource/sprites/Items/Small_Heart.png", 1, 1, 1);
 	bigHeart = new GTexture("Resource/sprites/Items/Big_Heart.png", 1, 1, 1);
 	moneyBag400 = new GTexture("Resource/sprites/Items/Red_Money_Bag.png", 1, 1, 1);
@@ -81,6 +79,11 @@ TextureManager::TextureManager(void)
 	cross = new GTexture("Resource/sprites/Items/Cross.png", 1, 1, 1);
 	magicBall = new GTexture("Resource/sprites/Items/SpiritBall.png", 1, 1, 1);
 	crown = new GTexture("Resource/sprites/Items/Crown.png", 4, 1, 4); 
+	doubleShot = new GTexture("Resource/sprites/Items/DoubleShot.png", 1, 1, 1);
+	trippleShot = new GTexture("Resource/sprites/Items/TrippleShot.png", 1, 1, 1);
+	tresureChest = new GTexture("Resource/sprites/Items/treasure.png", 1, 1, 1);
+
+
 
 	//Other
 	hitEffect = new GTexture("Resource/sprites/Effect/0.png", 1, 1, 1);
@@ -124,16 +127,20 @@ GTexture* TextureManager::getTexture(EnumID id)
 
 	//Ground
 	case EnumID::Brick_ID:
-		return brick;
+		return transparentSprite;
 	case EnumID::Breakable_ID:
-		return breakableBrick;
+		return transparentSprite;
 	case EnumID::Candle_ID:
 		return candle;
 	case EnumID::MovingPlatform_ID:
 		return movingPlatform;
 	case EnumID::Trap_ID:
 		return trap;
-
+	case EnumID::Door_ID:
+		return door;
+	case EnumID::StairUpLeft_ID:
+	case EnumID::StairUpRight_ID:
+		return transparentSprite;
 	//Sub-Weapon
 	case EnumID::Axe_Weapon_ID:
 		return axe;
@@ -183,6 +190,12 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return magicBall;
 	case EnumID::PorkChop_ID:
 		return porkChop;
+	case EnumID::DoubleShot_ID:
+		return doubleShot;
+	case EnumID::TripleShot_ID:
+		return trippleShot;
+	case EnumID::TreasureChest_ID:
+		return tresureChest;
 
 	//Other
 	/*case EnumID::HitEffect_ID:

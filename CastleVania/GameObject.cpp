@@ -15,7 +15,7 @@ GameObject::GameObject(void)
 }
 
 
-GameObject::GameObject(float _posX, float _posY, EnumID _id)
+GameObject::GameObject(float _posX, float _posY, int _width, int _height, EnumID _id)
 {
 	posX = _posX;
 	posY = _posY;
@@ -28,13 +28,8 @@ GameObject::GameObject(float _posX, float _posY, EnumID _id)
 	type = ObjectType::None;
 	canMove = false;
 	active = true;
-	
-	CreateSprite();
-	if (sprite != NULL)
-	{
-		width = sprite->_texture->FrameWidth;
-		height = sprite->_texture->FrameHeight;
-	}
+	width = _width;
+	height = _height;
 }
 
 void GameObject::CreateSprite()
@@ -76,9 +71,6 @@ void GameObject::CreateSprite()
 		break;
 	case EnumID::Boomerang_Weapon_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
-		break;
-	default:
-		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 100);
 		break;
 	}
 }

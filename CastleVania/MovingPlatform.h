@@ -5,7 +5,7 @@ class MovingPlatform :
 {
 public:
 	MovingPlatform();
-	MovingPlatform(float x, float y);
+	MovingPlatform(float x, float y, int _width, int _height);
 	~MovingPlatform();
 	void Draw(GCamera* camera);
 };

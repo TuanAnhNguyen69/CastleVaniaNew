@@ -20,7 +20,7 @@
 #define SPEED_Y 0.0f
 #define SPEED_FALL -0.6f
 #define MAX_HEIGHT 70.0f
-#define GIATOC 0.005f
+#define GIATOC 4.0f
 
 #define MAX_HEIGHT_KNOCKBACK 32.0f
 #define MAX_WIDTH_KNOCKBACK 38.0f
@@ -78,7 +78,7 @@ public:
 	virtual void Draw(GCamera* camera);
 	virtual void Update(int deltaTime);
 	virtual void Collision(list<GameObject*> &obj, float dt);
-	Simon(int _posX, int _posY);
+	Simon(int _posX, int _posY, int _width, int _height);
 
 	void RunLeft();
 	void RunRight();
