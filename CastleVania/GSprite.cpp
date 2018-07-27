@@ -118,6 +118,25 @@ void GSprite::DrawFlipX(int x, int y)
 	G_SpriteHandler->SetTransform(&oldMt);
 }
 
+void GSprite::DrawFlipXScale(int x, int y, float scaleX, float scaleY)
+{
+	D3DXMATRIX oldMt;
+	G_SpriteHandler->GetTransform(&oldMt);
+
+	D3DXMATRIX newMt;
+	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
+	D3DXVECTOR2 rotate = D3DXVECTOR2(-scaleX , scaleY);
+
+	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, &D3DXVECTOR2(scaleX, scaleY), 0.0f, NULL);
+	D3DXMATRIX finalMt = newMt * oldMt;
+	G_SpriteHandler->SetTransform(&finalMt);
+
+	x += _texture->FrameWidth;
+	this->Draw(x, y);
+
+	G_SpriteHandler->SetTransform(&oldMt);
+}
+
 void GSprite::DrawFlipY(int x, int y)
 {
 	D3DXMATRIX oldMt;

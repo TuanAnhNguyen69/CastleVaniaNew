@@ -20,7 +20,7 @@
 #define SPEED_Y 0.0f
 #define SPEED_FALL -0.6f
 #define MAX_HEIGHT 70.0f
-#define GIATOC 4.0f
+#define GRAVITATIONAL 0.005f			//gia toc trong truong
 
 #define MAX_HEIGHT_KNOCKBACK 32.0f
 #define MAX_WIDTH_KNOCKBACK 38.0f
@@ -56,20 +56,36 @@ protected:
 
 	//Sprite
 	GSprite* simonJum;
-	GSprite* simonFight;
+	GSprite* simonAttack;
 	GSprite* simonSit;
 	GSprite* simonDeath;
 	GSprite* simonKnockBack;
 
+	//Da chet
 	bool isDie;
+
+	//Dang nhay
 	bool isJump;
+
+	//Dang dung yen
 	bool isStop;
+
+	//Dang ngoi
 	bool isSit;
+
+	bool isAttack;
+
+	//Bat tu tam thoi
 	bool immortal;
 
+	//Bien enum cac loai hanh dong
 	Action action;
+
+	//Vx cuoi cung truoc khi dung lai
 	float vLast;
-	float giatoc;
+
+	//Gia toc trong truong
+	float g;
 
 public:
 	Simon();
@@ -80,17 +96,22 @@ public:
 	virtual void Collision(list<GameObject*> &obj, float dt);
 	Simon(int _posX, int _posY, int _width, int _height);
 
+	//di chuyen
 	void RunLeft();
 	void RunRight();
 	void Sit();
 	void Stop();
+	void Jump();
+	void Attack();
+	void OnAttack(int deltaTime);
 
+
+	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int deltaTime);
 
 	Box GetBox();
-	void Jump();
-	void ChangeAction();
 
+	//Xu ly dung tren nen dat
 	void StandGround(list<GameObject*> &obj, float dt);
 	
 };

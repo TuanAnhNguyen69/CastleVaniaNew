@@ -252,6 +252,9 @@ void SceneGame::OnKeyDown(int KeyCode) {
 	case DIK_SPACE:
 		player->Jump();
 		break;
+	case DIK_J:
+		player->Attack();
+		break;
 	}
 
 }

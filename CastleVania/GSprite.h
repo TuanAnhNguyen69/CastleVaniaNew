@@ -27,7 +27,7 @@ public:
 	//trở về frame đầu tiên
 	void Reset();
 
-	//chọn 1 frame nào đó
+	//chọn 1 frame nào đó để load
 	void SelectIndex(int index);
 
 	//update animation
@@ -41,6 +41,8 @@ public:
 
 	//render with scale (1, -1)
 	void DrawFlipY(int x, int y);
+
+	void DrawFlipXScale(int x, int y, float scaleX, float scaleY);
 
 	//Render Rect of texture at (x,y)
 	void DrawRect(int X, int Y, RECT SrcRect);
