@@ -104,8 +104,8 @@ namespace MapEditor
                 pictureBox1.BackgroundImage = Image.FromFile(openFileDialog1.FileName);
                 pictureBox1.Width = pictureBox1.BackgroundImage.Width;
                 pictureBox1.Height = pictureBox1.BackgroundImage.Height;
-                countCol = pictureBox1.Width / 16;
-                countRow = pictureBox1.Height / 16;
+                countCol = pictureBox1.Width / 32;
+                countRow = pictureBox1.Height / 32;
                 matTile = new int[countRow, countCol];
                 pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
@@ -130,12 +130,12 @@ namespace MapEditor
             p.DashPattern = dashValue;
             for (int i = 0; i < col; i++)
             {
-                g.DrawLine(p, new Point(i * 16, 0), new Point(i * 16, pictureBox1.Height));
+                g.DrawLine(p, new Point(i * 32, 0), new Point(i * 32, pictureBox1.Height));
             }
 
             for (int i = 0; i < row; i++)
             {
-                g.DrawLine(p, new Point(0, i * 16), new Point(pictureBox1.Width, i * 16));
+                g.DrawLine(p, new Point(0, i * 32), new Point(pictureBox1.Width, i * 32));
             }
         }
 
@@ -192,8 +192,9 @@ namespace MapEditor
                 fileName = Path.GetFileName(saveFileDialog1.FileName);
                 format = ImageFormat.Bmp;
                 pictureBox2.BackgroundImage.Save(Path.Combine(fileDirectory,fileName+".bmp"), format);
-              //  StreamWriter writer = new StreamWriter(Path.Combine(fileDirectory,Name+"txt"));
-                string text="";
+                //  StreamWriter writer = new StreamWriter(Path.Combine(fileDirectory,Name+"txt"));
+                string text = "";
+                text += listTile.Count + "\r\n";
                 text += countRow + "\r\n";
                 text += countCol + "\r\n";
                 text += writeMatrix;
@@ -209,39 +210,6 @@ namespace MapEditor
                 foreach (ObjectGame obj in listobjmap)
                 {
                     s += obj.ID + "\r\n";
-
-                    if (obj.ID == 11) //unknow
-                    {
-                        int i = 0;
-
-                        foreach (ObjectGame o in listobjmap)
-                        {
-                            if (o.location.X == obj.location.X && o.location.Y == obj.location.Y - 16)
-                            {
-                                s += i + "\r\n";
-                            }
-                            i++;
-                        }
-                    }
-
-                    if (obj.ID == 10) // brick
-                    {
-                        int i = 0;
-                        foreach (ObjectGame o in listobjmap)
-                        {
-                            if (o.ID == 10)
-                            {
-                                s += "0" + "\r\n";
-                            }
-                            if (o.ID != 10 && o.location.X == obj.location.X && o.location.Y == obj.location.Y - 16)
-                            {
-                                s += i + "\r\n";
-                            }
-                            i++;
-                        }
-                    }
-
-
                     s += obj.location.X + "\r\n";
                     s += obj.location.Y + "\r\n";
                     s += obj.bm.Width + "\r\n";
@@ -279,8 +247,8 @@ namespace MapEditor
                 pictureBox2.Width = pictureBox2.BackgroundImage.Width;
                 pictureBox2.Height = pictureBox2.BackgroundImage.Height;
                 readMatrix=File.ReadAllText(Path.Combine(fileDirectory, fileName + ".txt"));
-                countRow = pictureBox2.Height / 16;
-                countCol = pictureBox2.Width / 16;
+                countRow = pictureBox2.Height / 32;
+                countCol = pictureBox2.Width / 32;
                 matTile = new int[countRow, countCol];
                 
                 Cut(pictureBox2.BackgroundImage);
@@ -414,8 +382,8 @@ namespace MapEditor
 
         private void buildBackground()
         {
-            pictureBox1.Width = 16 * countMatrixCol;
-            pictureBox1.Height = 16 * countMatrixRow;
+            pictureBox1.Width = 32 * countMatrixCol;
+            pictureBox1.Height = 32 * countMatrixRow;
             pictureBox1.BackgroundImage = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             for(int i=0;i<countMatrixRow; i++)
             {
@@ -424,7 +392,7 @@ namespace MapEditor
                     int x = i;
                     int a = listMatrix[i, j];
                     Bitmap tile = listTile[a];
-                    DrawImage(pictureBox1.BackgroundImage, tile, new Point(j*16, i*16), new Rectangle(0, 0, 16, 16));
+                    DrawImage(pictureBox1.BackgroundImage, tile, new Point(j*32, i*32), new Rectangle(0, 0, 32, 32));
                
                 }
             }
@@ -474,9 +442,9 @@ namespace MapEditor
             {
                 for (int j = 0; j < countCol; j++)
                 {
-                    Bitmap b = new Bitmap(16, 16);
+                    Bitmap b = new Bitmap(32, 32);
                     int indexOf = 0;
-                    DrawImage(b, Image, new Point(0, 0), new Rectangle(j * 16, i * 16, 16, 16));
+                    DrawImage(b, Image, new Point(0, 0), new Rectangle(j * 32, i * 32, 32, 32));
                     bool allowAdd = true;
                     foreach (Bitmap bm in listTile)
                     {
@@ -514,28 +482,28 @@ namespace MapEditor
             //decodeMatrix();
 
 
-            pictureBox2.Width = 16 * listTile.Count;
-            pictureBox2.Height = 16;
+            pictureBox2.Width = 32 * listTile.Count;
+            pictureBox2.Height = 32;
             pictureBox2.BackgroundImage = new Bitmap(pictureBox2.Width, pictureBox2.Height);
 
 
             for (int i = 0; i < listTile.Count; i++)
             {
-                DrawImage(pictureBox2.BackgroundImage, listTile[i], new Point(i * 16, 0), new Rectangle(0, 0, 16, 16));
+                DrawImage(pictureBox2.BackgroundImage, listTile[i], new Point(i * 32, 0), new Rectangle(0, 0, 32, 32));
             }
         }
 
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e) //tao vien vuong luc chon tile
         {
-            if (e.Y > 16)
+            if (e.Y > 32)
             {
                 return;
             }
 
             pictureBox2.Image = new Bitmap(pictureBox2.Width, pictureBox2.Height);
             Graphics g = Graphics.FromImage(pictureBox2.Image);
-            g.DrawRectangle(new Pen(Color.Tomato), new Rectangle((e.X / 16) * 16, 0, 16, 16));
-            curTile = listTile[e.X / 16];
+            g.DrawRectangle(new Pen(Color.Tomato), new Rectangle((e.X / 32) * 32, 0, 32, 32));
+            curTile = listTile[e.X / 32];
         }
 
         String getName(String path)
@@ -562,7 +530,7 @@ namespace MapEditor
         private void pictureBox1_MouseDown_1(object sender, MouseEventArgs e)
         {
             textBox1.Text = e.X + "/" + e.Y;
-            currentMouse = new Point((e.X / 16) * 16, (e.Y / 16) * 16);
+            currentMouse = new Point(e.X, e.Y);
             if (e.Button.Equals(MouseButtons.Left))
             {
                 drawItem(@"resource\image\ground\ground.png", (int)EnumID.Brick_ID);
@@ -570,28 +538,21 @@ namespace MapEditor
 
             if (e.Button.Equals(MouseButtons.Middle))
             {
-                ObjectGame obj = new ObjectGame();
-                obj.location.X = currentMouse.X;
-                obj.location.Y = currentMouse.Y;
-
-                removeObject(obj);
+                removeObject(currentMouse);
             }
         }
 
      
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            currentMouse = new Point((e.X / 16) * 16, (e.Y / 16) * 16);
+            currentMouse = new Point(e.X, e.Y);
             if (e.Button.Equals(MouseButtons.Left))
             {
                 drawItem(@"resource\image\ground\ground.png", (int) EnumID.Brick_ID);
             }
             if (e.Button.Equals(MouseButtons.Middle))
             {
-                ObjectGame obj = new ObjectGame();
-                obj.location.X = currentMouse.X;
-                obj.location.Y = currentMouse.Y;
-                removeObject(obj);
+                removeObject(currentMouse);
             }
         }
 
@@ -810,6 +771,10 @@ namespace MapEditor
         {
 
             Bitmap bm = new Bitmap(Path.Combine(Application.StartupPath, path));
+            if(ID == (int) EnumID.Brick_ID || ID == (int)EnumID.StairUpLeft_ID || ID == (int)EnumID.StairUpRight_ID || ID == (int)EnumID.Door_ID)
+            {
+                currentMouse = new Point((currentMouse.X / 32) * 32, (currentMouse.Y / 32) * 32);
+            }
             DrawImage(pictureBox1.Image, bm, currentMouse, new Rectangle(0, 0, bm.Width, bm.Height));
             pictureBox1.Refresh();
             ObjectGame obj = new ObjectGame(bm, ID);
@@ -830,37 +795,65 @@ namespace MapEditor
 
         }
 
-        void removeObject(ObjectGame obj)
+        void removeObject(Point obj)
         {
             int index = 0;
             foreach (ObjectGame objectGame in listobjmap)
             {
-                if (obj.location == objectGame.location)
+                if (objInRange(currentMouse, objectGame))
                 {
-                    listobjmap.RemoveAt(index);
-                   
-                    for (int col = 0; col < objectGame.bm.Width / 16; col++)
+
+                    int numOfCol = objectGame.bm.Width / 32;
+                    int numOfRow = objectGame.bm.Height / 32;
+                    if ((objectGame.location.X + objectGame.bm.Width) % 32 != 0)
                     {
-                        for (int row = 0; row < objectGame.bm.Height / 16; row++)
+                        numOfCol++;
+                    }
+
+                    if ((objectGame.location.Y + objectGame.bm.Height) % 32 != 0)
+                    {
+                        numOfRow++;
+                    }
+
+                    for (int col = 0; col < numOfCol; col++)
+                    {
+                        for (int row = 0; row < numOfRow; row++)
                         {
-                            Point point = new Point(obj.location.X + col * 16, obj.location.Y + row * 16);
-                            int bitmapIndex = matTile[obj.location.Y / 16 + row, obj.location.X / 16 + col];
+                            Point point = new Point((objectGame.location.X / 32) * 32 + col * 32, (objectGame.location.Y / 32) * 32 + row * 32);
+                            int bitmapIndex = matTile[objectGame.location.Y / 32 + row, objectGame.location.X / 32 + col];
                             Bitmap bm = listTile[bitmapIndex];
                             DrawImage(pictureBox1.Image, bm, point, new Rectangle(0, 0, bm.Width, bm.Height));
                         }
-                    }               
+                    }
+                    for (int col = 0; col < numOfCol; col++)
+                    {
+                        for (int row = 0; row < numOfRow; row++)
+                        { 
+                            Graphics g = Graphics.FromImage(pictureBox1.Image);
+                            float[] dashValue = { 5, 2 };
+                            Pen p = new Pen(Color.Silver);
+                            p.DashPattern = dashValue;
+                            g.DrawRectangle(p, (objectGame.location.X / 32) * 32 + col * 32, (objectGame.location.Y / 32) * 32 + row * 32, 32, 32);
+                        }
+                    }
 
-                    Graphics g = Graphics.FromImage(pictureBox1.Image);
-                    float[] dashValue = { 5, 2 };
-                    Pen p = new Pen(Color.Silver);
-                    p.DashPattern = dashValue;
-                    g.DrawRectangle(p, obj.location.X, obj.location.Y, 16, 16);
-                   
+
                     pictureBox1.Refresh();
+                    listobjmap.RemoveAt(index);
                     return;
                 }
                 index++;
             }
         }
+
+        bool objInRange(Point clickPoint, ObjectGame obj)
+        {
+            if (clickPoint.X < obj.location.X || clickPoint.X > obj.location.X + obj.bm.Width || clickPoint.Y > obj.location.Y + obj.bm.Height || clickPoint.Y < obj.location.Y)
+            {
+                return false;
+            }
+            return true;
+        }
+        
     }
 }

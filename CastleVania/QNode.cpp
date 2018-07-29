@@ -47,6 +47,16 @@ QNode::QNode(const QNode& _node)
 	hasNode = leftTop != NULL;
 }
 
+//bool QNode::IsContain(GameObject* entity)
+//{
+//	Rect* bound = entity->GetBoundingBox();
+//
+//	return !(bound->x + bound->width < m_region->x ||
+//		bound->y + bound->height < m_region->y ||
+//		bound->x > m_region->x + m_region->width ||
+//		bound->y > m_region->y + m_region->height);
+//}
+
 QNode::~QNode(void)
 {
 }

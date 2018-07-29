@@ -17,8 +17,8 @@ BackgroundController::BackgroundController(int level)
 	switch (level)
 	{
 	case 1:
-		tileFileName = "Resource/map/lv-2.txt";
-		quadtreeFileName = "Resource/map/lv-2Quadtree.txt";
+		tileFileName = "Resource/map/lv-2.1.txt";
+		quadtreeFileName = "Resource/map/lv-2.1Quadtree.txt";
 
 		break;
 	case 2:
@@ -42,7 +42,7 @@ BackgroundController::BackgroundController(int level)
 		switch (level)
 		{
 		case 1:
-			bgSprite = new GSprite(new GTexture("Resource\\map\\lv-2.bmp", count, 1, count), 1000);
+			bgSprite = new GSprite(new GTexture("Resource\\map\\lv-2.1.bmp", count, 1, count), 1000);
 			break;
 		case 2:
 			bgSprite = new GSprite(new GTexture("Resource\\map\\Level2.png", count, 1, count), 1000);
@@ -52,8 +52,8 @@ BackgroundController::BackgroundController(int level)
 		}
 
 		map >> row >> col;
-		G_MapWidth = col * 16;
-		G_MapHeight = row * 16;
+		G_MapWidth = col * 32;
+		G_MapHeight = row * 32;
 		int tileID;
 		listTile = new std::map<int, Tile*>();
 		int value = 0;
@@ -61,8 +61,8 @@ BackgroundController::BackgroundController(int level)
 		{
 			for (int colIndex = 1; colIndex <= col; colIndex++, value++) {
 				map >> tileID;
-				posX = (colIndex - 1) * 16;
-				posY = G_MapHeight - (rowIndex - 1) * 16;
+				posX = (colIndex - 1) * 32;
+				posY = G_MapHeight - (rowIndex - 1) * 32;
 				listTile->insert(pair<int, Tile*>(value, new Tile(tileID, posX, posY)));
 			}
 		}

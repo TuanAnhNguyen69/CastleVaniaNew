@@ -2,7 +2,7 @@
 #define _QNODE_H_
 
 #include "Tile.h"
-
+#include "GameObject.h"
 #include <list>
 using namespace std;
 
@@ -21,6 +21,7 @@ public:
 	QNode *rightBottom;
 
 	void Insert(int key);
+	bool IsContain(GameObject* entity);
 	QNode(void);
 	QNode(int, int, int, int, bool, list<int>);
 	QNode(const QNode &);

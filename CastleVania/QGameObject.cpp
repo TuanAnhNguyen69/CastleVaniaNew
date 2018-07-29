@@ -64,7 +64,7 @@ QGameObject::QGameObject(string fileName)
 		{
 		float enumValue;
 		map >> id >> posX >> posY >> width >> height;
-		posY = G_MapHeight - posY;
+		posY = G_MapHeight - posY - 16;
 		if (id > 20) {
 			int a = 0;
 		}

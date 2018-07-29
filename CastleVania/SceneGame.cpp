@@ -47,7 +47,7 @@ void SceneGame::LoadLevel(int level)
 	//player = new Player(345, 1310); //-> Stage 6
 	//player = new Player(287, 1310);
 
-	player = new Simon(3776 / 2, 96, 16, 40); // stage 1
+	player = new Simon(3776, 110, 32, 96); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
 
@@ -99,7 +99,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new QGameObject("Resource/map/lv-2OBJ.txt");
+	qGameObject = new QGameObject("Resource/map/lv-2.1OBJ.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
