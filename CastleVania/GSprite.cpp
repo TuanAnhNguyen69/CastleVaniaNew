@@ -79,6 +79,7 @@ void GSprite::Draw(int X, int Y)
 {
 	RECT srect;
 
+
 	srect.left = (_index % _texture->Cols)*(_texture->FrameWidth);// + 1;
 	srect.top = (_index / _texture->Cols)*(_texture->FrameHeight);// + 1;
 	srect.right = srect.left + _texture->FrameWidth;
@@ -87,8 +88,10 @@ void GSprite::Draw(int X, int Y)
 	//D3DXVECTOR3 position((float)X, (float)Y, 0);
 	D3DXVECTOR3 position(0, 0, 0);
 	D3DXVECTOR3 center(0, 0, 0);
-	position.x = X - _texture->FrameWidth/2;
-	position.y = Y - _texture->FrameHeight/2;
+	//position.x = X - _texture->FrameWidth/2;
+	//position.y = Y - _texture->FrameHeight/2;
+	position.x = X;
+	position.y = Y;
 	G_SpriteHandler->Draw(
 		_texture->Texture,
 		&srect,
@@ -98,7 +101,7 @@ void GSprite::Draw(int X, int Y)
 		0xFFFFFFFF //color
 	);
 }
-
+/*
 void GSprite::DrawScale(int x, int y, float scaleX, float scaleY)
 {
 	RECT srect;
@@ -125,7 +128,7 @@ void GSprite::DrawScale(int x, int y, float scaleX, float scaleY)
 		0xFFFFFFFF //color
 	);
 }
-
+*/
 
 
 void GSprite::DrawFlipX(int x, int y)
@@ -134,7 +137,8 @@ void GSprite::DrawFlipX(int x, int y)
 	G_SpriteHandler->GetTransform(&oldMt);
 	
 	D3DXMATRIX newMt;
-	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
+	//D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
+	D3DXVECTOR2 center = D3DXVECTOR2(x, y);
 	D3DXVECTOR2 rotate = D3DXVECTOR2(-1, 1);
 
 	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
@@ -166,6 +170,7 @@ void GSprite::DrawFlipXScale(int x, int y, float scaleX, float scaleY)
 	G_SpriteHandler->SetTransform(&oldMt);
 }
 
+/*
 void GSprite::DrawFlipYScale(int x, int y, float scaleX, float scaleY)
 {
 	D3DXMATRIX oldMt;
@@ -201,7 +206,7 @@ void GSprite::DrawFlipY(int x, int y)
 
 	G_SpriteHandler->SetTransform(&oldMt);
 }
-
+*/
 void GSprite::DrawRect(int X, int Y, RECT SrcRect)
 {
 	D3DXVECTOR3 position((float)X, (float)Y, 0);
@@ -225,8 +230,11 @@ void GSprite::DrawIndex(int index, int X, int Y)
 
 	D3DXVECTOR3 position(0, 0, 0);
 	D3DXVECTOR3 center(0, 0, 0);
-	position.x = X - _texture->FrameWidth/2;
-	position.y = Y - _texture->FrameHeight/2;
+	//position.x = X - _texture->FrameWidth/2;
+	//position.y = Y - _texture->FrameHeight/2;
+	position.x = X;
+	position.y = Y;
+
 	G_SpriteHandler->Draw(
 		_texture->Texture,
 		&srect,

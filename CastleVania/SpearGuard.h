@@ -9,14 +9,16 @@ class SpearGuard :
 {
 public:
 
-	int posX0;
+	//int posX0;
+	int x0;
 
 
 	void Update(int deltaTime);
 	void Draw(GCamera* camera);
 
 	SpearGuard();
-	SpearGuard(float _posX, float _posY, int _width, int _height);
+	//SpearGuard(float _posX, float _posY, int _width, int _height);
+	SpearGuard(float _x, float _y, int _width, int _height);
 	~SpearGuard();
 };
 

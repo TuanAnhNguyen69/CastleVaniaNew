@@ -13,14 +13,16 @@ public:
 	bool getUp;
 
 	Bat();
-	Bat(float _posX, float _posY, int _width, int _height);
+	//Bat(float _posX, float _posY, int _width, int _height);
+	Bat(float _x, float _y, int _width, int _height);
 	~Bat();
 
 	void MovePath(int deltaTime);
 	void Draw(GCamera* camera);
 	void Update(int deltaTime);
 
-	void SetActive(float _posX_Simon, float _posY_Simon);
+	//void SetActive(float _posX_Simon, float _posY_Simon);
+	void SetActive(float _x_Simon, float _y_Simon);
 
 	//Va cham, chua dinh nghia
 	void Collision();

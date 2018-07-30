@@ -18,6 +18,10 @@ public:
 	float posX;
 	float posY;
 
+	//toa do left top
+	float x;
+	float y;
+
 	//cao, rong hit box
 	int width;
 	int height;
@@ -86,7 +90,8 @@ public:
 
 	//virtual void Pause();
 	GameObject(void);
-	GameObject(float posX, float posY, int _width, int _height, EnumID id);
+	//GameObject(float _posX, float _posY, int _width, int _height, EnumID id);
+	GameObject(float _x, float _y, int _width, int _height, EnumID id);
 	~GameObject(void);
 };
 

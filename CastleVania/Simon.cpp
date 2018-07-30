@@ -6,6 +6,7 @@ Simon::Simon():ActiveObject()
 {
 }
 
+/*
 Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 40;
@@ -21,6 +22,24 @@ Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000/SIMON_FIGHT_RATE);
 }
+*/
+
+Simon::Simon(int _x, int _y, int _width, int _height) 
+	: ActiveObject(_x, _y, _width, _height, 0, -SPEED_Y, EnumID::Simon_ID)
+{
+	hp = 40;
+	action = Action::Stand;
+	g = GRAVITATIONAL;
+	isDie = false;
+	isJump = false;
+	isSit = false;
+	isStop = false;
+	isAttack = false;
+
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
+	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
+	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000 / SIMON_FIGHT_RATE);
+}
 
 Simon::~Simon()
 {
@@ -30,16 +49,19 @@ Simon::~Simon()
 void Simon::Draw(GCamera* camera)
 {
 	//Rot xuong vuc
-	if (posY < (camera->viewport.y - G_ScreenHeight))
+	//if (posY < (camera->viewport.y - G_ScreenHeight))
+	if(y - height/2 < (camera->viewport.y - G_ScreenHeight))
 	{
 		hp = 0;
 		isDie = true;
 	}
 
-	D3DXVECTOR2 center = camera->Transform(posX, posY);
+	//D3DXVECTOR2 center = camera->Transform(posX, posY);
+	D3DXVECTOR2 pos = camera->Transform(x, x);
 	if (isDie)
 	{
-		simonDeath->DrawFlipX(center.x, center.y);
+		//simonDeath->DrawFlipX(center.x, center.y);
+		simonDeath->DrawFlipX(pos.x, pos.y);
 	}
 	else
 	{
@@ -47,27 +69,25 @@ void Simon::Draw(GCamera* camera)
 		{
 			if (action == Action::Attack)
 			{
-				simonAttack->DrawFlipX(center.x, center.y);
+				//simonAttack->DrawFlipX(center.x, center.y);
+				simonAttack->DrawFlipX(pos.x, pos.y);
 				return;
 			}
-			sprite->DrawFlipX(center.x, center.y);
+			//sprite->DrawFlipX(center.x, center.y);
+			sprite->DrawFlipX(pos.x, pos.y);
 		}
 		else
 		{
 			if (action == Action::Attack)
 			{
-				simonAttack->Draw(center.x, center.y);
+				//simonAttack->Draw(center.x, center.y);
+				simonAttack->Draw(pos.x, pos.y);
 				return;
 			}
-			sprite->Draw(center.x, center.y);
+			//sprite->Draw(center.x, center.y);
+			sprite->Draw(pos.x, pos.y);
 		}
-			
-
-
 	}
-
-	
-
 }
 
 void Simon::Update(int deltaTime)
@@ -91,7 +111,8 @@ void Simon::Update(int deltaTime)
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
-		posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
+		//posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
+		x += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		if (vY > SPEED_FALL)
 			vY += g * deltaTime;
 		//return;
@@ -99,8 +120,8 @@ void Simon::Update(int deltaTime)
 	else
 		vY = 0;
 
-	posX += vX * deltaTime;
-
+	//posX += vX * deltaTime;
+	x += vX * deltaTime;
 }
 
 void Simon::RunLeft()
@@ -200,7 +221,8 @@ void Simon::Stop()
 	}
 	if (isSit)
 	{
-		posY += 16;
+		//posY += 16;
+		y += 16;
 		isSit = false;
 	}
 	action = Action::Stand;
@@ -230,9 +252,11 @@ Box Simon::GetBox()
 {
 	if (isJump || isSit)
 	{
-		return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
+		//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
+		return Box(x - width / 2 + 14.5f, y - 3, width - 29, height - 22);
 	}
-	return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
+	//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
+	return Box(x + 14.5f, y - 3, width - 29, height - 6);
 }
 
 void Simon::StandGround(GameObject* &obj, float dt)
@@ -254,7 +278,8 @@ void Simon::StandGround(GameObject* &obj, float dt)
 			{
 				if (moveY > 0)
 				{
-					posY += moveY;
+					//posY += moveY;
+					y += moveY + height / 2;
 					if (isJump)
 					{
 						isJump = false;

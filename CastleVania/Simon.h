@@ -97,7 +97,8 @@ public:
 	virtual void Draw(GCamera* camera);
 	virtual void Update(int deltaTime);
 	virtual void Collision(list<GameObject*> &obj, float dt);
-	Simon(int _posX, int _posY, int _width, int _height);
+	//Simon(int _posX, int _posY, int _width, int _height);
+	Simon(int _x, int _y, int _width, int _height);
 
 	//di chuyen
 	void RunLeft();

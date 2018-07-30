@@ -4,6 +4,8 @@
 
 GameObject::GameObject(void)
 {
+	x = 0;
+	y = 0;
 	posX = 0;
 	posY = 0;
 	width = 0;
@@ -14,7 +16,7 @@ GameObject::GameObject(void)
 	neededPlayerPosition = false;
 }
 
-
+/*
 GameObject::GameObject(float _posX, float _posY, int _width, int _height, EnumID _id)
 {
 	posX = _posX;
@@ -23,6 +25,24 @@ GameObject::GameObject(float _posX, float _posY, int _width, int _height, EnumID
 	vY = 0;
 	id = _id;
 	
+	hp = 1;
+	point = 1;
+	type = ObjectType::None;
+	canMove = false;
+	active = true;
+	width = _width;
+	height = _height;
+}
+*/
+
+GameObject::GameObject(float _x, float _y, int _width, int _height, EnumID _id)
+{
+	x = _x;
+	y = _y;
+	vX = 0;
+	vY = 0;
+	id = _id;
+
 	hp = 1;
 	point = 1;
 	type = ObjectType::None;
@@ -88,8 +108,9 @@ void GameObject::Draw(GCamera* camera)
 {
 	if (sprite != NULL)
 	{
-		D3DXVECTOR2 center = camera->Transform(posX, posY);
-		sprite->Draw(center.x, center.y);
+		//D3DXVECTOR2 center = camera->Transform(posX, posY);
+		D3DXVECTOR2 pos = camera->Transform(x, y);
+		sprite->Draw(pos.x, pos.y);
 	}
 }
 void GameObject::ReceiveDamage(int damage)
@@ -109,11 +130,22 @@ void GameObject::Remove()
 	active = false;
 	isDeath = true;
 }
+
+/*
 Box GameObject::GetBox()
 {
 	Box result(posX - width / 2, posY + height / 2, width, height);
 	return result;
 }
+*/
+
+Box GameObject::GetBox()
+{
+	//Box result(posX - width / 2, posY - height / 2, width, height);
+	Box result(x, y, width, height);
+	return result;
+}
+
 void GameObject::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int t) {}
 void GameObject::OnKeyDown(int KeyCode) {}
 GameObject::~GameObject(void) {}
