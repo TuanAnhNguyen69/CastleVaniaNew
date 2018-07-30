@@ -6,8 +6,6 @@ GameObject::GameObject(void)
 {
 	x = 0;
 	y = 0;
-	posX = 0;
-	posY = 0;
 	width = 0;
 	height = 0;
 	canMove = false;

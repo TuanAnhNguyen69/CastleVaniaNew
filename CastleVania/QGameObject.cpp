@@ -18,10 +18,10 @@ int QGameObject::RemoveAllObjectInCamera(D3DXVECTOR2 viewport)
 	while (it != _dynamicObject->end())
 	{
 		GameObject* other = (*it);
-		if (other->active && !(other->posX + other->width / 2 <= viewport.x
-			|| other->posX - other->width / 2 >= viewport.x + G_ScreenWidth
-			|| other->posY + other->height / 2 <= viewport.y - G_ScreenHeight
-			|| other->posY - other->height / 2 >= viewport.y))
+		if (other->active && !(other->x + other->width <= viewport.x
+			|| other->x >= viewport.x + G_ScreenWidth
+			|| other->y + other->height <= viewport.y - G_ScreenHeight
+			|| other->y >= viewport.y))
 		{
 			if (other->type == ObjectType::Enemy_Type)
 			{
@@ -64,7 +64,7 @@ QGameObject::QGameObject(string fileName)
 		{
 		float enumValue;
 		map >> id >> posX >> posY >> width >> height;
-		posY = G_MapHeight - posY - 16;
+		posY = G_MapHeight - posY;
 		if (id > 20) {
 			int a = 0;
 		}

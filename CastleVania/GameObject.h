@@ -14,10 +14,6 @@ public:
 	
 	GSprite* sprite;
 
-	//posX, posY -> toa do center
-	float posX;
-	float posY;
-
 	//toa do left top
 	float x;
 	float y;

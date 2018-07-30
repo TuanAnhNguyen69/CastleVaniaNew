@@ -31,8 +31,8 @@ void Weapon::Update(int deltaTime)
 {
 	if (sprite == NULL || !active)
 		return;
-	posX += vX * deltaTime;
-	posY += vY * deltaTime;
+	x += vX * deltaTime;
+	y += vY * deltaTime;
 	sprite->Update(deltaTime);
 }
 

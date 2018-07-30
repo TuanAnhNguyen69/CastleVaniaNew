@@ -54,7 +54,7 @@ void BonePillar::Update(int deltaTime)
 		lifeTime += deltaTime;
 		if (lifeTime % 30 == 0)
 		{
-			listFire->push_back(new Fire(posX, posY + 10, 16, 16));
+			listFire->push_back(new Fire(x, y + 10, 16, 16));
 		}
 
 		UpdateFire(deltaTime);
@@ -64,7 +64,7 @@ void BonePillar::Update(int deltaTime)
 
 void BonePillar::Draw(GCamera* camera)
 {
-	D3DXVECTOR2 center = camera->Transform(posX, posY);
+	D3DXVECTOR2 center = camera->Transform(x, y);
 	sprite->Draw(center.x, center.y);
 	this->DrawFire(camera);
 }

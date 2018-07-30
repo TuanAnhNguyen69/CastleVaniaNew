@@ -22,8 +22,8 @@ MedusaHead::~MedusaHead()
 
 void MedusaHead::MovePath(int deltaTime)
 {
-	posX += vX * deltaTime;
-	posY = sin(posX*3.14 / 180);
+	x += vX * deltaTime;
+	y = sin(x*3.14 / 180);
 }
 
 void MedusaHead::Draw(GCamera* camera)

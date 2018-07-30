@@ -45,9 +45,9 @@ int Trap::Round(float _number)
 
 int Trap::CheckBound()
 {
-	if (posY <= min)
+	if (y <= min)
 		return -1;
-	if (posY >= max)
+	if (y >= max)
 		return 1;
 	return 0;
 }

@@ -44,7 +44,7 @@ void Bat::Draw(GCamera* camera)
 	if (sprite == NULL || !active)
 		return;
 	//if (posX + width / 2 <= camera->viewport.x || posX - width / 2 >= camera->viewport.x + G_ScreenWidth)
-	if (x <= camera->viewport.x || posX >= camera->viewport.x + G_ScreenWidth)
+	if (x <= camera->viewport.x || x >= camera->viewport.x + G_ScreenWidth)
 	{
 		active = false;
 		return;

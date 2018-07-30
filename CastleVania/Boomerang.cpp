@@ -29,7 +29,7 @@ void Boomerang::Update(int deltaTime)
 	else
 	{
 		range += vX * deltaTime;
-		posX += vX * deltaTime;
+		x += vX * deltaTime;
 		if (abs(range) > BOOMERANG_RAGE && lifeTime == 0)
 		{
 			lifeTime += deltaTime;

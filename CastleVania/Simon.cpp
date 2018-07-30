@@ -57,7 +57,7 @@ void Simon::Draw(GCamera* camera)
 	}
 
 	//D3DXVECTOR2 center = camera->Transform(posX, posY);
-	D3DXVECTOR2 pos = camera->Transform(x, x);
+	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (isDie)
 	{
 		//simonDeath->DrawFlipX(center.x, center.y);
@@ -237,12 +237,12 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	if (rangeMove > 0)
 	{
 		rangeMove -= AUTO_MOVE_RANGE;
-		posX += AUTO_MOVE_RANGE;
+		x += AUTO_MOVE_RANGE;
 	}
 	else
 	{
 		rangeMove += AUTO_MOVE_RANGE;
-		posX -= AUTO_MOVE_RANGE;
+		y -= AUTO_MOVE_RANGE;
 	}
 	sprite->Update(dt);
 	return false;

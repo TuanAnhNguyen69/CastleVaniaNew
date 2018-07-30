@@ -28,7 +28,7 @@ void RewardItem::Update(int deltaTime)
 {
 	if (sprite == NULL)
 		return;
-	posY += vY * deltaTime;
+	y += vY * deltaTime;
 	lifeTime += deltaTime;
 	//Xu ly thoi gian ton tai cua RewardItem
 	if (lifeTime > 1500)

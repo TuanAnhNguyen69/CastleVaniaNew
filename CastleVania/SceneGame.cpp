@@ -44,10 +44,10 @@ void SceneGame::LoadLevel(int level)
 	camera->viewport.y = 485;
 	bg = new BackgroundController(level);
 	//bg->LoadQuadTreeFromFile();
-	//player = new Player(345, 1310); //-> Stage 6
+	//player = new Player(345, 1310); //-> Stage 6 
 	//player = new Player(287, 1310);
 
-	player = new Simon(3776, 110, 32, 96); // stage 1
+	player = new Simon(3776, 130, 32, 64); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
 
@@ -58,8 +58,8 @@ void SceneGame::LoadLevel(int level)
 
 	// Position to reset
 
-	revivePosition.x = player->posX;
-	revivePosition.y = player->posY;
+	revivePosition.x = player->x;
+	revivePosition.y = player->y;
 	cameraPosition = camera->viewport;
 }
 
@@ -68,10 +68,10 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 		if (_stateCamera == ECameraState::Update_Camera)
 		{
-			camera->UpdateCamera(player->posX);
+			camera->UpdateCamera(player->x);
 		}
 
-		qGameObject->Update(player->posX, player->posY, t);
+		qGameObject->Update(player->x, player->y, t);
 		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
 		if (G_Device->BeginScene())
 		{
@@ -114,7 +114,7 @@ void SceneGame::ChangeCamera(EDoorDirection _directDoor)
 	//	case TeleDown:
 	//	{
 	//		camera->viewport.y -= (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
-	//		player->posY -= 32;
+	//		player->y -= 32;
 
 	//		if (_stageNow >= 1) {
 	//			_stageNow--;
@@ -125,7 +125,7 @@ void SceneGame::ChangeCamera(EDoorDirection _directDoor)
 	//	case TeleUp:
 	//	{
 	//		camera->viewport.y += (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
-	//		player->posY += 64;
+	//		player->y += 64;
 
 	//		_stageNow++;
 	//		LoadStage(_stageNow);
@@ -202,8 +202,8 @@ void SceneGame::MoveCamera(int &_moveRange)
 	//		_stateCamera = ECameraState::Update_Camera;
 	//		//---------Luu vi tri stage moi de hoi sinh -----------------
 	//		_stageReset = _stageNow;
-	//		revivePosition.x = player->posX;
-	//		revivePosition.y = player->posY;
+	//		revivePosition.x = player->x;
+	//		revivePosition.y = player->y;
 	//		cameraPosition = camera->viewport;
 	//		//-----------------------------
 	//		return;

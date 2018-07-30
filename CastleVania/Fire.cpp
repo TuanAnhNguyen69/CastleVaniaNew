@@ -25,7 +25,7 @@ Fire::~Fire()
 void Fire::Update(int deltaTime)
 {
 	lifeTime += deltaTime;
-	posX -= vX * deltaTime;
+	x -= vX * deltaTime;
 	if (lifeTime >= 3000) active = false;
 }
 

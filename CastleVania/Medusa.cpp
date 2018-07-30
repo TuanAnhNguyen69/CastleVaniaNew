@@ -6,16 +6,16 @@ void Medusa::Initialize()
 	//Tao cac vi tri boss se di chuyen toi
 	listStopPos = vector<D3DXVECTOR2*>();
 	listStopPos.pop_back();
-	listStopPos.push_back(new D3DXVECTOR2(posX - 165, 0));
-	listStopPos.push_back(new D3DXVECTOR2(posX - 80, 0));
-	listStopPos.push_back(new D3DXVECTOR2(posX, 0));
-	listStopPos.push_back(new D3DXVECTOR2(posX + 90, 0));
-	listStopPos.push_back(new D3DXVECTOR2(posX + 210, 0));
+	listStopPos.push_back(new D3DXVECTOR2(x - 165, 0));
+	listStopPos.push_back(new D3DXVECTOR2(x - 80, 0));
+	listStopPos.push_back(new D3DXVECTOR2(x, 0));
+	listStopPos.push_back(new D3DXVECTOR2(x + 90, 0));
+	listStopPos.push_back(new D3DXVECTOR2(x + 210, 0));
 
 	_previousStopPos = 0;
 	_currentStopPos = 0;
 	deltaPhi = 0;
-	posY0 = posY;
+	posY0 = y;
 
 	state = EnumMedusaState::stSleeping;
 	simonPos = new D3DXVECTOR2(0, 0);
@@ -56,7 +56,7 @@ void Medusa::Stoping(int deltaTime)
 	localTime = deltaTime;
 	if (localTime > 1000)	//Bay sang vi tri khac
 	{
-		float deltaX = posX - simonPos->x;						//khang cach tu Boss toi Simon
+		float deltaX = x - simonPos->x;						//khang cach tu Boss toi Simon
 		float snake_vX = (-deltaX / abs(deltaX))*SNAKE_SPEED;	//Snake	luon chay ve huong Simon
 		localTime = 0;
 		switch (_currentStopPos)
@@ -78,7 +78,7 @@ void Medusa::Stoping(int deltaTime)
 			_previousStopPos = _currentStopPos;
 			_currentStopPos = 0;
 			
-			listSnake->push_back(new Snake(posX, posY, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID));	//Tha Snake
+			listSnake->push_back(new Snake(x, y, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID));	//Tha Snake
 		}
 		break;
 		case 2:
@@ -102,7 +102,7 @@ void Medusa::Stoping(int deltaTime)
 		{
 			_previousStopPos = _currentStopPos;
 			_currentStopPos = 4;
-			listSnake->push_back(new Snake(posX, posY, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID)); //Tha Snake
+			listSnake->push_back(new Snake(x, y, 32, 16, snake_vX, -0.2f, EnumID::Snake_ID)); //Tha Snake
 		}
 		break;
 		case 4:
@@ -138,14 +138,14 @@ bool Medusa::LeaveStopPos(D3DXVECTOR2 _boss, D3DXVECTOR2 _nextStopPos)
 void Medusa::Moving(int deltaTime_)
 {
 	//Neu di xa nextStopPos thi phai ngung lai
-	if (LeaveStopPos(D3DXVECTOR2(posX, posY), *this->nextStopPos))
+	if (LeaveStopPos(D3DXVECTOR2(x, y), *this->nextStopPos))
 	{
 		this->state = EnumMedusaState::stStop;
 		return;
 	}
 	//Neu khong
-	posX += vX * deltaTime_;
-	posY = posY0 + A * cos(2 * PI*deltaTime_ / T + deltaPhi); // Phuong trinh chuyen dong duong hinh sin x = 2pi. t/ lamda
+	x += vX * deltaTime_;
+	y = posY0 + A * cos(2 * PI*deltaTime_ / T + deltaPhi); // Phuong trinh chuyen dong duong hinh sin x = 2pi. t/ lamda
 	deltaPhi += 2 * PI*deltaTime_ / T;
 	fightSprite->Update(deltaTime_);
 }
@@ -234,7 +234,7 @@ void Medusa::Update(int t, D3DXVECTOR2* _simonPos)
 
 void Medusa::Draw(GCamera* camera_)
 {
-	D3DXVECTOR2 center = camera_->Transform(posX, posY);
+	D3DXVECTOR2 center = camera_->Transform(x, y);
 	switch (state)
 	{
 	case stSleeping:

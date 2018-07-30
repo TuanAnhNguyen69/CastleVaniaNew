@@ -23,12 +23,12 @@ void Snake::Draw(GCamera* camera)
 {
 	if (sprite == NULL || !active)
 		return;
-	if (posX + width / 2 <= camera->viewport.x || posX - width / 2 >= camera->viewport.x + G_ScreenWidth)
+	if (x + width <= camera->viewport.x || x >= camera->viewport.x + G_ScreenWidth)
 	{
 		active = false;
 		return;
 	}
-	D3DXVECTOR2 center = camera->Transform(posX, posY);
+	D3DXVECTOR2 center = camera->Transform(x, y);
 	if (vX > 0)
 		sprite->DrawFlipX(center.x, center.y);
 	else

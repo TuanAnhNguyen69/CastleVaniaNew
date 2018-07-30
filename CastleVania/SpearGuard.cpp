@@ -36,7 +36,7 @@ SpearGuard::~SpearGuard()
 
 void SpearGuard::Update(int deltaTime)
 {
-	posX += vX * deltaTime;
+	x += vX * deltaTime;
 	if (abs(x0 - x) >= SPEARGUARD_RANGE)
 	{
 		vX = -vX;
