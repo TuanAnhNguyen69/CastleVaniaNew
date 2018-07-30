@@ -94,7 +94,7 @@ void Simon::Update(int deltaTime)
 		posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		if (vY > SPEED_FALL)
 			vY += g * deltaTime;
-		return;
+		//return;
 	}
 	else
 		vY = 0;
@@ -105,6 +105,8 @@ void Simon::Update(int deltaTime)
 
 void Simon::RunLeft()
 {
+	if (isJump || isSit)
+		return;
 	if (isStop && vLast < 0)
 		vX = 0;
 	else 
@@ -113,11 +115,14 @@ void Simon::RunLeft()
 		vX = -SPEED_X;
 		vLast = vX;
 	}
+	isSit = false;
 	action = Action::Run_Left;
 }
 
 void Simon::RunRight()
 {
+	if (isJump || isSit)
+		return;
 	if (isStop && vLast > 0)
 		vX = 0;
 	else
@@ -126,25 +131,28 @@ void Simon::RunRight()
 		vX = SPEED_X;
 		vLast = vX;
 	}
+	isSit = false;
 	action = Action::Run_Right;
 }
 
 void Simon::Jump()
 {
+	if (isSit)
+		return;
 	if (!isJump)
 	{
+		isJump = true;
 		g = -g;
 		vY = sqrt(-2 * g * MAX_HEIGHT);
 		sprite->SelectIndex(4);
 		action = Action::Jump;
-		isJump = true;
 	}
-	else
-		vY = 0;
 }
 
 void Simon::Sit()
 {
+	if (isSit)
+		return;
 	if (!isJump)
 	{
 		//posY -= 5;
@@ -227,57 +235,58 @@ Box Simon::GetBox()
 	return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
 }
 
-void Simon::StandGround(list<GameObject*> &obj, float dt)
+void Simon::StandGround(GameObject* &obj, float dt)
 {
-	float moveX = 0;
-	float moveY = 0;
-	float normalx;
-	float normaly;
-	if (vY < 0 && moveY < 26)
+	float moveX = 0.0f;
+	float moveY = 0.0f;
+	float normalx = 0.0f;
+	float normaly = 0.0f;
+	Box box = this->GetBox();
+	Box boxOther = obj->GetBox();
+	if (AABB(box, boxOther, moveX, moveY) == true)
 	{
 
-
-		if (moveY > 0) {
-			
-			posY += moveY;
-
-			if (isJump)
+		float collisiontime = SweptAABB(box, boxOther, normalx, normaly, dt);
+		//if (normalx == 0 && normaly == -1)
+		{
+			isOnBrick = true;
+			if (vY < 0 && moveY < 26)
 			{
-				isJump = false;
-				/*
-				if (_hasKnockBack)
+				if (moveY > 0)
 				{
-					if (!_hidden)
+					posY += moveY;
+					if (isJump)
 					{
-						_hidden = true;
-						_startToHiddenTime = GetTickCount();
-						if (hp > 0)
-						{
-							if (hp <= 3)
-							{
-								hp -= 1;
-							}
-							else
-								hp -= other->damage;
-						}
-
+						isJump = false;
 					}
-					_hasKnockBack = false;
+					vY = 0;
+					g = GRAVITATIONAL;
+					sprite->SelectIndex(0);
+					return;
 				}
-				*/
-				vY = 0;
-				vX = 0;
-				g = 0;
-				//_allowPress = true;
-				sprite->SelectIndex(0);
-			}
+				//posY = boxOther.y + height / 2 - boxOther.h;
 
+			}
 		}
 	}
+
 }
 
 void Simon::Collision(list<GameObject*> &obj, float dt)
 {
-	ActiveObject::Collision(obj, dt);
-	StandGround(obj, dt);
+	
+	list<GameObject*>::iterator _itBegin;
+	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
+	{
+		//float moveX = 0;
+		//float moveY = 0;
+		//float normalx = 0;
+		//float normaly = 0;
+		GameObject* other = (*_itBegin);
+
+		if (other->id == EnumID::Brick_ID)
+		{
+			StandGround(other, dt);
+		}
+	}
 }

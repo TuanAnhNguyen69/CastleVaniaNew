@@ -81,9 +81,9 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			//----- start drawing
 
 			player->Update(t);
-			/*player->Collision(*(qGameObject->_staticObject), t);
-			player->Collision(*(qGameObject->_dynamicObject), t);*/
-			//qGameObject->Collision(t);
+			player->Collision(*(qGameObject->_staticObject), t);
+			player->Collision(*(qGameObject->_dynamicObject), t);
+			qGameObject->Collision(t);
 			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 			bg->Draw(camera);
 			qGameObject->Draw(camera);

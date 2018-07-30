@@ -78,6 +78,9 @@ protected:
 	//Bat tu tam thoi
 	bool immortal;
 
+	//Dung tren brick
+	bool isOnBrick;
+
 	//Bien enum cac loai hanh dong
 	Action action;
 
@@ -112,7 +115,7 @@ public:
 	Box GetBox();
 
 	//Xu ly dung tren nen dat
-	void StandGround(list<GameObject*> &obj, float dt);
+	void StandGround(GameObject* &obj, float dt);
 	
 };
 
