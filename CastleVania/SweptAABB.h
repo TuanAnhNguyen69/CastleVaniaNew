@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <limits>
 #include <math.h>
-// mot GameObject la 1 Box (hinh chu nhat) co cac thuoc tinh
 struct Box
 {
 	// toa do top-left cua Box
@@ -41,69 +40,36 @@ struct Box
 	
 };
 
+inline bool isColliding(const Box& object, const Box& other)
+{
+	float left = other.x - (object.x + object.w);
+	float top = (other.y + other.h) - object.y;
+	float right = (other.x + other.w) - object.x;
+	float bottom = other.y - (object.y + object.h);
 
-//Kiem tra 2 doi tuong co giao nhau khong
-static bool AABBCheck(Box b1, Box b2)
+	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
+}
+
+inline bool AABBCheck(Box b1, Box b2)
 {
 	return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y - b1.h > b2.y || b1.y < b2.y - b2.h);
 }
 
-static bool AABB(Box b1, Box b2, float& moveX, float& moveY)
+inline Box getSweptBroadphaseBox(const Box& object, float t)
 {
-	moveX = moveY = 0.0f;
+	float x = object.vx > 0 ? object.x : object.x + object.vx;
+	float y = object.vy > 0 ? object.y : object.y + object.vy;
+	float w = object.w + abs(object.vx * t);
+	float h = object.h + abs(object.vy * t);
 
-	float l = b2.x - (b1.x + b1.w);
-	float r = (b2.x + b2.w) - b1.x;
-	float t = b2.y - (b1.y - b1.h);
-	float b = (b2.y - b2.h) - b1.y;
-
-	// check that there was a collision
-	if (l > 0 || r < 0 || t < 0 || b > 0)
-		return false;
-
-	// find the offset of both sides
-	moveX = abs(l) < r ? l : r;
-	moveY = abs(b) < t ? b : t;
-
-	// only use whichever offset is the smallest
-	if (abs(moveX) < abs(moveY))
-		moveY = 0.0f;
-	else
-		moveX = 0.0f;
-
-	return true;
+	return Box(x, y, w, h);
 }
 
-// tra ve 1 Box keo dai tu Box truoc va cham den Box sau va cham
-// de sau nay lay Box do xet xem co chong len Object bi va cham khong
-// neu khong thi khong can phai xet tiep
-static Box GetSweptBroadphaseBox(Box b) //, int dt
-{
-	Box broadphasebox(0.0f, 0.0f, 0.0f, 0.0f);
-
-	broadphasebox.x = b.vx > 0 ? b.x : b.x + b.vx; //* dt;
-	broadphasebox.y = b.vy < 0 ? b.y : b.y + b.vy; //*dt;
-	broadphasebox.w = b.vx > 0 ? b.vx  + b.w : b.w - b.vx; //* dt;
-	broadphasebox.h = b.vy > 0 ? b.vy  + b.h : b.h - b.vy; //* dt;
-
-	return broadphasebox;
-}
-
-// Xet va cham giua Box1 di chuyen va Box2 tinh
-// Tra ve thoi gian va cham (>0 va <1)
-// Neu <= 0, la 2 Box dang di ra xa nhau
-// Neu >= 1, la 2 Box chua va cham
-// vi tri moi duoc tinh bang: box.x = box.x + box.vx * collision_time
-// normalx and normaly return the normal of the collided surface (this can be used to do a response)
-/*
-static float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, int dt)
+inline float sweptAABB(const Box& b1, const Box& b2, ECollisionDirection& result, float dt)
 {
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;
-
 	// find the distance between the objects on the near and far sides for both x and y
-
-	// ??ng b? d?u cho cùng h??ng thôi
 	if (b1.vx > 0.0f)
 	{
 		xInvEntry = b2.x - (b1.x + b1.w);
@@ -114,24 +80,20 @@ static float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, int dt)
 		xInvEntry = (b2.x + b2.w) - b1.x;
 		xInvExit = b2.x - (b1.x + b1.w);
 	}
-
 	if (b1.vy < 0.0f)
 	{
-		yInvEntry = b2.y - (b1.y - b1.h);
-		yInvExit = (b2.y - b2.h) - b1.y;
+		yInvEntry = (b1.y - b1.h) - b2.y;
+		yInvExit = (b2.y - b2.h) - (b1.y - b1.h);
 	}
 	else
 	{
 		yInvEntry = (b2.y - b2.h) - b1.y;
-		yInvExit = b2.y - (b1.y - b1.h);
+		yInvExit = b2.y - b1.y;
 	}
 
 	// find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)
-
-	//tìm th?i gian ?? b?t ??u và k?t thúc va ch?m :
 	float xEntry, yEntry;
 	float xExit, yExit;
-
 	if (b1.vx == 0.0f)
 	{
 		xEntry = -std::numeric_limits<float>::infinity();
@@ -139,10 +101,9 @@ static float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, int dt)
 	}
 	else
 	{
-		xEntry = xInvEntry / (b1.vx);
-		xExit = xInvExit / (b1.vx);
+		xEntry = xInvEntry / b1.vx / dt;
+		xExit = xInvExit / b1.vx / dt;
 	}
-
 	if (b1.vy == 0.0f)
 	{
 		yEntry = -std::numeric_limits<float>::infinity();
@@ -150,173 +111,45 @@ static float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, int dt)
 	}
 	else
 	{
-		yEntry = yInvEntry / (b1.vy);
-		yExit = yInvExit / (b1.vy);
+		yEntry = yInvEntry / (b1.vy * dt);
+		yExit = yInvExit / (b1.vy * dt);
 	}
 
-	// th?i gian va ch?m là th?i gian l?n nh?t c?a 2 tr?c (2 tr?c ph?i cùng ti?p xúc thì m?i va ch?m)
+	float entryTime = xEntry > yEntry ? xEntry : yEntry;
+	float exitTime = xExit < yExit ? xExit : yExit;
 
-	float entryTime = max(xEntry, yEntry);
-	// th?i gian h?t va ch?m là th?i gian c?a 2 tr?c, (1 cái ra kh?i là object h?t va ch?m)
-	float exitTime = min(xExit, yExit);
-
-	// if there was no collision
 	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
 	{
-		normalx = 0.0f;
-		normaly = 0.0f;
+		result = ECollisionDirection::Colls_None;
 		return 1.0f;
 	}
-	//else // if there was a collision
+	else // if there was a collision
 	{
 		// calculate normal of collided surface
 		if (xEntry > yEntry)
 		{
-			if (xInvEntry < 0.0f)			//Vat va cham nam ben phai
+			if (xInvEntry < 0.0f)
 			{
-				normalx = 1.0f;
-				normaly = 0.0f;
+				result = ECollisionDirection::Colls_Left;
 			}
-			else							//Vat va cham nam ben trai
+			else
 			{
-				normalx = -1.0f;
-				normaly = 0.0f;
+				result = ECollisionDirection::Colls_Right;
 			}
 		}
-		else								
+		else
 		{
-			if (yInvEntry < 0.0f)			//Vat va cham nam phia tren
+			if (yInvEntry < 0.0f)
 			{
-				normalx = 0.0f;
-				normaly = 1.0f;
+				result = ECollisionDirection::Colls_Bot;
 			}
-			else							//Vat va cham nam phia duoi
+			else
 			{
-				normalx = 0.0f;
-				normaly = -1.0f;
+				result = ECollisionDirection::Colls_Top;
 			}
 		}
-
 		// return the time of collision
 		return entryTime;
 	}
-}
-*/
-static float SweptAABB(Box b1, Box b2, float &normalX, float &normalY)
-{
-	//neu object thu 2 di chuyen
-	//b1.vx = (b1.vx - b2.vx) * gameTime;
-	//b1.vy = (b1.vy - b2.vy) * gameTime;
-
-	//khoang cach de hai vat cham vao nhau
-	float xInvEntry, yInvEntry;
-	float xInvExit, yInvExit;
-
-	if (b1.vx > 0) // Vat b1 di chuyen tu trai qua
-	{
-		xInvEntry = b2.x  - (b1.x + b1.w);
-		xInvExit = (b2.x + b2.w) - b1.x;
-	}
-	else // Vat b1 di chuyen tu phai qua
-	{
-		xInvEntry = (b2.x + b2.w)  - b1.x;
-		xInvExit = b2.x - (b1.x + b1.w);
-	}
-
-	if (b1.vy > 0.0f) // Vat di tu duoi len
-	{
-		yInvEntry = (b2.y - b2.h) - b1.y; /*Vi xet trong he truc world nen nguoc voi cua thay*/
-		yInvExit = b2.y - (b1.y - b1.h);
-		//yInvEntry = b2.y - (b1.y + b1.h);
-		//yInvExit = (b2.y + b2.h) - b1.y;
-	}
-	else // Vat di tu tren xuong
-	{
-		/*yInvEntry = (b1.y - b1.h) - b2.y;
-		yInvExit = b1.y - (b2.y - b2.h);*/
-		yInvEntry = b2.y - (b1.y - b1.h); /*Vi xet trong he truc world nen nguoc voi cua thay*/
-		yInvExit = (b2.y - b2.h) - b1.y;
-		//yInvEntry = (b2.y + b2.h) - b1.y;
-		//yInvExit = b2.y - (b1.y + b1.h);
-	}
-
-	//Thoi gian de va cham theo 2 truc
-	float xEntry, yEntry;
-	float xExit, yExit;
-
-	if (b1.vx == 0.0f)
-	{
-		xEntry = -std::numeric_limits<float>::infinity();
-		xExit = std::numeric_limits<float>::infinity();
-	}
-	else
-	{
-		xEntry = xInvEntry / b1.vx;
-		xExit = xInvExit / b1.vx;
-	}
-
-	if (b1.vy == 0.0f)
-	{
-		yEntry = -std::numeric_limits<float>::infinity();
-		yExit = std::numeric_limits<float>::infinity();
-	}
-	else
-	{
-		yEntry = yInvEntry / b1.vy;
-		yExit = yInvExit / b1.vy;
-	}
-
-	// Tim thoi gian lon nhat va nho nhat khi va cham 
-	float entryTime; // = max(xEntry, yEntry);
-	float exitTime; // = min(xExit, yExit);
-	if (xEntry > yEntry)
-		entryTime = xEntry;
-	else
-		entryTime = yEntry;
-
-	if (xExit < yExit)
-		exitTime = xExit;
-	else
-		exitTime = yExit;
-
-	// Neu khong co va cham
-
-	if (entryTime > exitTime
-		|| (xEntry<0.0f && yEntry<0.0f)
-		|| xEntry>1.0f
-		|| yEntry>1.0f)
-	{
-		normalX = 0.0f;
-		normalY = 0.0f;
-		return 1.0f;
-	}
-	// Co va cham -> uoc tinh vector phap tuyen
-	if (xEntry > yEntry)
-	{
-		if (xInvEntry < 0.0f) // Dung ve ben phai
-		{
-			normalX = 1.0f;
-			normalY = 0.0f;
-		}
-		else // Dung ve ben trai
-		{
-			normalX = -1.0f;
-			normalY = 0.0f;
-		}
-	}
-	else
-	{
-		if (yInvEntry < 0.0f) // Dung o tren
-		{
-			normalX = 0.0f;
-			normalY = 1.0f;
-		}
-		else // Dung o duoi
-		{
-			normalX = 0.0f;
-			normalY = -1.0f;
-		}
-	}
-	return entryTime;
 }
 #endif

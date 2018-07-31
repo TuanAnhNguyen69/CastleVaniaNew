@@ -31,4 +31,5 @@ void PhantomBat::SetActive(float _posX_Simon, float _posY_Simon)
 
 void PhantomBat::Collision()
 {
+
 }

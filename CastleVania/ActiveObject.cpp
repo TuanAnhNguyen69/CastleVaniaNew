@@ -1,7 +1,5 @@
 #include "ActiveObject.h"
 
-
-
 ActiveObject::ActiveObject() : GameObject()
 {
 	canBeKilled = true;
@@ -83,49 +81,49 @@ void ActiveObject::Draw(GCamera* camera)
 
 void ActiveObject::Collision(list<GameObject*> obj, int dt)
 {
-	list<GameObject*>::iterator _itBegin;
-	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
-	{
-		float moveX = 0;
-		float moveY = 0;
-		float normalx;
-		float normaly;
-		GameObject* other = (*_itBegin);
-		if (other->id == EnumID::Brick_ID)
-		{
-			Box box = this->GetBox();
-			Box boxOther = other->GetBox();
+	//list<GameObject*>::iterator _itBegin;
+	//for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
+	//{
+	//	float moveX = 0;
+	//	float moveY = 0;
+	//	float normalx;
+	//	float normaly;
+	//	GameObject* other = (*_itBegin);
+	//	if (other->id == EnumID::Brick_ID)
+	//	{
+	//		Box box = this->GetBox();
+	//		Box boxOther = other->GetBox();
 
-			if (AABB(box, boxOther, moveX, moveY) == true)
-			{
-				if (vY < 0)
-				{
-					//posY += moveY + 20;
-					y += moveY;
-					vY = 0;
-					return;
-				}
-				/*
-				if ((posX - width / 2 + 10) - (other->posX - other->width / 2) <= 0
-					|| (posX + width / 2 - 10) - (other->posX + other->width / 2) >= 0)
-					vX = -vX;
-				*/
-				if ((x + 10) - (other->x) <= 0 || (x - 10) - (other->x) >= 0)
-					vX = -vX;
-			}
-			else
-				if (AABB(box, boxOther, moveX, moveY) == false)
-				{
-					if (other->canMove == true)
-					{
-						box.vx -= boxOther.vx;
-						box.vy -= boxOther.vy;
-						boxOther.vx = 0;
-						boxOther.vy = 0;
-					}
-				}
-		}
-	}
+	//		if (AABBCheck(box, boxOther, moveX, moveY) == true)
+	//		{
+	//			if (vY < 0)
+	//			{
+	//				//posY += moveY + 20;
+	//				y += moveY;
+	//				vY = 0;
+	//				return;
+	//			}
+	//			/*
+	//			if ((posX - width / 2 + 10) - (other->posX - other->width / 2) <= 0
+	//				|| (posX + width / 2 - 10) - (other->posX + other->width / 2) >= 0)
+	//				vX = -vX;
+	//			*/
+	//			if ((x + 10) - (other->x) <= 0 || (x - 10) - (other->x) >= 0)
+	//				vX = -vX;
+	//		}
+	//		else
+	//			if (AABB(box, boxOther, moveX, moveY) == false)
+	//			{
+	//				if (other->canMove == true)
+	//				{
+	//					box.vx -= boxOther.vx;
+	//					box.vy -= boxOther.vy;
+	//					boxOther.vx = 0;
+	//					boxOther.vy = 0;
+	//				}
+	//			}
+	//	}
+	//}
 
 }
 

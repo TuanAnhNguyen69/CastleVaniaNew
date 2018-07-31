@@ -173,7 +173,7 @@ D3DXVECTOR2 ObjectsManager::GetPosDoor()
 
 void ObjectsManager::Draw(GCamera *camera)
 {
-	for (list<GameObject*>::iterator i = inSightObjects->begin(); i != inSightObjects->end(); i++)
+	for (list<GameObject*>::iterator i = objects->begin(); i != objects->end(); i++)
 	{ 
 		GameObject* obj = (*i);
 	

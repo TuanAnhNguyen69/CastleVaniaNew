@@ -45,6 +45,7 @@ TextureManager::TextureManager(void)
 
 	//Ground
 	brick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
+	testBrick = new GTexture("Resource/sprites/Ground/13.png", 3, 1, 3);
 	transparentSprite = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 		//Xem lai
 	breakableBrick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
@@ -127,7 +128,7 @@ GTexture* TextureManager::getTexture(EnumID id)
 
 	//Ground
 	case EnumID::Brick_ID:
-		return transparentSprite;
+		return testBrick;
 	case EnumID::Breakable_ID:
 		return transparentSprite;
 	case EnumID::Candle_ID:
