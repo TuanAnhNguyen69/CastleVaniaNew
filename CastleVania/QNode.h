@@ -6,26 +6,25 @@
 #include <list>
 using namespace std;
 
+#define MAX_LEVEL                3
+#define MAX_OBJECT_IN_REGION     4
+
 class QNode
 {
+private:
+	int m_level;
+	Box* m_region;
+	list<GameObject*>* m_objects_list;
+	QNode** m_nodes;
 public:
-	int left;
-	int top;
-	int width;
-	int height;
-	bool hasNode;
-	list<int> listObject;
-	QNode *leftTop;
-	QNode *rightTop;
-	QNode *leftBottom;
-	QNode *rightBottom;
-
-	void Insert(int key);
-	bool IsContain(GameObject* entity);
-	QNode(void);
-	QNode(int, int, int, int, bool, list<int>);
-	QNode(const QNode &);
-	~QNode(void);
+	QNode();
+	QNode(int level, Box* box);
+	~QNode();
+	void Split();
+	void Insert(GameObject* object);
+	bool IsContain(GameObject* object);
+	void Retrieve(list<GameObject*> *return_objects_list, GameObject* object);	
+	void Clear();
 };
 
 #endif

@@ -112,7 +112,7 @@
     <ClCompile Include="MedusaHead.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="PhantomBat.cpp" />
-    <ClCompile Include="QGameObject.cpp" />
+    <ClCompile Include="ObjectsManager.cpp" />
     <ClCompile Include="QNode.cpp" />
     <ClCompile Include="RewardItem.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="MedusaHead.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="PhantomBat.h" />
-    <ClInclude Include="QGameObject.h" />
+    <ClInclude Include="ObjectsManager.h" />
     <ClInclude Include="QNode.h" />
     <ClInclude Include="RewardItem.h" />
     <ClInclude Include="Scene.h" />

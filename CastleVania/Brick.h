@@ -8,7 +8,7 @@ class Brick :
 public:
 	bool isBreakable;
 	Brick();
-	Brick(float _posX, float _posY, int _width, int _height, bool breakable);
+	Brick(float _posX, float _posY, bool breakable);
 	~Brick();
 };
 

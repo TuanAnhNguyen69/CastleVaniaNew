@@ -17,6 +17,7 @@ struct Box
 	// van toc cua Box
 	float vx, vy;
 
+
 	Box(float _x, float _y, float _w, float _h, float _vx, float _vy)
 	{
 		x = _x;

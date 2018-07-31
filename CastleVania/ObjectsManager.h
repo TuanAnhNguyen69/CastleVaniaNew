@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include "QNode.h"
 #include "HeaderObj.h"
 #include "TextureManager.h"
 #include "GCamera.h"
@@ -16,27 +17,25 @@
 
 //using namespace std;
 
-class QGameObject
+class ObjectsManager
 {
 protected:
 	
 	D3DXVECTOR2 posDoor;
 	//Medusa *_medusa;
 public:
-	
+	ObjectsManager(void);
+	~ObjectsManager(void);
+	ObjectsManager(string);
 
+	list<GameObject*>* objects;
 
-	list<GameObject*> *_staticObject;
-	list<GameObject*> *_dynamicObject;
-
-	QGameObject(void);
-	~QGameObject(void);
-
-	QGameObject(string);
+	list<GameObject*>* inSightObjects;
+	QNode* quadtree;
 	D3DXVECTOR2 GetPosDoor();	//Lay vi tri de ve canh cua qua stage
 	void Draw(GCamera *camera);
 	void Update(int deltaTime);
-	void Update(int, int, int deltaTime);
+	void Update(Simon*, int deltaTime);
 
 	void Collision(int dt);
 	int RemoveAllObjectInCamera(D3DXVECTOR2);
