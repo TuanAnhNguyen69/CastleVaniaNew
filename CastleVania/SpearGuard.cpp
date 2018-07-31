@@ -19,8 +19,8 @@ SpearGuard::SpearGuard(float _posX, float _posY, int _width, int _height) : Acti
 }
 */
 
-SpearGuard::SpearGuard(float _x, float _y, int _width, int _height) 
-	: ActiveObject(_x, _y, _width, _height, SPEARGUARD_SPEED, 0, EnumID::SpearGuard_ID)
+SpearGuard::SpearGuard(float _x, float _y) 
+	: ActiveObject(_x, _y, SPEARGUARD_SPEED, 0, EnumID::SpearGuard_ID)
 {
 	active = true;
 	hp = 3;

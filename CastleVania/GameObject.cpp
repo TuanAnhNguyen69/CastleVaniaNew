@@ -33,7 +33,7 @@ GameObject::GameObject(float _posX, float _posY, int _width, int _height, EnumID
 }
 */
 
-GameObject::GameObject(float _x, float _y, int _width, int _height, EnumID _id)
+GameObject::GameObject(float _x, float _y, EnumID _id)
 {
 	x = _x;
 	y = _y;
@@ -46,8 +46,13 @@ GameObject::GameObject(float _x, float _y, int _width, int _height, EnumID _id)
 	type = ObjectType::None;
 	canMove = false;
 	active = true;
-	width = _width;
-	height = _height;
+
+	CreateSprite();
+	if (sprite != NULL)
+	{
+		width = sprite->_texture->FrameWidth;
+		height = sprite->_texture->FrameHeight;
+	}
 }
 
 void GameObject::CreateSprite()

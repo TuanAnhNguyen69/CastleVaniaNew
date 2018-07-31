@@ -6,8 +6,8 @@ Candle::Candle() : GameObject()
 {
 }
 
-Candle::Candle(float _posX, float _posY, int _width, int _height) :
-	GameObject(_posX, _posY, _width, _height, EnumID::Candle_ID)
+Candle::Candle(float _posX, float _posY) :
+	GameObject(_posX, _posY, EnumID::Candle_ID)
 {
 	canBeKilled = true;
 	hp = 1;

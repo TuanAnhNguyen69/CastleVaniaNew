@@ -18,8 +18,8 @@ ActiveObject::ActiveObject(float _posX, float _posY, int _width, int _height, fl
 }
 */
 
-ActiveObject::ActiveObject(float _x, float _y, int _width, int _height, float _vX, float _vY, EnumID id) :
-	GameObject(_x, _y, _width, _height, id)
+ActiveObject::ActiveObject(float _x, float _y, float _vX, float _vY, EnumID id) :
+	GameObject(_x, _y, id)
 {
 	vX = _vX;
 	vY = _vY;
@@ -147,7 +147,7 @@ bool ActiveObject::IntoScreen(float _x, float _y, GCamera* camera)
 	*/
 
 	
-	if (_x + width <= camera->viewport.x || _x >= camera->viewport.x + G_ScreenWidth
+	if (_x <= camera->viewport.x || _x >= camera->viewport.x + G_ScreenWidth
 		|| _y <= camera->viewport.y || _y >= camera->viewport.y + G_ScreenHeight)
 		return false;
 	return true;

@@ -9,7 +9,7 @@ class Fire :
 	int lifeTime;
 public:
 	Fire();
-	Fire(float _posX, float _poxY, int _width, int _height);
+	Fire(float _posX, float _poxY);
 	~Fire();
 	void Update(int deltaTime);
 	void Draw(GCamera *camera);

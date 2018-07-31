@@ -7,7 +7,7 @@ class Candle :
 {
 public:
 	Candle();
-	Candle(float _posX, float _posY, int _width, int _height);
+	Candle(float _posX, float _posY);
 	~Candle();
 };
 

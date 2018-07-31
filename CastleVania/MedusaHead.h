@@ -12,7 +12,7 @@ class MedusaHead :
 {
 public:
 	MedusaHead();
-	MedusaHead(float _posX, float _posY, int _width, int _height);
+	MedusaHead(float _posX, float _posY);
 	~MedusaHead();
 
 	void MovePath(int deltaTime);

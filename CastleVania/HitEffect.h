@@ -7,7 +7,7 @@ class HitEffect :
 {
 public:
 	HitEffect();
-	HitEffect(float _posX, float _posY, int _width, int _height);
+	HitEffect(float _posX, float _posY);
 	~HitEffect();
 };
 

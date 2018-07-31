@@ -138,7 +138,7 @@ void GSprite::DrawFlipX(int x, int y)
 	
 	D3DXMATRIX newMt;
 	//D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
-	D3DXVECTOR2 center = D3DXVECTOR2(x, y);
+	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth, y + _texture->FrameHeight);
 	D3DXVECTOR2 rotate = D3DXVECTOR2(-1, 1);
 
 	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);

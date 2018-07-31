@@ -98,7 +98,7 @@ public:
 	virtual void Update(int deltaTime);
 	virtual void Collision(list<GameObject*> &obj, float dt);
 	//Simon(int _posX, int _posY, int _width, int _height);
-	Simon(int _x, int _y, int _width, int _height);
+	Simon(int _x, int _y);
 
 	//di chuyen
 	void RunLeft();

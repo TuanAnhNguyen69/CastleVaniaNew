@@ -87,7 +87,7 @@ public:
 	//virtual void Pause();
 	GameObject(void);
 	//GameObject(float _posX, float _posY, int _width, int _height, EnumID id);
-	GameObject(float _x, float _y, int _width, int _height, EnumID id);
+	GameObject(float _x, float _y, EnumID id);
 	~GameObject(void);
 };
 

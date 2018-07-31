@@ -41,11 +41,6 @@ public:
 	void DrawFlipX(int x, int y);
 	void DrawFlipXScale(int x, int y, float scaleX, float scaleY);
 
-	//render with scale (1, -1)
-	void DrawFlipY(int x, int y);
-	void DrawFlipYScale(int x, int y, float scaleX, float scaleY);
-	
-
 	//Render Rect of texture at (x,y)
 	void DrawRect(int X, int Y, RECT SrcRect);
 

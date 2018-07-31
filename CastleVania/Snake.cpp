@@ -6,8 +6,8 @@ Snake::Snake() : ActiveObject()
 {
 }
 
-Snake::Snake(float _posX, float _posY, int _width, int _height, float _vX, float _vY, EnumID _id)
-	: ActiveObject(_posX, _posY, _width, _height, _vX, _vY, _id)
+Snake::Snake(float _posX, float _posY, float _vX, float _vY, EnumID _id)
+	: ActiveObject(_posX, _posY, _vX, _vY, _id)
 {
 	active = true;
 	canBeKilled = true;

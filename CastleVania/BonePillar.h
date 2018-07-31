@@ -21,7 +21,7 @@ public:
 
 
 	BonePillar();
-	BonePillar(float _posX, float _posY, int _width, int _height);
+	BonePillar(float _posX, float _posY);
 	~BonePillar();
 };
 

@@ -6,7 +6,7 @@ BonePillar::BonePillar() : ActiveObject()
 {
 }
 
-BonePillar::BonePillar(float _posX, float _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0, 0, EnumID::BonePillar_ID)
+BonePillar::BonePillar(float _posX, float _posY) : ActiveObject(_posX, _posY, 0, 0, EnumID::BonePillar_ID)
 {
 	listFire = new list<ActiveObject*>();
 	type = ObjectType::Enemy_Type;
@@ -54,7 +54,7 @@ void BonePillar::Update(int deltaTime)
 		lifeTime += deltaTime;
 		if (lifeTime % 30 == 0)
 		{
-			listFire->push_back(new Fire(x, y + 10, 16, 16));
+			listFire->push_back(new Fire(x, y + 10));
 		}
 
 		UpdateFire(deltaTime);

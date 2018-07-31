@@ -24,8 +24,8 @@ Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX
 }
 */
 
-Simon::Simon(int _x, int _y, int _width, int _height) 
-	: ActiveObject(_x, _y, _width, _height, 0, -SPEED_Y, EnumID::Simon_ID)
+Simon::Simon(int _x, int _y) 
+	: ActiveObject(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 40;
 	action = Action::Stand;
@@ -108,20 +108,20 @@ void Simon::Update(int deltaTime)
 	}
 	//sprite->Update(deltaTime);
 
+	x += vX * deltaTime;
+
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
 		//posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
-		x += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
+		y += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		if (vY > SPEED_FALL)
 			vY += g * deltaTime;
-		//return;
+		return;
 	}
-	else
-		vY = 0;
-
-	//posX += vX * deltaTime;
-	x += vX * deltaTime;
+	//else
+		//y += vY * deltaTime;
+	
 }
 
 void Simon::RunLeft()
@@ -162,11 +162,11 @@ void Simon::Jump()
 		return;
 	if (!isJump)
 	{
-		isJump = true;
 		g = -g;
 		vY = sqrt(-2 * g * MAX_HEIGHT);
 		sprite->SelectIndex(4);
 		action = Action::Jump;
+		isJump = true;
 	}
 }
 
@@ -176,11 +176,10 @@ void Simon::Sit()
 		return;
 	if (!isJump)
 	{
-		//posY -= 5;
+		y -= 16;
 		sprite->SelectIndex(4);
 		vX = 0;
-		//vY = -(SPEED_Y + 0.3f);
-		vY = 0;
+		vY = -(SPEED_Y + 0.3f);
 		isSit = true;
 		action = Action::Sit;
 	}
@@ -222,9 +221,11 @@ void Simon::Stop()
 	if (isSit)
 	{
 		//posY += 16;
-		y += 16;
+		//y += 16;
 		isSit = false;
 	}
+	//if (!isJump)
+	//	vX = 0;
 	action = Action::Stand;
 	sprite->SelectIndex(0);
 }
@@ -248,25 +249,65 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	return false;
 }
 
+//Do sprite lon hon co the thuc cua Simon
 Box Simon::GetBox()
 {
 	if (isJump || isSit)
 	{
 		//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
-		return Box(x - width / 2 + 14.5f, y - 3, width - 29, height - 22);
+		return Box(x + 14.5f, y - 3, width - 29, height - 22);
+		//return Box(x , y, width, height);
 	}
 	//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
 	return Box(x + 14.5f, y - 3, width - 29, height - 6);
+	//return Box(x, y , width, height);
 }
 
 void Simon::StandGround(GameObject* &obj, float dt)
 {
-	float moveX = 0.0f;
-	float moveY = 0.0f;
+	//float moveX = 0.0f;
+	//float moveY = 0.0f;
 	float normalx = 0.0f;
 	float normaly = 0.0f;
 	Box box = this->GetBox();
 	Box boxOther = obj->GetBox();
+
+	
+	if (AABBCheck(box, boxOther))
+		isOnBrick = false;
+
+	Box tempBox = GetSweptBroadphaseBox(box);
+	if (AABBCheck(tempBox, boxOther))
+	{
+		float timeColl = SweptAABB(box, boxOther, normalx, normaly);
+		if (timeColl >= 0.0f && timeColl < 1.0f)
+		{
+			//printf("%f", timeColl);
+			
+			//y = 200
+			if (normaly == 1.0f)
+			{
+				y += vY * timeColl + 16;
+				//y = boxOther.y + box.h;
+				//x += vX * timeColl;
+				isOnBrick = true;
+				vY = 0;
+				vX = 0;
+				g = 0;
+				sprite->SelectIndex(0);
+				if (isJump)
+					isJump = false;
+				x = vX * dt;
+				return;
+			}
+			
+		}
+	}
+	else
+		isOnBrick = false;
+	
+
+	/*
 	if (AABB(box, boxOther, moveX, moveY) == true)
 	{
 
@@ -279,22 +320,23 @@ void Simon::StandGround(GameObject* &obj, float dt)
 				if (moveY > 0)
 				{
 					//posY += moveY;
-					y += moveY + height / 2;
+					y += moveY + 16;
 					if (isJump)
 					{
 						isJump = false;
 					}
 					vY = 0;
+					vX = 0;
 					g = GRAVITATIONAL;
 					sprite->SelectIndex(0);
 					return;
 				}
-				//posY = boxOther.y + height / 2 - boxOther.h;
+				x += vX * dt;
 
 			}
 		}
 	}
-
+	*/
 }
 
 void Simon::Collision(list<GameObject*> &obj, float dt)

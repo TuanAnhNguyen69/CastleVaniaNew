@@ -13,7 +13,7 @@ public:
 	float deltaPhi;
 
 	Ghost();
-	Ghost(float _posX, float _posY, int _width, int _height);
+	Ghost(float _posX, float _posY);
 	~Ghost();
 	void Update(int deltaTime);
 };

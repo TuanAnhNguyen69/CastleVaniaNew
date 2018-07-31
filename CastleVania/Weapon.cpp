@@ -7,8 +7,8 @@ Weapon::Weapon() : ActiveObject()
 {
 }
 
-Weapon::Weapon(float _posX, float _posY, int _width, int _height, float _direction, EnumID id) :
-	ActiveObject(_posX, _posY, _width, _height, 0, 0, id)
+Weapon::Weapon(float _posX, float _posY, float _direction, EnumID id) :
+	ActiveObject(_posX, _posY, 0, 0, id)
 {
 	active = true;
 	if (_direction > 0)

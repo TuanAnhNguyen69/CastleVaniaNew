@@ -6,7 +6,7 @@ class ActiveObject :
 public:
 	ActiveObject();
 	//ActiveObject(float _posX, float _posY, int _width, int _height, float _vX, float _vY, EnumID id);
-	ActiveObject(float _x, float _y, int _width, int _height, float _vX, float _vY, EnumID id);
+	ActiveObject(float _x, float _y, float _vX, float _vY, EnumID id);
 	~ActiveObject();
 
 	virtual void Update(int deltaTime);

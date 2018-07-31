@@ -18,7 +18,7 @@ public:
 
 	SpearGuard();
 	//SpearGuard(float _posX, float _posY, int _width, int _height);
-	SpearGuard(float _x, float _y, int _width, int _height);
+	SpearGuard(float _x, float _y);
 	~SpearGuard();
 };
 

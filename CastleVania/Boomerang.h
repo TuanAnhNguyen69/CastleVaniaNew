@@ -9,7 +9,7 @@ class Boomerang :
 {
 public:
 	Boomerang();
-	Boomerang(float _posX, float _posY, int _width, int _height, float _direction);
+	Boomerang(float _posX, float _posY, float _direction);
 	~Boomerang();
 
 	void Update(int deltaTime);

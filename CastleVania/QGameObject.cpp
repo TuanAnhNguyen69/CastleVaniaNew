@@ -82,7 +82,7 @@ QGameObject::QGameObject(string fileName)
 				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
 				break;
 			case EnumID::Candle_ID:
-				_staticObject->push_back(new Candle(posX, posY, width, height));
+				_staticObject->push_back(new Candle(posX, posY));
 				break;
 			case EnumID::Breakable_ID:
 				_staticObject->push_back(new Brick(posX, posY, width, height, true));
@@ -91,10 +91,10 @@ QGameObject::QGameObject(string fileName)
 				_staticObject->push_back(new Door(posX, posY, width, height));
 				break;
 			case EnumID::MovingPlatform_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
+				_dynamicObject->push_back(new MovingPlatform(posX, posY));
 				break;
 			case EnumID::Tele_ID:
-				_staticObject->push_back(new Tele(posX, posY, width, height));
+				_staticObject->push_back(new Tele(posX, posY));
 				break;
 			case EnumID::Trap_ID:
 				//_dynamicObject->push_back(new Trap(posX, posY, width, height));
@@ -107,22 +107,22 @@ QGameObject::QGameObject(string fileName)
 				//_dynamicObject->push_back(_medusa);
 				break;
 			case EnumID::MedusaHead_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
+				_dynamicObject->push_back(new MovingPlatform(posX, posY));
 				break;
 			case EnumID::Ghost_ID:
-				_dynamicObject->push_back(new Ghost(posX, posY, width, height));
+				_dynamicObject->push_back(new Ghost(posX, posY));
 			break;
 			case EnumID::Bat_ID:
-				_dynamicObject->push_back(new Bat(posX, posY, width, height));
+				_dynamicObject->push_back(new Bat(posX, posY));
 				break;
 			case EnumID::BonePillar_ID:
-				_dynamicObject->push_back(new BonePillar(posX, posY, width, height));
+				_dynamicObject->push_back(new BonePillar(posX, posY));
 				break;
 			case EnumID::Eagle_ID:
 				/*_staticObject->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
 				break;
 			case EnumID::PhantomBat_ID:
-				_dynamicObject->push_back(new PhantomBat(posX, posY, width, height));
+				_dynamicObject->push_back(new PhantomBat(posX, posY));
 				break;
 			case EnumID::Pleaman_ID:
 				/*_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
@@ -131,7 +131,7 @@ QGameObject::QGameObject(string fileName)
 				//_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
 				break;
 			case EnumID::SpearGuard_ID:
-				_dynamicObject->push_back(new SpearGuard(posX, posY, width, height));
+				_dynamicObject->push_back(new SpearGuard(posX, posY));
 				break;
 			case EnumID::Axe_ID:
 			case EnumID::BigHeart_ID:
@@ -149,7 +149,7 @@ QGameObject::QGameObject(string fileName)
 			case EnumID::SpiritBall_ID:
 			case EnumID::StopWatch_ID:
 			case EnumID::TreasureChest_ID:
-				_staticObject->push_back(new RewardItem(posX, posY, width, height, static_cast<EnumID>(id)));
+				_staticObject->push_back(new RewardItem(posX, posY, static_cast<EnumID>(id)));
 				break;
 			}
 			}

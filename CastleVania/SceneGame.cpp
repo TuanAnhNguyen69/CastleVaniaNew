@@ -47,7 +47,8 @@ void SceneGame::LoadLevel(int level)
 	//player = new Player(345, 1310); //-> Stage 6 
 	//player = new Player(287, 1310);
 
-	player = new Simon(3776, 130, 32, 64); // stage 1
+	player = new Simon(3776, 110);
+	//player = new Simon(3776, 130, 32, 64); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
 
@@ -73,7 +74,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 		qGameObject->Update(player->x, player->y, t);
 		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
-		if (G_Device->BeginScene())
+		//if (G_Device->BeginScene())
 		{
 			// Clear back buffer with BLACK
 			G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));

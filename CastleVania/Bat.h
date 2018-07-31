@@ -14,7 +14,7 @@ public:
 
 	Bat();
 	//Bat(float _posX, float _posY, int _width, int _height);
-	Bat(float _x, float _y, int _width, int _height);
+	Bat(float _x, float _y);
 	~Bat();
 
 	void MovePath(int deltaTime);
