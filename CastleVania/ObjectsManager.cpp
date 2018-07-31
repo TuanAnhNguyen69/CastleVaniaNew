@@ -1,21 +1,21 @@
-﻿#include "QGameObject.h"
+﻿#include "ObjectsManager.h"
 
 
-QGameObject::QGameObject(void)
+ObjectsManager::ObjectsManager(void)
 {
-	
+	quadtree = new QNode(1, new Box(0,0,G_MapWidth, G_MapHeight));
 }
 
-void QGameObject::RemoveAllObject()
+void ObjectsManager::RemoveAllObject()
 {
-	_dynamicObject->clear();
+	quadtree->Clear();
 }
 
-int QGameObject::RemoveAllObjectInCamera(D3DXVECTOR2 viewport)
+int ObjectsManager::RemoveAllObjectInCamera(D3DXVECTOR2 viewport)
 {
 	int score = 0;
-	list<GameObject*>::iterator it = _dynamicObject->begin();
-	while (it != _dynamicObject->end())
+	list<GameObject*>::iterator it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{
 		GameObject* other = (*it);
 		if (other->active && !(other->x + other->width <= viewport.x
@@ -30,7 +30,7 @@ int QGameObject::RemoveAllObjectInCamera(D3DXVECTOR2 viewport)
 				
 				default:
 					score += other->point;
-					_dynamicObject->erase(it++);
+					inSightObjects->erase(it++);
 					break;
 				}
 			}
@@ -42,13 +42,12 @@ int QGameObject::RemoveAllObjectInCamera(D3DXVECTOR2 viewport)
 }
 //Được gọi khi load Stage
 //Filename là tên file Stage
-QGameObject::QGameObject(string fileName)
+ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 {
 	ifstream map(fileName);
 
-	// GameObject :_staticObject,_dynamicObject
-	_staticObject = new list<GameObject*>();
-	_dynamicObject = new list<GameObject*>();
+	// GameObject :objects,_dynamicObject
+	objects = new list<GameObject*>();
 
 	if (map.is_open())
 	{
@@ -73,28 +72,28 @@ QGameObject::QGameObject(string fileName)
 		{
 
 			case EnumID::Brick_ID:
-				_staticObject->push_back(new Brick(posX, posY, width, height, false));
+				objects->push_back(new Brick(posX, posY, width, height, false));
 				break;
 			case EnumID::StairUpLeft_ID:
-				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpLeft_ID));
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpLeft_ID));
 				break;
 			case EnumID::StairUpRight_ID:
-				_staticObject->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
 				break;
 			case EnumID::Candle_ID:
-				_staticObject->push_back(new Candle(posX, posY, width, height));
+				objects->push_back(new Candle(posX, posY, width, height));
 				break;
 			case EnumID::Breakable_ID:
-				_staticObject->push_back(new Brick(posX, posY, width, height, true));
+				objects->push_back(new Brick(posX, posY, width, height, true));
 				break;
 			case EnumID::Door_ID:
-				_staticObject->push_back(new Door(posX, posY, width, height));
+				objects->push_back(new Door(posX, posY, width, height));
 				break;
 			case EnumID::MovingPlatform_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
+				objects->push_back(new MovingPlatform(posX, posY, width, height));
 				break;
 			case EnumID::Tele_ID:
-				_staticObject->push_back(new Tele(posX, posY, width, height));
+				objects->push_back(new Tele(posX, posY, width, height));
 				break;
 			case EnumID::Trap_ID:
 				//_dynamicObject->push_back(new Trap(posX, posY, width, height));
@@ -107,31 +106,31 @@ QGameObject::QGameObject(string fileName)
 				//_dynamicObject->push_back(_medusa);
 				break;
 			case EnumID::MedusaHead_ID:
-				_dynamicObject->push_back(new MovingPlatform(posX, posY, width, height));
+				objects->push_back(new MovingPlatform(posX, posY, width, height));
 				break;
 			case EnumID::Ghost_ID:
-				_dynamicObject->push_back(new Ghost(posX, posY, width, height));
+				objects->push_back(new Ghost(posX, posY, width, height));
 			break;
 			case EnumID::Bat_ID:
-				_dynamicObject->push_back(new Bat(posX, posY, width, height));
+				objects->push_back(new Bat(posX, posY, width, height));
 				break;
 			case EnumID::BonePillar_ID:
-				_dynamicObject->push_back(new BonePillar(posX, posY, width, height));
+				objects->push_back(new BonePillar(posX, posY, width, height));
 				break;
 			case EnumID::Eagle_ID:
-				/*_staticObject->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
+				/*objects->push_back(new Eagle(posX, posY, width, height, EnumID::DoorLeft_ID));*/
 				break;
 			case EnumID::PhantomBat_ID:
-				_dynamicObject->push_back(new PhantomBat(posX, posY, width, height));
+				objects->push_back(new PhantomBat(posX, posY, width, height));
 				break;
 			case EnumID::Pleaman_ID:
-				/*_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
+				/*objects->push_back(new Door(posX, posY, width, height, EnumID::TeleUp_ID));*/
 				break;
 			case EnumID::Skeleton_ID:
-				//_staticObject->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
+				//objects->push_back(new Door(posX, posY, width, height, EnumID::TeleDown_ID));
 				break;
 			case EnumID::SpearGuard_ID:
-				_dynamicObject->push_back(new SpearGuard(posX, posY, width, height));
+				objects->push_back(new SpearGuard(posX, posY, width, height));
 				break;
 			case EnumID::Axe_ID:
 			case EnumID::BigHeart_ID:
@@ -149,38 +148,32 @@ QGameObject::QGameObject(string fileName)
 			case EnumID::SpiritBall_ID:
 			case EnumID::StopWatch_ID:
 			case EnumID::TreasureChest_ID:
-				_staticObject->push_back(new RewardItem(posX, posY, width, height, static_cast<EnumID>(id)));
+				objects->push_back(new RewardItem(posX, posY, width, height, static_cast<EnumID>(id)));
 				break;
 			}
-			}
+		}
+	}
+
+	for (auto iterator = objects->begin(); iterator != objects->end(); iterator++) {
+		quadtree->Insert(*iterator);
 	}
 	_pausing = false;
 	_startToPauseTime = 0;
 }
 
-Medusa* QGameObject::getMedusa()
+Medusa* ObjectsManager::getMedusa()
 {
 	return NULL;
 }
 
-D3DXVECTOR2 QGameObject::GetPosDoor()
+D3DXVECTOR2 ObjectsManager::GetPosDoor()
 {
 	return posDoor;
 }
 
-void QGameObject::Draw(GCamera *camera)
+void ObjectsManager::Draw(GCamera *camera)
 {
-	for (list<GameObject*>::iterator i = _staticObject->begin(); i != _staticObject->end(); i++)
-	{
-		GameObject* obj = (*i);
-	
-		if (obj->active)
-		{
-			obj->Draw(camera);
-		}
-	}
-
-	for (list<GameObject*>::iterator i = _dynamicObject->begin(); i != _dynamicObject->end(); i++)
+	for (list<GameObject*>::iterator i = inSightObjects->begin(); i != inSightObjects->end(); i++)
 	{ 
 		GameObject* obj = (*i);
 	
@@ -192,28 +185,21 @@ void QGameObject::Draw(GCamera *camera)
 }
 
 // Gọi về hàm va chạm của lớp con
-void QGameObject::Collision(int dt)
+void ObjectsManager::Collision(int dt)
 {
-	for (list<GameObject*>::reverse_iterator i = _staticObject->rbegin(); i != _staticObject->rend(); i++)
+	for (list<GameObject*>::reverse_iterator i = inSightObjects->rbegin(); i != inSightObjects->rend(); i++)
 	{
-		if ((*i)->canMove)
+		if ((*i)->canMove || (*i)->active)
 		{
-			(*i)->Collision((*_staticObject), dt);
-		}
-	}
-	for (list<GameObject*>::iterator i = _dynamicObject->begin(); i != _dynamicObject->end(); i++)
-	{
-		if ((*i)->active)
-		{
-			(*i)->Collision((*_staticObject), dt);
+			(*i)->Collision((*inSightObjects), dt);
 		}
 	}
 }
 // Gọi về hàm update của từng game object để vẽ hình
-void QGameObject::Update(int deltaTime)
+void ObjectsManager::Update(int deltaTime)
 {
-	list<GameObject*>::iterator it = _staticObject->begin();
-	while (it != _staticObject->end())
+	list<GameObject*>::iterator it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{	
 		{
 			(*it)->Update(deltaTime);
@@ -221,8 +207,8 @@ void QGameObject::Update(int deltaTime)
 		}
 	}
 
-	it = _dynamicObject->begin();
-	while (it != _dynamicObject->end())
+	it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{
 		if  (!IsPausing() || (IsPausing() && (*it)->type != ObjectType::Enemy_Type)) {
 				if ((*it)->active) {
@@ -235,10 +221,12 @@ void QGameObject::Update(int deltaTime)
 		++it;
 	}
 }
-void QGameObject::Update(int playerX, int playerY, int deltaTime)
+void ObjectsManager::Update(Simon* simon, int deltaTime)
 {
-	list<GameObject*>::iterator it = _staticObject->begin();
-	while (it != _staticObject->end())
+	inSightObjects = new list<GameObject*>();
+	quadtree->Retrieve(inSightObjects, simon);
+	list<GameObject*>::iterator it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{
 		{
 			(*it)->Update(deltaTime);
@@ -246,8 +234,8 @@ void QGameObject::Update(int playerX, int playerY, int deltaTime)
 		}
 	}
 
-	it = _dynamicObject->begin();
-	while (it != _dynamicObject->end())
+	it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{
 		if (!IsPausing() || (IsPausing() && (*it)->type != ObjectType::Enemy_Type)) {
 			if ((*it)->id == EnumID::Medusa_ID)
@@ -255,7 +243,7 @@ void QGameObject::Update(int playerX, int playerY, int deltaTime)
 				if (((Medusa*)*it)->StateCancel())
 				{
 					/*_dynamicObject->push_back(new MagicalBall((*it)->posX, (*it)->posY));*/
-					_dynamicObject->erase(it++);
+					inSightObjects->erase(it++);
 				}
 				else ++it;
 			}
@@ -265,7 +253,7 @@ void QGameObject::Update(int playerX, int playerY, int deltaTime)
 				{
 
 					if ((*it)->neededPlayerPosition) {
-						(*it)->Update(playerX, playerY, deltaTime);
+						(*it)->Update(simon->x,simon->y, deltaTime);
 					}
 					else {
 						(*it)->Update(deltaTime);
@@ -280,7 +268,7 @@ void QGameObject::Update(int playerX, int playerY, int deltaTime)
 	}
 }
 // Neu IsPausing == false -> Game chay binh thuong
-bool QGameObject::IsPausing()
+bool ObjectsManager::IsPausing()
 {
 	if (!_pausing)
 		return false;
@@ -293,11 +281,11 @@ bool QGameObject::IsPausing()
 	}
 	return true;
 }
-void QGameObject::PauseUpdate() {
+void ObjectsManager::PauseUpdate() {
 	_pausing = true;
 	_startToPauseTime = GetTickCount();
 }
 
-QGameObject::~QGameObject(void)
+ObjectsManager::~ObjectsManager(void)
 {
 }

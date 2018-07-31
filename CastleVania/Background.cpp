@@ -69,7 +69,6 @@ BackgroundController::BackgroundController(int level)
 	}
 
 		map.close();
-		LoadQuadTreeFromFile(quadtreeFileName);
 }
 
 void BackgroundController::GetAvailableTiles(int viewportX, int viewportY)
@@ -79,37 +78,6 @@ void BackgroundController::GetAvailableTiles(int viewportX, int viewportY)
 		if (listTile->find(index)->second->posX > viewportX && listTile->find(index)->second->posY < viewportY) {
 			currentTiles->push_back(index);
 		}
-	}
-}
-
-void BackgroundController::LoadQuadTreeFromFile(string quadtreeFileName)
-{
-	ifstream map(quadtreeFileName);
-	Load(&map, tree);
-	map.close();
-}
-
-void BackgroundController::Load(ifstream *map, QNode *& _nodeTree)
-{
-	int width, height, numberOfNode, numberOfObject;
-	float posX, posY;
-
-	*map >> posX >> posY >> width >> height >> numberOfNode >> numberOfObject;
-	int objectIndex = 0;
-	list<int> *_objOfNode = new list<int>();
-
-	for (int index = 0; index < numberOfObject; index++)
-	{
-		*map >> objectIndex;
-		_objOfNode->push_back(objectIndex);
-	}
-
-	_nodeTree = new QNode(posX, posY, width, height, numberOfNode != 0, *_objOfNode);
-	if (_nodeTree->hasNode) {
-		Load(map, _nodeTree->leftTop);
-		Load(map, _nodeTree->rightTop);
-		Load(map, _nodeTree->leftBottom);
-		Load(map, _nodeTree->rightBottom);
 	}
 }
 

@@ -71,7 +71,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			camera->UpdateCamera(player->x);
 		}
 
-		qGameObject->Update(player->x, player->y, t);
+		qGameObject->Update(player, t);
 		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
 		if (G_Device->BeginScene())
 		{
@@ -79,10 +79,8 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 			//----- start drawing
-
 			player->Update(t);
-			player->Collision(*(qGameObject->_staticObject), t);
-			player->Collision(*(qGameObject->_dynamicObject), t);
+			player->Collision(*(qGameObject->inSightObjects), t);
 			qGameObject->Collision(t);
 			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 			bg->Draw(camera);
@@ -99,7 +97,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new QGameObject("Resource/map/lv-2.1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

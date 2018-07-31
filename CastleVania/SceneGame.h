@@ -5,7 +5,7 @@
 #include "Background.h"
 #include "Simon.h"
 #include "Scene.h"
-#include "QGameObject.h"
+#include "ObjectsManager.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ protected:
 	D3DXVECTOR2 revivePosition; //Vi tri hoi sinh
 	D3DXVECTOR2 posDoor;
 	BackgroundController *bg;
-	QGameObject* qGameObject;
+	ObjectsManager* qGameObject;
 
 
 	int _levelNow, _stageNow;
