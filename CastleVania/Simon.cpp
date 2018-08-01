@@ -36,6 +36,7 @@ Simon::Simon(int _x, int _y)
 	isSit = false;
 	isStop = false;
 	isAttack = false;
+	isOnBrick = false;
 
 	live = 10;
 	weaponCount = 10;
@@ -97,6 +98,14 @@ void Simon::Draw(GCamera* camera)
 
 void Simon::Update(int deltaTime)
 {
+	/*
+	if (isOnBrick == false)
+	{
+		vY = -SPEED_Y;
+		//y += vY * deltaTime;
+		//return;
+	}
+	*/
 	switch (action)
 	{
 	case Action::Run_Right:
@@ -114,7 +123,8 @@ void Simon::Update(int deltaTime)
 	//sprite->Update(deltaTime);
 
 	x += vX * deltaTime;
-
+	//vY = -(SPEED_Y + 0.3f);
+	//y += vY * deltaTime;
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
@@ -128,7 +138,10 @@ void Simon::Update(int deltaTime)
 		y += vY * deltaTime;
 	}
 	
+	
+	
 }
+
 
 void Simon::RunLeft()
 {
@@ -182,10 +195,8 @@ void Simon::Sit()
 		return;
 	if (!isJump)
 	{
-		y -= 16;
 		sprite->SelectIndex(4);
 		vX = 0;
-		vY = -(SPEED_Y + 0.3f);
 		isSit = true;
 		action = Action::Sit;
 	}
@@ -273,7 +284,11 @@ void Simon::StandGround(ECollisionDirection colDirection, float dt)
 {
 	if (colDirection == ECollisionDirection::Colls_Bot) {
 		this->vY = 0;
+		isOnBrick = true;
 	}
+	else
+		isOnBrick = false;
+	
 
 	if (colDirection == ECollisionDirection::Colls_Left || colDirection == ECollisionDirection::Colls_Right) {
 		this->vX = 0;
@@ -284,6 +299,64 @@ void Simon::StandGround(ECollisionDirection colDirection, float dt)
 	sprite->SelectIndex(0);
 }
 
+void Simon::StandBrick(GameObject* other, int dt)
+{
+	Box box = this->GetBox();
+	Box boxOther = other->GetBox();
+
+	Box broadphasebox = getSweptBroadphaseBox(box, dt);
+	if (box.x + box.w >= 3865 && boxOther.x > 3865) {
+		int a = 0;
+	}
+
+	if (AABBCheck(broadphasebox, boxOther))
+	{
+		ECollisionDirection colDirection;
+		float collisiontime = sweptAABB(box, boxOther, colDirection, dt);
+		if (collisiontime < 1.0f && collisiontime >= 0)
+		{
+			if (colDirection == ECollisionDirection::Colls_Bot)
+			{
+				//StandGround(colDirection, dt);
+				//this->y += this->vY * collisiontime * dt + 5;
+				this->y = other->y + box.h + 20;
+				//vY = 0;
+
+				this->vY = 0;
+
+				action = Action::Stand;
+				isJump = false;
+				g = GRAVITATIONAL;
+				sprite->SelectIndex(0);
+				return;
+			}
+
+			if (colDirection == ECollisionDirection::Colls_Left)
+			{
+				//this->x = other->x + boxOther.w - 6;
+				//this->x = boxOther.x + boxOther.w - 10;
+				//this->vX = 0;
+				//y += 200;
+				this->x += this->vX * collisiontime * dt - 5 + 0.1;
+				action = Action::Stand;
+				return;
+			}
+
+			if (colDirection == ECollisionDirection::Colls_Right)
+			{
+				//this->x = other->x - box.w - 12;
+				this->x += this->vX * collisiontime * dt - 5 + 0.1;
+				//this->vX = 0;
+				action = Action::Stand;
+				return;
+			}
+			//else
+				//vY += SPEED_Y +0.3;
+		}
+	}
+	
+}
+
 void Simon::Collision(list<GameObject*> &obj, float dt)
 {
 	
@@ -292,10 +365,18 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	{
 		GameObject* other = (*_itBegin);
 
+		if (other->id == EnumID::Brick_ID)
+		{
+			StandBrick(other, dt);
+		}
 		//float moveX = 0.0f;
 		//float moveY = 0.0f;
+		/*
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
+
+
+
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 		if (box.x + box.w >= 3865 && boxOther.x > 3865) {
 			int a = 0;
@@ -304,13 +385,23 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 		{
 			ECollisionDirection colDirection;
 			float collisiontime = sweptAABB(box, boxOther, colDirection, dt);
-			if (collisiontime < 1.0f) {
+			if ( collisiontime < 1.0f) //collisiontime > 0 &&
+			{
 				if (other->id == EnumID::Brick_ID)
 				{
-					StandGround(colDirection, dt);
+					if (colDirection == ECollisionDirection::Colls_Bot)
+					{
+						//StandGround(colDirection, dt);
+						//y += vY * collisiontime * dt + 0.1 + 16;	
+						//y = boxOther.y + box.h;
+						//vY = 0;
+					}
+					else
+						isOnBrick = false;
 				}
+				
 			}
 		}
-
+		*/
 	}
 }
