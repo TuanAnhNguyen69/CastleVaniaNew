@@ -75,7 +75,11 @@ enum EnumID
 
 	//Bullet
 	Snake_ID,
-	Fire_ID
+	Fire_ID,
+
+	//UI
+	HP_ID,
+	GameUI_ID
 
 };
 

@@ -134,6 +134,9 @@
     <ClCompile Include="ObjectsManager.cpp">
       <Filter>Quad</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>GameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -273,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="ObjectsManager.h">
       <Filter>Quad</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>GameUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

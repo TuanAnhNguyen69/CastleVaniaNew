@@ -93,6 +93,10 @@ public:
 	Simon();
 	~Simon();
 
+	int score;
+	int live;
+	int weaponCount;
+	EnumID weaponID;
 	virtual void Draw(GCamera* camera);
 	virtual void Update(int deltaTime);
 	virtual void Collision(list<GameObject*> &obj, float dt);

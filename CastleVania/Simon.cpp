@@ -27,14 +27,19 @@ Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX
 Simon::Simon(int _x, int _y) 
 	: ActiveObject(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
-	hp = 40;
+	hp = 10;
 	action = Action::Stand;
+	score = 10;
 	g = GRAVITATIONAL;
 	isDie = false;
 	isJump = false;
 	isSit = false;
 	isStop = false;
 	isAttack = false;
+
+	live = 10;
+	weaponCount = 10;
+	weaponID = EnumID::Boomerang_ID;
 
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);

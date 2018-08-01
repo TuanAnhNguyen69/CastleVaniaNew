@@ -49,6 +49,8 @@ protected:
 	// door open and close
 	int _stageReset;
 	
+	// UI
+	GameUI *gameUI;
 
 	bool _firstMoveCameraDone;	//Di chuyen camera lan 1
 	bool _secondMoveCameraDone;	//Di chuyen camera lan 2

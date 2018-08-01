@@ -95,6 +95,7 @@
     <ClCompile Include="Candle.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HitEffect.cpp" />
     <ClCompile Include="Fire.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="dxutil.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HeaderObj.h" />
     <ClInclude Include="HitEffect.h" />

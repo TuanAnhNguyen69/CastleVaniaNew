@@ -10,6 +10,7 @@
 #include "GCamera.h"
 #include "EnumManager.h"
 #include "Game.h"
+#include "GameUI.h"
 
 class Scene
 {

@@ -12,6 +12,7 @@ SceneGame::SceneGame(void) : Scene(EnumSceneState::Scene_Game)
 	_stateCamera = ECameraState::Update_Camera;
 	score = 0;
 	totalResets = 3;
+	gameUI = NULL;
 }
 
 SceneGame::~SceneGame()
@@ -62,6 +63,8 @@ void SceneGame::LoadLevel(int level)
 	revivePosition.x = player->x;
 	revivePosition.y = player->y;
 	cameraPosition = camera->viewport;
+	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
+	gameUI->initTimer(100);
 }
 
 void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
@@ -72,7 +75,19 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			camera->UpdateCamera(player->x);
 		}
 
+		if (gameUI->getTimer() <= 0)
+		{
+			if (_levelNow == 1)
+				gameUI->initTimer(200);
+			else gameUI->initTimer(300);
+		}
+
+		player->Update(t);
+		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->x, player->y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y);
 		qGameObject->Update(player, t);
+		player->Collision(*(qGameObject->inSightObjects), t);
+		qGameObject->Collision(t);
+
 		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
 		//if (G_Device->BeginScene())
 		{
@@ -80,16 +95,13 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 			//----- start drawing
-			player->Update(t);
-			player->Collision(*(qGameObject->inSightObjects), t);
-			qGameObject->Collision(t);
-			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 			bg->Draw(camera);
 			qGameObject->Draw(camera);
-			player->Draw(camera);
 			//---- end drawing
+			gameUI->drawTable();
+			player->Draw(camera);
 			G_SpriteHandler->End();
-			G_Device->EndScene();
+			gameUI->drawScore();
 		}
 		
 }
@@ -98,7 +110,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1.1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

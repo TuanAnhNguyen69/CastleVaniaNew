@@ -92,6 +92,9 @@ TextureManager::TextureManager(void)
 	//HP
 	//Score
 
+	gameScore = new GTexture("Resource/sprites/UI/blackboard.png", 1, 1, 1);
+	hp = new GTexture("Resource/sprites/UI/heal.png", 3, 1, 3);
+
 }
 
 GTexture* TextureManager::getTexture(EnumID id)
@@ -204,11 +207,11 @@ GTexture* TextureManager::getTexture(EnumID id)
 	case EnumID::Water_ID:
 		return Water;
 	case EnumID::Barrier_ID:
-		return Barrier;
+		return Barrier;*/
 	case EnumID::HP_ID:
-		return HP;
-	case EnumID::Score_ID:
-		return Score;*/
+		return hp;
+	case EnumID::GameUI_ID:
+		return gameScore;
 
 	}
 }

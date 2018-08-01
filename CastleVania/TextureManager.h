@@ -69,6 +69,9 @@ private:
 	//Other
 	GTexture* hitEffect;
 	GTexture* rewardItem;
+	GTexture* hp;
+	GTexture* gameScore;
+
 
 	static TextureManager *single; 
 
