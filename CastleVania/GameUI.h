@@ -27,6 +27,7 @@ protected:
 	int _playerVY;
 	int _viewPortY;
 	int _viewPortX;
+	int _dt;
 
 	int _collideID;
 	int _colabc;
@@ -53,7 +54,7 @@ public:
 	// deltaTime_ is in milisecond
 	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_ = 20);
 
-	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, float _vX, float _vY, int viewPortX, int viewPortY);
+	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, float _vX, float _vY, int viewPortX, int viewPortY, int t);
 
 	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY, int collideId, bool abc, int rang, bool onstair,float checkCameraHaft);
 	~GameUI(void);

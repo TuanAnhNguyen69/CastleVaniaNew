@@ -123,8 +123,7 @@ public:
 	//Xu ly dung tren nen dat
 	void StandGround(ECollisionDirection direction, float dt);
 
-	void StandBrick(GameObject* obj, int dt);
-	
+	void StandBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
 };
 
 

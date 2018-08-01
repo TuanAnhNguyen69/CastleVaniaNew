@@ -86,8 +86,8 @@ void GameUI::drawScore()
 	_arial->render(_playerVX, 250, 80);
 	_arial->render("VY: ", 390, 80);
 	_arial->render(_playerVY, 480, 80);
-	_arial->render("ranger: ", 290, 80);
-	_arial->render(_rang, 360, 80);
+	_arial->render("dt: ", 290, 80);
+	_arial->render(_dt, 360, 80);
 	//_arial->render("onstair: ", 290, 80);
 	_arial->render(_onstair, 390, 100);
 	_arial->render(_checkCameraHaft, 100, 100);
@@ -163,7 +163,7 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 }
 
 
-void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, float _vX, float _vY, int viewPortX, int viewPortY)
+void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, float _vX, float _vY, int viewPortX, int viewPortY, int dt)
 {
 	//(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, EnumID weaponID_, int weaponCount_, int enemyHP_)
 	_gameStage = gameStage_;
@@ -181,6 +181,7 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 	_playerY = _y;
 	_playerVX = _vX;
 	_playerVY = _vY;
+	_dt = dt;
 	_viewPortY = viewPortY;
 	_viewPortX = viewPortX;
 	switch (weaponID_)

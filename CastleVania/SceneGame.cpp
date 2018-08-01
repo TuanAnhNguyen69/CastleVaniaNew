@@ -83,7 +83,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 		}
 
 		player->Update(t);
-		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->x, player->y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y);
+		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->x, player->y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
 		qGameObject->Update(player, t);
 		player->Collision(*(qGameObject->inSightObjects), t);
 		qGameObject->Collision(t);
@@ -110,7 +110,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1.1OBJ.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

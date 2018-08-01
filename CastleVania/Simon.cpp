@@ -6,24 +6,6 @@ Simon::Simon():ActiveObject()
 {
 }
 
-/*
-Simon::Simon(int _posX, int _posY, int _width, int _height) : ActiveObject(_posX, _posY, _width, _height, 0, -SPEED_Y, EnumID::Simon_ID)
-{
-	hp = 40;
-	action = Action::Stand;
-	g = GRAVITATIONAL;
-	isDie = false;
-	isJump = false;
-	isSit = false;
-	isStop = false;
-	isAttack = false;
-
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
-	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
-	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000/SIMON_FIGHT_RATE);
-}
-*/
-
 Simon::Simon(int _x, int _y) 
 	: ActiveObject(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
@@ -137,9 +119,6 @@ void Simon::Update(int deltaTime)
 	else {
 		y += vY * deltaTime;
 	}
-	
-	
-	
 }
 
 
@@ -177,7 +156,7 @@ void Simon::RunRight()
 
 void Simon::Jump()
 {
-	if (isSit)
+	if (isSit || isJump)
 		return;
 	if (!isJump)
 	{
@@ -272,11 +251,11 @@ Box Simon::GetBox()
 	if (isJump || isSit)
 	{
 		//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
-		return Box(x + 14.5f, y - 22, width - 29, height - 22, vX, vY);
+		return Box(x + 12, y - 22, width - 29, height - 22, vX, vY);
 		//return Box(x , y, width, height);
 	}
 	//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
-	return Box(x + 14.5f, y - 3, width - 29, height - 6, vX, vY);
+	return Box(x + 12, y - 3, width - 29, height - 6, vX, vY);
 	//return Box(x, y , width, height);
 }
 
@@ -299,27 +278,11 @@ void Simon::StandGround(ECollisionDirection colDirection, float dt)
 	sprite->SelectIndex(0);
 }
 
-void Simon::StandBrick(GameObject* other, int dt)
+void Simon::StandBrick(Box other, int dt, ECollisionDirection colDirection, float collisionTime)
 {
-	Box box = this->GetBox();
-	Box boxOther = other->GetBox();
-
-	Box broadphasebox = getSweptBroadphaseBox(box, dt);
-	if (box.x + box.w >= 3865 && boxOther.x > 3865) {
-		int a = 0;
-	}
-
-	if (AABBCheck(broadphasebox, boxOther))
-	{
-		ECollisionDirection colDirection;
-		float collisiontime = sweptAABB(box, boxOther, colDirection, dt);
-		if (collisiontime < 1.0f && collisiontime >= 0)
-		{
 			if (colDirection == ECollisionDirection::Colls_Bot)
 			{
-				//StandGround(colDirection, dt);
-				//this->y += this->vY * collisiontime * dt + 5;
-				this->y = other->y + box.h + 20;
+				this->y = other.y + this->height;
 				//vY = 0;
 
 				this->vY = 0;
@@ -333,28 +296,17 @@ void Simon::StandBrick(GameObject* other, int dt)
 
 			if (colDirection == ECollisionDirection::Colls_Left)
 			{
-				//this->x = other->x + boxOther.w - 6;
-				//this->x = boxOther.x + boxOther.w - 10;
-				//this->vX = 0;
-				//y += 200;
-				this->x += this->vX * collisiontime * dt - 5 + 0.1;
+				this->x += this->vX * collisionTime * dt + 5;
 				action = Action::Stand;
 				return;
 			}
 
 			if (colDirection == ECollisionDirection::Colls_Right)
 			{
-				//this->x = other->x - box.w - 12;
-				this->x += this->vX * collisiontime * dt - 5 + 0.1;
-				//this->vX = 0;
+				this->x += this->vX * collisionTime * dt - 5;
 				action = Action::Stand;
 				return;
 			}
-			//else
-				//vY += SPEED_Y +0.3;
-		}
-	}
-	
 }
 
 void Simon::Collision(list<GameObject*> &obj, float dt)
@@ -364,19 +316,9 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
-
-		if (other->id == EnumID::Brick_ID)
-		{
-			StandBrick(other, dt);
-		}
-		//float moveX = 0.0f;
-		//float moveY = 0.0f;
-		/*
+		
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
-
-
-
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 		if (box.x + box.w >= 3865 && boxOther.x > 3865) {
 			int a = 0;
@@ -384,24 +326,16 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 		if (AABBCheck(broadphasebox, boxOther))
 		{
 			ECollisionDirection colDirection;
-			float collisiontime = sweptAABB(box, boxOther, colDirection, dt);
-			if ( collisiontime < 1.0f) //collisiontime > 0 &&
+			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+			if ( collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
 			{
 				if (other->id == EnumID::Brick_ID)
 				{
-					if (colDirection == ECollisionDirection::Colls_Bot)
-					{
-						//StandGround(colDirection, dt);
-						//y += vY * collisiontime * dt + 0.1 + 16;	
-						//y = boxOther.y + box.h;
-						//vY = 0;
-					}
-					else
-						isOnBrick = false;
+					StandBrick(boxOther, dt, colDirection, collisionTime);
 				}
 				
 			}
 		}
-		*/
+		
 	}
 }
