@@ -4,7 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <limits>
-#include <math.h>
+
 struct Box
 {
 	// toa do top-left cua Box
@@ -59,8 +59,8 @@ inline Box getSweptBroadphaseBox(const Box& object, float t)
 {
 	float x = object.vx > 0 ? object.x : object.x + object.vx;
 	float y = object.vy > 0 ? object.y : object.y + object.vy;
-	float w = object.w + abs(object.vx * t);
-	float h = object.h + abs(object.vy * t);
+	float w = object.w + abs(object.vx *t);
+	float h = object.h + abs(object.vy *t);
 
 	return Box(x, y, w, h);
 }
@@ -111,8 +111,8 @@ inline float sweptAABB(const Box& b1, const Box& b2, ECollisionDirection& result
 	}
 	else
 	{
-		yEntry = yInvEntry / (b1.vy * dt);
-		yExit = yInvExit / (b1.vy * dt);
+		yEntry = yInvEntry / (b1.vy *dt);
+		yExit = yInvExit / (b1.vy *dt);
 	}
 
 	float entryTime = xEntry > yEntry ? xEntry : yEntry;

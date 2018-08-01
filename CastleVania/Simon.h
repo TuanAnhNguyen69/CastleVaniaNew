@@ -60,6 +60,8 @@ protected:
 	GSprite* simonDeath;
 	GSprite* simonKnockBack;
 
+	float y0;
+
 	//Da chet
 	bool isDie;
 
@@ -116,6 +118,8 @@ public:
 
 	//Xu ly dung tren nen dat
 	void StandGround(ECollisionDirection direction, float dt);
+
+	void StandBrick(GameObject* obj, int dt);
 	
 };
 
