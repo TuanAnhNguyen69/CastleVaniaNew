@@ -74,11 +74,23 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::Brick_ID:
 				objects->push_back(new Brick(posX, posY, false));
 				break;
-			case EnumID::StairUpLeft_ID:
-				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpLeft_ID));
+			case EnumID::StairLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairLeft_ID));
 				break;
-			case EnumID::StairUpRight_ID:
-				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
+			case EnumID::StairRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairRight_ID));
+				break;
+			case EnumID::StairTopLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairTopLeft_ID));
+				break;
+			case EnumID::StairTopRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairTopRight_ID));
+				break;
+			case EnumID::StairBotLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairBotLeft_ID));
+				break;
+			case EnumID::StairBotRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairBotRight_ID));
 				break;
 			case EnumID::Candle_ID:
 				objects->push_back(new Candle(posX, posY));

@@ -25,6 +25,9 @@ private:
 	//Ground
 	GTexture* brick;
 	GTexture* testBrick;
+	GTexture* stairTop;
+	GTexture* stairBot;
+
 	GTexture* breakableBrick;
 	GTexture* candle;
 	GTexture* movingPlatform;
