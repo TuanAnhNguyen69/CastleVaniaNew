@@ -20,6 +20,15 @@ Simon::Simon(int _x, int _y)
 	isAttack = false;
 	isOnBrick = false;
 
+	//onStair = false;
+	outStair = false;
+	//colBottomStair = false;
+	upStair = false;
+	downStair = false;
+	standOnStair = false;
+	colStair = false;
+
+
 	live = 10;
 	weaponCount = 10;
 	weaponID = EnumID::Boomerang_ID;
@@ -27,6 +36,7 @@ Simon::Simon(int _x, int _y)
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000 / SIMON_FIGHT_RATE);
+	simonOnStair = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 10, 13, 320);
 }
 
 Simon::~Simon()
@@ -63,7 +73,7 @@ void Simon::Draw(GCamera* camera)
 			}
 			if (onStair)
 			{
-				if (stairType == EStairType::UpRight || stairType == EStairType::DownRight)
+				if (stairType == EStairType::BotRight || stairType == EStairType::TopLeft)
 					simonOnStair->DrawFlipX(pos.x, pos.y);
 			}
 			//sprite->DrawFlipX(center.x, center.y);
@@ -79,7 +89,7 @@ void Simon::Draw(GCamera* camera)
 			}
 			if (onStair)
 			{
-				if (stairType == EStairType::UpLeft || stairType == EStairType::UpLeft)		//Hình như không cần dòng này
+				if (stairType == EStairType::BotLeft || stairType == EStairType::TopRight)		//Hình như không cần dòng này
 					simonOnStair->Draw(pos.x, pos.y);
 			}
 			//sprite->Draw(center.x, center.y);
@@ -117,7 +127,7 @@ void Simon::Update(int deltaTime)
 	x += vX * deltaTime;
 	//vY = -(SPEED_Y + 0.3f);
 	//y += vY * deltaTime;
-	if (colBottomStair)
+	//if (colBottomStair)
 		UpdateStair(deltaTime);
 
 	if (isJump)
@@ -347,10 +357,10 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				case EnumID::Brick_ID:
 					StandBrick(boxOther, dt, colDirection, collisionTime);
 					break;
-				case EnumID::StairDownLeft_ID:
-				case EnumID::StairDownRight_ID:
-				case EnumID::StairUpLeft_ID:
-				case EnumID::StairUpRight_ID:
+				case EnumID::StairBotLeft_ID:
+				case EnumID::StairBotRight_ID:
+				case EnumID::StairTopLeft_ID:
+				case EnumID::StairTopRight_ID:
 					TakeOnStairs(other, dt);
 					break;
 				default:
@@ -364,29 +374,29 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 void Simon::SetUpStair()
 {
-	if (stairType == EStairType::DownLeft)
+	if (stairType == EStairType::TopRight)
 	{
 		vX = vLast = -1;
-		stairType = EStairType::UpRight;
+		stairType = EStairType::BotRight;
 	}
-	if (stairType == EStairType::DownRight)
+	if (stairType == EStairType::TopLeft)
 	{
 		vX = vLast = 1;
-		stairType = EStairType::UpLeft;
+		stairType = EStairType::BotLeft;
 	}
 }
 
 void Simon::SetDownStair()
 {
-	if (stairType == EStairType::UpRight)
+	if (stairType == EStairType::BotRight)
 	{
 		vX = vLast = -1;
-		stairType = EStairType::DownLeft;
+		stairType = EStairType::TopRight;
 	}
-	if (stairType == EStairType::UpLeft)
+	if (stairType == EStairType::BotLeft)
 	{
 		vX = vLast = 1;
-		stairType = EStairType::DownRight;
+		stairType = EStairType::TopLeft;
 	}
 }
 
@@ -404,17 +414,17 @@ void Simon::OutStair()
 
 		switch (stair->id)
 		{
-		case EnumID::StairUpLeft_ID:
-			stairType = EStairType::UpLeft;
+		case EnumID::StairBotLeft_ID:
+			stairType = EStairType::BotLeft;
 			break;
-		case EnumID::StairUpRight_ID:
-			stairType = EStairType::UpRight;
+		case EnumID::StairBotRight_ID:
+			stairType = EStairType::BotRight;
 			break;
-		case EnumID::StairDownLeft_ID:
-			stairType = EStairType::DownLeft;
+		case EnumID::StairTopRight_ID:
+			stairType = EStairType::TopRight;
 			break;
-		case EnumID::StairDownRight_ID:
-			stairType = EStairType::DownRight;
+		case EnumID::StairTopLeft_ID:
+			stairType = EStairType::TopLeft;
 			break;
 		default:
 			break;
@@ -424,8 +434,8 @@ void Simon::OutStair()
 
 bool Simon::OnStair()
 {
-	if ((stair->y = y - 14 && colStair &&
-		(stair->id == EnumID::StairDownLeft_ID || stair->id == EnumID::StairDownRight_ID)) || onStair)
+	if ((stair->y == y - 14 && colStair &&
+		(stair->id == EnumID::StairTopRight_ID || stair->id == EnumID::StairTopLeft_ID)) || onStair)
 		return true;
 	return false;
 }
@@ -447,12 +457,12 @@ void Simon::UpStair()
 	}
 	if (isJump || action == Action::Attack)
 		return;
-	if (colBottomStair)		//chưa hiểu lắm
-		return;
+	//if (colBottomStair)		//chưa hiểu lắm
+	//	return;
 
 	if (abs(rangeStair) <= 40)		//Cách 1 khoảng <= 40 khi nhấn lên sẽ di chuyển lại đầu cầu thang
 	{
-		if (colStair && stair->y == y && (stair->id == EnumID::StairUpLeft_ID || stair->id == EnumID::StairUpRight_ID))
+		if (colStair && stair->y == this->GetBox().y -14 && (stair->id == EnumID::StairBotLeft_ID || stair->id == EnumID::StairBotRight_ID))
 		{
 			if (!colBottomStair)			//bắt đầu đi lên
 				colBottomStair = true;
@@ -474,7 +484,7 @@ void Simon::UpStair()
 		}
 	}
 	else
-		onStair = false;
+		colStair = false;
 }
 
 void Simon::DownStair()
@@ -493,7 +503,7 @@ void Simon::DownStair()
 
 	if (abs(rangeStair) <= 40)
 	{
-		if (colStair && stair->y == y - 14 && (stair->id == EnumID::StairDownLeft_ID || stair->id == EnumID::StairDownRight_ID))
+		if (colStair && stair->y == y - 14 && (stair->id == EnumID::StairTopRight_ID || stair->id == EnumID::StairTopLeft_ID))
 		{
 			if (!colBottomStair)
 				colBottomStair = true;
@@ -524,16 +534,16 @@ void Simon::UpdateStair(int dt)
 	{
 		if (colBottomStair)
 		{
-			if (rangeStair > 0)			//Simon bên phải đầu cầu thang
+			if (rangeStair < 0)			//Simon bên trái đầu cầu thang
 			{
 				vX = vLast = 1;
-				x += 1;
+				this->x += 1;
 				rangeStair += 1;		//Simon luôn hướng về vị trí rangeStair = 0
 			}
-			if (rangeStair < 0)			//Siomon bên trái đầu cầu thang
+			if (rangeStair > 0)			//Siomon bên phải đầu cầu thang
 			{
 				vX = vLast = -1;
-				x -= 1;
+				this->x -= 1;
 				rangeStair -= 1;
 			}
 			if (rangeStair == 0)		//Simon ở điểm rangeStair =0 bắt đầu di chuyển trên cầu thang
@@ -543,37 +553,37 @@ void Simon::UpdateStair(int dt)
 
 				switch (stair->id)
 				{
-				case EnumID::StairUpLeft_ID:
-					stairType = EStairType::UpLeft;
+				case EnumID::StairBotLeft_ID:
+					stairType = EStairType::BotLeft;
 					break;
-				case EnumID::StairUpRight_ID:
-					stairType = EStairType::UpRight;
+				case EnumID::StairBotRight_ID:
+					stairType = EStairType::BotRight;
 					break;
-				case EnumID::StairDownLeft_ID:
-					stairType = EStairType::DownLeft;
+				case EnumID::StairTopRight_ID:
+					stairType = EStairType::TopRight;
 					break;
-				case EnumID::StairDownRight_ID:
-					stairType = EStairType::DownRight;
+				case EnumID::StairTopLeft_ID:
+					stairType = EStairType::TopLeft;
 					break;
 				default:
 					break;
 				}
 
 				//Xét vX
-				if (stairType == EStairType::UpRight || stairType == EStairType::DownRight)
+				if (stairType == EStairType::BotRight || stairType == EStairType::TopLeft)
 					vX = vLast = 1;
-				if (stairType == EStairType::UpLeft || stairType == EStairType::DownLeft)
+				if (stairType == EStairType::BotLeft || stairType == EStairType::TopRight)
 					vX = vLast = -1;
 
 				//Xét vY
-				if (stairType == EStairType::UpRight || stairType == EStairType::UpLeft)
+				if (stairType == EStairType::BotRight || stairType == EStairType::BotLeft)
 				{
 					//Vì chỉ đi bước 1 chân lên cầu thang, chân trụ vẫn còn ở mặt đất
 					//Nên chỉ cao hơn khi đứng dưới đất 2 đơn vị
 					y += 2;			
 					simonOnStair->SelectIndex(12);
 				}
-				if (stairType == EStairType::DownRight || stairType == EStairType::DownLeft)
+				if (stairType == EStairType::TopLeft || stairType == EStairType::TopRight)
 				{
 					//Bước 1 chân xuống cầu thang, chân trụ khuỵu xuống
 					//Nên sẽ thấp hơn khi đứng ở mặt đất 16 đơn vị (bằng chênh lệch giữa ngồi và đứng)
@@ -581,25 +591,32 @@ void Simon::UpdateStair(int dt)
 					simonOnStair->SelectIndex(10);
 				}
 			}
-			else if (outStair)	//Ra khỏi cầu thang
-			{
-				colStair = false;	//Không va chạm với cầu thang nữa
-				sprite->SelectIndex(0);
-				stairType = EStairType::NoneType;
-				//action = Action::Stand;		//không chắc
-			}
+			sprite->Update(dt);
 		}
-		else			//Không ở đầu cầu thang => đang đi trên cầu thang
+		else if (outStair)	//Ra khỏi cầu thang
 		{
-			if(upStair)		//Đang đi lên
-			{ 
+			colStair = false;	//Không va chạm với cầu thang nữa
+			sprite->SelectIndex(0);
+			stairType = EStairType::NoneType;
+			//action = Action::Stand;		//không chắc
+		}
+		
+	}
+	else			//Không ở đầu cầu thang => đang đi trên cầu thang
+	{
+		if (upStair)		//Đang đi lên
+		{
+			if (stairType == EStairType::BotRight)		//Đi lên bên phải
+			{
 				timeOnStair += 1;		//Thời gian đi trên cầu thang bắt đầu được tính
-				y += 1.6;
+				vX = vLast = 1;
 
 				//Nếu timeOnStair = 10 thì simon bước được 1 bậc rồi dừng lại
 				//Nếu nhấn phím lên 1 lần nữa, thì sẽ bước 1 bậc nữa
 				if (timeOnStair <= 10)
 				{
+					y += 1.6;
+					x += 1.6;
 					if (timeOnStair > 1 && timeOnStair < 6)
 						simonOnStair->SelectIndex(13);		//Động tác bước chân trước lên
 					else
@@ -612,25 +629,63 @@ void Simon::UpdateStair(int dt)
 						return;
 					}
 				}
-
-				if (stairType == EStairType::UpRight)		//Đi lên bên phải
-				{
-					vX = vLast = 1;
-					x += 1.6;
-				}
-				if (stairType == EStairType::UpLeft)		//Đi lên bên trái
-				{
-					vX = vLast = -1;
-					x -= 1.6;
-				}
+				
 			}
-			else if (downStair)								//Đi xuống
+			if (stairType == EStairType::BotLeft)		//Đi lên bên trái
+			{
+				timeOnStair += 1;		//Thời gian đi trên cầu thang bắt đầu được tính
+				vX = vLast = -1;
+				if (timeOnStair <= 10)
+				{
+					y += 1.6;
+					x -= 1.6;
+					if (timeOnStair > 1 && timeOnStair < 6)
+						simonOnStair->SelectIndex(13);		
+					else
+						simonOnStair->SelectIndex(12);		
+
+					if (timeOnStair == 10)					
+					{
+						standOnStair = true;				
+						timeOnStair = 0;					
+						return;
+					}
+				}
+			}	
+		}
+		else if (downStair)								//Đi xuống
+		{
+
+			if (stairType == EStairType::TopLeft)
 			{
 				timeOnStair += 1;
-				y -= 1.6;
+				vX = vLast = 1;
 
 				if (timeOnStair <= 10)
 				{
+					x += 1.6;
+					y -= 1.6;
+					if (timeOnStair > 1 && timeOnStair < 6)
+						simonOnStair->SelectIndex(10);
+					else
+						simonOnStair->SelectIndex(12);
+
+					if (timeOnStair == 10)
+					{
+						standOnStair = true;
+						timeOnStair = 0;
+						return;
+					}
+				}		
+			}
+			if (stairType == EStairType::TopLeft)
+			{
+				timeOnStair += 1;
+				vX = vLast = -1;
+				if (timeOnStair <= 10)
+				{
+					x -= 1.6;
+					y -= 1.6;
 					if (timeOnStair > 1 && timeOnStair < 6)
 						simonOnStair->SelectIndex(10);
 					else
@@ -651,7 +706,7 @@ void Simon::UpdateStair(int dt)
 void Simon::TakeOnStairs(GameObject *other, int dt)
 {
 	Box simon = this->GetBox();
-	Box boxOther = other->GetBox();
+	Box boxStair = other->GetBox();
 	stair = other;
 
 	//Nếu biến 
@@ -659,64 +714,68 @@ void Simon::TakeOnStairs(GameObject *other, int dt)
 		colStair = true;
 	switch (other->id)
 	{
-		case EnumID::StairUpRight_ID:
+		case EnumID::StairBotRight_ID:
 		{
 			if (!colBottomStair)
-				rangeStair = x - (other->x);	// - k);	k là số để điều chỉnh cho hợp lý với cầu thang
+				rangeStair = simon.x - (boxStair.x);	// - k);	k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair && onStair)
-				stairType = EStairType::UpRight;
-			 
-			float compareHeight = (simon.y - simon.h) - (boxOther.y - boxOther.h);
-			if (compareHeight == 0 && stairType == EStairType::DownLeft)
+				stairType = EStairType::BotRight;
+			/*
+			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
+			if (compareHeight == 0 && stairType == EStairType::TopRight)
 			{
 				outStair = true;
 				OutStair();
 			}
+			*/
 		}
 		break;
-		case EnumID::StairUpLeft_ID:
+		case EnumID::StairBotLeft_ID:
 		{
 			if (!colBottomStair)
-				rangeStair = x - (other->x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
+				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
-				stairType = EStairType::UpLeft;
-
-			float compareHeight = (simon.y - simon.h) - (boxOther.y - boxOther.h);
-			if (compareHeight == 0 && stairType == EStairType::DownRight)
+				stairType = EStairType::BotLeft;
+			/*
+			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
+			if (compareHeight == 0 && stairType == EStairType::TopLeft)
 			{
 				outStair = true;
 				OutStair();
 			}
+			*/
 		}
 		break;
-		case EnumID::StairDownLeft_ID:
+		case EnumID::StairTopRight_ID:
 		{
 			if (!colBottomStair)
-				rangeStair = x - (other->x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
+				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
-				stairType = EStairType::DownLeft;
-
-			float compareHeight = (simon.y - simon.h) - (boxOther.y - boxOther.h);
-			if (compareHeight == 0 && stairType == EStairType::UpRight)
+				stairType = EStairType::TopRight;
+			/*
+			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
+			if (compareHeight == 0 && stairType == EStairType::BotRight)
 			{
 				outStair = true;
 				OutStair();
 			}
+			*/
 		}
 		break;
-		case EnumID::StairDownRight_ID:
+		case EnumID::StairTopLeft_ID:
 		{
 			if (!colBottomStair)
-				rangeStair = x - (other->x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
+				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
-				stairType = EStairType::DownRight;
-
-			float compareHeight = (simon.y - simon.h) - (boxOther.y - boxOther.h);
-			if (compareHeight == 0 && stairType == EStairType::UpLeft)
+				stairType = EStairType::TopLeft;
+			/*
+			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
+			if (compareHeight == 0 && stairType == EStairType::BotLeft)
 			{
 				outStair = true;
 				OutStair();
 			}
+			*/
 		}
 		break;
 		default:

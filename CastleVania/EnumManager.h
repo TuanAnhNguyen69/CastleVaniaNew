@@ -27,8 +27,12 @@ enum EnumID
 
 	//ground
 	MovingPlatform_ID,
-	StairUpLeft_ID,
-	StairUpRight_ID,
+	StairLeft_ID,
+	StairRight_ID,
+	StairTopLeft_ID,
+	StairTopRight_ID,
+	StairBotLeft_ID,
+	StairBotRight_ID,
 	Door_ID,
 	Tele_ID,
 	Trap_ID,
@@ -83,16 +87,18 @@ enum EnumID
 
 
 	//Gournd
-	StairDownLeft_ID,
-	StairDownRight_ID,
+	//StairDownLeft_ID,
+	//StairDownRight_ID,
 };
 
 enum EStairType
 {
-	UpRight,
-	UpLeft,
-	DownRight,
-	DownLeft,
+	TopLeft,
+	BotLeft,
+	TopRight,
+	BotRight,
+	Left,
+	Right,
 	NoneType,
 };
 

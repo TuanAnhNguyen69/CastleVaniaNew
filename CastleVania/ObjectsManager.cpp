@@ -74,11 +74,23 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::Brick_ID:
 				objects->push_back(new Brick(posX, posY, false));
 				break;
-			case EnumID::StairUpLeft_ID:
-				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpLeft_ID));
+			case EnumID::StairLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairLeft_ID));
 				break;
-			case EnumID::StairUpRight_ID:
-				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairUpRight_ID));
+			case EnumID::StairRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairRight_ID));
+				break;
+			case EnumID::StairTopLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairTopLeft_ID));
+				break;
+			case EnumID::StairTopRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairTopRight_ID));
+				break;
+			case EnumID::StairBotLeft_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairBotLeft_ID));
+				break;
+			case EnumID::StairBotRight_ID:
+				objects->push_back(new Stair(posX, posY, width, height, EnumID::StairBotRight_ID));
 				break;
 			case EnumID::Candle_ID:
 				objects->push_back(new Candle(posX, posY));
@@ -198,73 +210,26 @@ void ObjectsManager::Collision(int dt)
 // Gọi về hàm update của từng game object để vẽ hình
 void ObjectsManager::Update(int deltaTime)
 {
-	list<GameObject*>::iterator it = inSightObjects->begin();
-	while (it != inSightObjects->end())
+	list<GameObject*>::iterator it = objects->begin();
+	while (it != objects->end())
 	{	
 		{
 			(*it)->Update(deltaTime);
 			++it;
 		}
 	}
-
-	it = inSightObjects->begin();
-	while (it != inSightObjects->end())
-	{
-		if  (!IsPausing() || (IsPausing() && (*it)->type != ObjectType::Enemy_Type)) {
-				if ((*it)->active) {
-				
-					(*it)->Update(deltaTime);
-				}
-				it++;
-		}
-		else 
-		++it;
-	}
 }
 void ObjectsManager::Update(Simon* simon, int deltaTime)
 {
 	inSightObjects = new list<GameObject*>();
 	quadtree->Retrieve(inSightObjects, simon);
-	list<GameObject*>::iterator it = inSightObjects->begin();
-	while (it != inSightObjects->end())
+	list<GameObject*>::iterator it = objects->begin();
+	while (it != objects->end())
 	{
 		{
 			(*it)->Update(deltaTime);
 			++it;
 		}
-	}
-
-	it = inSightObjects->begin();
-	while (it != inSightObjects->end())
-	{
-		if (!IsPausing() || (IsPausing() && (*it)->type != ObjectType::Enemy_Type)) {
-			if ((*it)->id == EnumID::Medusa_ID)
-			{
-				if (((Medusa*)*it)->StateCancel())
-				{
-					/*_dynamicObject->push_back(new MagicalBall((*it)->posX, (*it)->posY));*/
-					inSightObjects->erase(it++);
-				}
-				else ++it;
-			}
-			else {
-
-				if ((*it)->active)
-				{
-
-					if ((*it)->neededPlayerPosition) {
-						(*it)->Update(simon->x,simon->y, deltaTime);
-					}
-					else {
-						(*it)->Update(deltaTime);
-					}
-				}
-				it++;
-
-			}
-		}
-		else
-			++it;
 	}
 }
 // Neu IsPausing == false -> Game chay binh thuong

@@ -46,6 +46,8 @@ TextureManager::TextureManager(void)
 	//Ground
 	brick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 	testBrick = new GTexture("Resource/sprites/Ground/13.png", 3, 1, 3);
+	stairTop = new GTexture("Resource/sprites/Ground/stairTop.png", 1, 1, 1);
+	stairBot = new GTexture("Resource/sprites/Ground/stairBot.png", 1, 1, 1);
 	transparentSprite = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 		//Xem lai
 	breakableBrick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
@@ -142,9 +144,15 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return trap;
 	case EnumID::Door_ID:
 		return door;
-	case EnumID::StairUpLeft_ID:
-	case EnumID::StairUpRight_ID:
+	case EnumID::StairLeft_ID:
+	case EnumID::StairRight_ID:
 		return transparentSprite;
+	case EnumID::StairTopLeft_ID:
+	case EnumID::StairTopRight_ID:
+		return stairTop;
+	case EnumID::StairBotLeft_ID:
+	case EnumID::StairBotRight_ID:
+		return stairBot;
 	//Sub-Weapon
 	case EnumID::Axe_Weapon_ID:
 		return axe;

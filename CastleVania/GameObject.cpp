@@ -60,8 +60,6 @@ void GameObject::CreateSprite()
 	switch (id)
 	{
 	case EnumID::Brick_ID:
-	case EnumID::StairUpRight_ID:
-	case EnumID::StairUpLeft_ID:
 	case EnumID::Tele_ID:
 		sprite = NULL;
 		break;

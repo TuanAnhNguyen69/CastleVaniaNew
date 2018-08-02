@@ -28,8 +28,12 @@ enum EnumID
 
     //ground
     MovingPlatform_ID,
-    StairUpLeft_ID,
-    StairUpRight_ID,
+    StairLeft_ID,
+    StairRight_ID,
+    StairTopLeft_ID,
+    StairTopRight_ID,
+    StairBotLeft_ID,
+    StairBotRight_ID,
     Door_ID,
     Tele_ID,
     Trap_ID,
@@ -332,9 +336,17 @@ namespace MapEditor
                     return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\door.png"));
                 case (int) EnumID.MovingPlatform_ID:
                     return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\movingplatform.png"));
-                case (int) EnumID.StairUpLeft_ID:
+                case (int) EnumID.StairLeft_ID:
                     return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairleft.png"));
-                case (int) EnumID.StairUpRight_ID:
+                case (int) EnumID.StairRight_ID:
+                    return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairright.png"));
+                case (int)EnumID.StairTopLeft_ID:
+                    return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairleft.png"));
+                case (int)EnumID.StairTopRight_ID:
+                    return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairright.png"));
+                case (int)EnumID.StairBotLeft_ID:
+                    return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairleft.png"));
+                case (int)EnumID.StairBotRight_ID:
                     return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\stairright.png"));
                 case (int) EnumID.Tele_ID:
                     return new Bitmap(Path.Combine(Application.StartupPath, @"resource\image\ground\tele.png"));
@@ -646,13 +658,13 @@ namespace MapEditor
 
         private void stairToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairUpRight_ID);
+            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairRight_ID);
 
         }
 
         private void stairLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairUpLeft_ID);
+            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairLeft_ID);
 
         }
 
@@ -771,7 +783,9 @@ namespace MapEditor
         {
 
             Bitmap bm = new Bitmap(Path.Combine(Application.StartupPath, path));
-            if(ID == (int) EnumID.Brick_ID || ID == (int)EnumID.StairUpLeft_ID || ID == (int)EnumID.StairUpRight_ID || ID == (int)EnumID.Door_ID)
+            if(ID == (int) EnumID.Brick_ID || ID == (int)EnumID.StairLeft_ID || ID == (int)EnumID.StairRight_ID 
+                || ID == (int)EnumID.Door_ID || ID == (int)EnumID.StairTopLeft_ID || ID == (int)EnumID.StairTopRight_ID 
+                || ID == (int)EnumID.StairBotLeft_ID || ID == (int)EnumID.StairBotRight_ID)
             {
                 currentMouse = new Point((currentMouse.X / 32) * 32, (currentMouse.Y / 32) * 32);
             }
@@ -780,6 +794,30 @@ namespace MapEditor
             ObjectGame obj = new ObjectGame(bm, ID);
             obj.SetLocation(currentMouse.X, currentMouse.Y);
             addObject(obj);
+        }
+
+        private void stairTopLeftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairTopLeft_ID);
+
+        }
+
+        private void stairTopRightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairTopRight_ID);
+
+        }
+
+        private void stairBotLeftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairBotLeft_ID);
+
+        }
+
+        private void stairBotRightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairBotRight_ID);
+
         }
 
         void addObject(ObjectGame obj)
