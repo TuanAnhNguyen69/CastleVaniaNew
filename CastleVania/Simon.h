@@ -114,6 +114,32 @@ public:
 	void Attack();
 	void OnAttack(int deltaTime);
 
+	//Stair
+	GameObject* stair;		//đối tượng stair đang xét
+
+	bool colBottomStair;	//có lên cầu thang không
+	bool onStair;			//có ở trên stair không
+	bool upStair;			//có đi lên stair không
+	bool downStair;			//có đi xuống stair không
+	bool colStair;			//có chạm vào 1 trong 2 đầu cầu thang không
+	bool standOnStair;		//có đứng trên cầu thang không
+	bool outStair;			//có ra ngoài cầu thang không
+	float rangeStair;		//khoảng các từ simon tới stair
+	int timeOnStair;		//thời gian đi 1 bậc
+	EStairType stairType;	//loại stair
+
+	void UpStair();
+	void DownStair();
+	bool OnStair();
+	void OutStair();
+	void ResetStair();
+	void UpdateStair(int deltaTime);
+	void SetUpStair();
+	void SetDownStair();
+
+	GSprite *simonOnStair;
+	GSprite *simonAttackUpStair;
+	GSprite *simonAttackDownStair;
 
 	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int deltaTime);
@@ -124,6 +150,7 @@ public:
 	void StandGround(ECollisionDirection direction, float dt);
 
 	void StandBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
+	void TakeOnStairs(GameObject *other, int dt);
 };
 
 

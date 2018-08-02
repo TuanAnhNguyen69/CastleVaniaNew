@@ -110,7 +110,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1.1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
 	camera->SetSizeMap(4096, 0);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
@@ -247,7 +247,15 @@ void SceneGame::ProcessInput(int KeyCode) {
 	case DIK_A:
 		player->RunLeft();
 		break;
+	case DIK_UP:
+	case DIK_W:
+		player->UpStair();
+		break;
 	case DIK_DOWN:
+	case DIK_S:
+		if (player->onStair)
+			player->DownStair();
+		else
 			player->Sit();
 		break;
 	default:

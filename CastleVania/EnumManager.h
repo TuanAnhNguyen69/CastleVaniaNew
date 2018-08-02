@@ -79,14 +79,21 @@ enum EnumID
 
 	//UI
 	HP_ID,
-	GameUI_ID
+	GameUI_ID,
 
+
+	//Gournd
+	StairDownLeft_ID,
+	StairDownRight_ID,
 };
 
 enum EStairType
 {
 	UpRight,
 	UpLeft,
+	DownRight,
+	DownLeft,
+	NoneType,
 };
 
 enum ObjectType {
