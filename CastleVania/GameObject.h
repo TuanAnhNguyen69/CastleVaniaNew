@@ -76,6 +76,7 @@ public:
 
 	//Lay thuoc tinh cua Box
 	virtual Box GetBox();
+	virtual D3DXVECTOR2 GetPos();
 
 	//Nhan damage
 	virtual void ReceiveDamage(int damage);

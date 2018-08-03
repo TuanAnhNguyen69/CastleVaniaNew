@@ -24,6 +24,7 @@ SpearGuard::SpearGuard(float _x, float _y)
 {
 	active = true;
 	hp = 3;
+	damage = 3;
 	point = 500;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
@@ -43,6 +44,8 @@ void SpearGuard::Update(int deltaTime)
 	}
 	sprite->Update(deltaTime);
 }
+
+
 
 void SpearGuard::Draw(GCamera* camera)
 {
@@ -67,4 +70,14 @@ void SpearGuard::Draw(GCamera* camera)
 		sprite->DrawFlipX(pos.x, pos.y);
 	else
 		sprite->Draw(pos.x, pos.y);
+}
+
+Box SpearGuard::GetBox()
+{
+	Box box = Box(0, 0, 0,0);
+	box.x = this->x;
+	box.y = this->y;
+	box.w = 32;
+	box.h = 64;
+	return box;
 }

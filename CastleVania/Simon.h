@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "ActiveObject.h"
+#include "Whip.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -60,6 +61,8 @@ protected:
 	GSprite* simonDeath;
 	GSprite* simonKnockBack;
 
+	Whip* whip;
+
 	float y0;
 
 	//Da chet
@@ -117,14 +120,14 @@ public:
 	//Stair
 	GameObject* stair;		//đối tượng stair đang xét
 
-	bool colBottomStair;	//có lên cầu thang không
+	bool startStair;		//bắt đầu đi
 	bool onStair;			//có ở trên stair không
 	bool upStair;			//có đi lên stair không
 	bool downStair;			//có đi xuống stair không
 	bool colStair;			//có chạm vào 1 trong 2 đầu cầu thang không
 	bool standOnStair;		//có đứng trên cầu thang không
 	bool outStair;			//có ra ngoài cầu thang không
-	float rangeStair;		//khoảng các từ simon tới stair
+	int rangeStair;		//khoảng các từ simon tới stair
 	int timeOnStair;		//thời gian đi 1 bậc
 	EStairType stairType;	//loại stair
 
@@ -150,7 +153,11 @@ public:
 	void StandGround(ECollisionDirection direction, float dt);
 
 	void StandBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
-	void TakeOnStairs(GameObject *other, int dt);
+	void TakeOnStairs(GameObject *other);
+
+	void Die();
+
+	void ReceiveDamage(GameObject *enemy);
 };
 
 

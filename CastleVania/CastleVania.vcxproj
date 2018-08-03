@@ -132,6 +132,9 @@
     <ClCompile Include="Dracula.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Whip.cpp" />
+    <ClCompile Include="WhipRect.cpp" />
+    <ClCompile Include="WhipSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActiveObject.h" />
@@ -181,6 +184,9 @@
     <ClInclude Include="Dracula.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Whip.h" />
+    <ClInclude Include="WhipRect.h" />
+    <ClInclude Include="WhipSprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,7 +22,7 @@ Simon::Simon(int _x, int _y)
 
 	//onStair = false;
 	outStair = false;
-	//colBottomStair = false;
+	//startStair = false;
 	upStair = false;
 	downStair = false;
 	standOnStair = false;
@@ -32,6 +32,9 @@ Simon::Simon(int _x, int _y)
 	live = 10;
 	weaponCount = 10;
 	weaponID = EnumID::Boomerang_ID;
+
+	whip = new Whip(_x, _y, 0, 0, EnumID::MorningStar_ID, 1000 / 20);
+	whip->UpdateLevel();
 
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
@@ -127,7 +130,7 @@ void Simon::Update(int deltaTime)
 	x += vX * deltaTime;
 	//vY = -(SPEED_Y + 0.3f);
 	//y += vY * deltaTime;
-	//if (colBottomStair)
+	if (startStair )//&& upStair)
 		UpdateStair(deltaTime);
 
 	if (isJump)
@@ -225,6 +228,16 @@ void Simon::OnAttack(int deltaTime)
 		action = Action::Stand;
 		simonAttack->Reset();
 	}
+
+	whip->Update(deltaTime);
+
+	// Update the Vx of morningStar
+	float morningStarVx = -1;
+	if (vX > 0 || vLast > 0)
+		morningStarVx = -morningStarVx;
+	whip->UpdateVx(morningStarVx);
+
+	whip->UpdateXY(x, y);
 }
 
 void Simon::Stop()
@@ -361,7 +374,11 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				case EnumID::StairBotRight_ID:
 				case EnumID::StairTopLeft_ID:
 				case EnumID::StairTopRight_ID:
-					TakeOnStairs(other, dt);
+					TakeOnStairs(other);
+					break;
+				case EnumID::SpearGuard_ID:
+					this->ReceiveDamage(other);
+					sprite->SelectIndex(8);
 					break;
 				default:
 					break;
@@ -408,6 +425,7 @@ void Simon::OutStair()
 		downStair = false;
 		onStair = false;
 		colStair = false;
+		startStair = false;
 		vX = 0;
 		vY = -SPEED_Y;
 		sprite->SelectIndex(0);
@@ -457,16 +475,16 @@ void Simon::UpStair()
 	}
 	if (isJump || action == Action::Attack)
 		return;
-	//if (colBottomStair)		//chưa hiểu lắm
-	//	return;
-
-	if (abs(rangeStair) <= 40)		//Cách 1 khoảng <= 40 khi nhấn lên sẽ di chuyển lại đầu cầu thang
+	if (startStair)		//chưa hiểu lắm
+		return;
+	startStair = true;
+	if (abs(rangeStair) <= 20)		//Cách 1 khoảng <= 40 khi nhấn lên sẽ di chuyển lại đầu cầu thang
 	{
-		if (colStair && stair->y == this->GetBox().y -14 && (stair->id == EnumID::StairBotLeft_ID || stair->id == EnumID::StairBotRight_ID))
+		if (colStair  && (stair->id == EnumID::StairBotLeft_ID || stair->id == EnumID::StairBotRight_ID))// && stair->y == this->GetBox().y - 14)
 		{
-			if (!colBottomStair)			//bắt đầu đi lên
-				colBottomStair = true;
-			else
+			//if (!startStair)			//bắt đầu đi lên
+				//startStair = true;
+			//else
 			{
 				onStair = true;
 				timeOnStair = 0;
@@ -498,15 +516,15 @@ void Simon::DownStair()
 
 	if (isJump || action == Action::Attack)
 		return;
-	if (colBottomStair)		//chưa hiểu lắm
-		return;
+	//if (startStair)		//chưa hiểu lắm
+		//return;
 
 	if (abs(rangeStair) <= 40)
 	{
 		if (colStair && stair->y == y - 14 && (stair->id == EnumID::StairTopRight_ID || stair->id == EnumID::StairTopLeft_ID))
 		{
-			if (!colBottomStair)
-				colBottomStair = true;
+			if (!startStair)
+				startStair = true;
 			else
 			{
 				onStair = true;
@@ -518,7 +536,7 @@ void Simon::DownStair()
 			else
 			{
 				onStair = true;
-				SetDownStair();
+				//SetDownStair();
 				simonOnStair->SelectIndex(11);
 				timeOnStair = 0;
 			}
@@ -532,7 +550,7 @@ void Simon::UpdateStair(int dt)
 {
 	if (!onStair)
 	{
-		if (colBottomStair)
+		if (startStair)
 		{
 			if (rangeStair < 0)			//Simon bên trái đầu cầu thang
 			{
@@ -540,13 +558,13 @@ void Simon::UpdateStair(int dt)
 				this->x += 1;
 				rangeStair += 1;		//Simon luôn hướng về vị trí rangeStair = 0
 			}
-			if (rangeStair > 0)			//Siomon bên phải đầu cầu thang
+			else if (rangeStair > 0)			//Siomon bên phải đầu cầu thang
 			{
 				vX = vLast = -1;
 				this->x -= 1;
 				rangeStair -= 1;
 			}
-			if (rangeStair == 0)		//Simon ở điểm rangeStair =0 bắt đầu di chuyển trên cầu thang
+			else  if (rangeStair == 0)		//Simon ở điểm rangeStair =0 bắt đầu di chuyển trên cầu thang
 			{
 				onStair = true;
 				timeOnStair = 0;
@@ -703,7 +721,7 @@ void Simon::UpdateStair(int dt)
 	}
 }
 
-void Simon::TakeOnStairs(GameObject *other, int dt)
+void Simon::TakeOnStairs(GameObject *other)
 {
 	Box simon = this->GetBox();
 	Box boxStair = other->GetBox();
@@ -716,23 +734,27 @@ void Simon::TakeOnStairs(GameObject *other, int dt)
 	{
 		case EnumID::StairBotRight_ID:
 		{
-			if (!colBottomStair)
-				rangeStair = simon.x - (boxStair.x);	// - k);	k là số để điều chỉnh cho hợp lý với cầu thang
+			if (!startStair)
+			{
+				//startStair = true;
+				rangeStair = this->GetPos().x - (stair->GetPos().x);	// - k);	k là số để điều chỉnh cho hợp lý với cầu thang
+			}
+			
 			if (upStair && onStair)
 				stairType = EStairType::BotRight;
-			/*
-			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
-			if (compareHeight == 0 && stairType == EStairType::TopRight)
+			
+			float compareHeight = abs(this->GetPos().y - other->GetPos().y);
+			if (compareHeight < 15 && stairType == EStairType::TopRight)
 			{
 				outStair = true;
 				OutStair();
 			}
-			*/
+			
 		}
 		break;
 		case EnumID::StairBotLeft_ID:
 		{
-			if (!colBottomStair)
+			if (!startStair)
 				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
 				stairType = EStairType::BotLeft;
@@ -748,7 +770,7 @@ void Simon::TakeOnStairs(GameObject *other, int dt)
 		break;
 		case EnumID::StairTopRight_ID:
 		{
-			if (!colBottomStair)
+			if (!startStair)
 				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
 				stairType = EStairType::TopRight;
@@ -764,7 +786,7 @@ void Simon::TakeOnStairs(GameObject *other, int dt)
 		break;
 		case EnumID::StairTopLeft_ID:
 		{
-			if (!colBottomStair)
+			if (!startStair)
 				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
 			if (upStair&& onStair)
 				stairType = EStairType::TopLeft;
@@ -782,4 +804,14 @@ void Simon::TakeOnStairs(GameObject *other, int dt)
 			break;
 	}
 
+}
+
+void Simon::Die()
+{
+
+}
+
+void Simon::ReceiveDamage(GameObject *enemy)
+{
+	hp -= enemy->damage;
 }
