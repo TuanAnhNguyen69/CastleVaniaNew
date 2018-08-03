@@ -86,8 +86,12 @@ enum EnumID
 
 	//UI
 	HP_ID,
-	GameUI_ID
+	GameUI_ID,
 
+
+	//Gournd
+	//StairDownLeft_ID,
+	//StairDownRight_ID,
 };
 
 enum EStairType
@@ -97,7 +101,8 @@ enum EStairType
 	TopRight,
 	BotRight,
 	Left,
-	Right
+	Right,
+	NoneType,
 };
 
 enum ObjectType {
