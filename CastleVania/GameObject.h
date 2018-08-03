@@ -7,6 +7,7 @@
 #include "GCamera.h"
 #include "SweptAABB.h"
 #include <list>
+
 using namespace std;
 class GameObject
 {
@@ -90,5 +91,4 @@ public:
 	GameObject(float _x, float _y, EnumID id);
 	~GameObject(void);
 };
-
 #endif

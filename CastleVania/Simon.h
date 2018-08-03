@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "ActiveObject.h"
+#include "MorningStar.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -29,8 +30,6 @@
 class Simon :
 	public ActiveObject
 {
-private:
-	static Simon* instance;
 protected:
 	/*
 	GameTime * delayIndexChange;
@@ -82,6 +81,8 @@ protected:
 	//Dung tren brick
 	bool isOnBrick;
 
+	bool isLeft;
+
 	//Bien enum cac loai hanh dong
 	Action action;
 
@@ -99,6 +100,7 @@ public:
 	int live;
 	int weaponCount;
 	EnumID weaponID;
+	MorningStar* morningStar;
 	virtual void Draw(GCamera* camera);
 	virtual void Update(int deltaTime);
 	virtual void Collision(list<GameObject*> &obj, float dt);

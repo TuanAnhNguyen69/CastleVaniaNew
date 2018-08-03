@@ -67,6 +67,9 @@ enum EnumID
 	Simon_ID,
 	SimonDeath_ID,
 
+	//MorningStar
+	MorningStar_Weapon_ID,
+
 	//weapon
 	Axe_Weapon_ID,
 	Boomerang_Weapon_ID,

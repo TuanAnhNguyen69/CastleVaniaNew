@@ -111,6 +111,7 @@
     <ClCompile Include="GTexture.cpp" />
     <ClCompile Include="Medusa.cpp" />
     <ClCompile Include="MedusaHead.cpp" />
+    <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="ObjectsManager.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Knife.h" />
     <ClInclude Include="Medusa.h" />
     <ClInclude Include="MedusaHead.h" />
+    <ClInclude Include="MorningStar.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="PhantomBat.h" />
     <ClInclude Include="ObjectsManager.h" />

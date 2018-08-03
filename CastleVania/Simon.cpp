@@ -19,14 +19,16 @@ Simon::Simon(int _x, int _y)
 	isStop = false;
 	isAttack = false;
 	isOnBrick = false;
+	isLeft = true;
 
 	live = 10;
 	weaponCount = 10;
 	weaponID = EnumID::Boomerang_ID;
+	morningStar = new MorningStar(x, y, 20);
 
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
-	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 1000 / SIMON_FIGHT_RATE);
+	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 20);
 }
 
 Simon::~Simon()
@@ -59,6 +61,8 @@ void Simon::Draw(GCamera* camera)
 			{
 				//simonAttack->DrawFlipX(center.x, center.y);
 				simonAttack->DrawFlipX(pos.x, pos.y);
+				morningStar->Draw(camera);
+
 				return;
 			}
 			//sprite->DrawFlipX(center.x, center.y);
@@ -70,6 +74,7 @@ void Simon::Draw(GCamera* camera)
 			{
 				//simonAttack->Draw(center.x, center.y);
 				simonAttack->Draw(pos.x, pos.y);
+				morningStar->Draw(camera);
 				return;
 			}
 			//sprite->Draw(center.x, center.y);
@@ -80,14 +85,6 @@ void Simon::Draw(GCamera* camera)
 
 void Simon::Update(int deltaTime)
 {
-	/*
-	if (isOnBrick == false)
-	{
-		vY = -SPEED_Y;
-		//y += vY * deltaTime;
-		//return;
-	}
-	*/
 	switch (action)
 	{
 	case Action::Run_Right:
@@ -124,6 +121,7 @@ void Simon::Update(int deltaTime)
 
 void Simon::RunLeft()
 {
+	morningStar->updateDirection(true);
 	if (isJump || isSit)
 		return;
 	if (isStop && vLast < 0)
@@ -140,6 +138,8 @@ void Simon::RunLeft()
 
 void Simon::RunRight()
 {
+	morningStar->updateDirection(false);
+
 	if (isJump || isSit)
 		return;
 	if (isStop && vLast > 0)
@@ -197,6 +197,7 @@ void Simon::OnAttack(int deltaTime)
 {
 	isAttack = true;
 	simonAttack->Update(deltaTime);
+	morningStar->update(x, y, deltaTime);
 	if (!isSit && simonAttack->GetIndex() >= 8)
 	{
 		action = Action::Stand;

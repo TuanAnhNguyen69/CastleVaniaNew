@@ -3,7 +3,6 @@
 
 #include "GameObject.h"
 #include "Medusa.h"
-#include "MorningStarSprite.h"
 #include <vector>
 #include "RewardItem.h"
 using namespace std;
@@ -11,27 +10,23 @@ using namespace std;
 class MorningStar :
 	public GameObject
 {
-protected:
-	MorningStarSprite* _morningStarSprite;
-
 public:
 	MorningStar(void);
-	MorningStar(int posX_, int posY_, float vx_, float vy_, EnumID id_, int MorningStarRate_);
+	MorningStar(int posX, int posY, int MorningStarRate);
+	int level;
+	int damage;
+
 	void reset();
-	virtual void Update(int deltaTime_);
-	virtual void Draw(GCamera*);
+	bool isLeft;
+	virtual void Draw(GCamera* camera);
 	virtual Box GetBox();
 
-	void updateXY(int posX_, int posY_);
-	void updateVx(float vx_);
+	void update(int posX, int posY, int deltaTime);
+	void updateDirection(bool);
 	void updateLevel();
 	bool getdata();
-	bool abc;
 	void Collision(list<GameObject*> &obj, int dt);
 	~MorningStar(void);
-
-	//for testing
-	MorningStarSprite* getSprite();
 };
 
 #endif

@@ -66,6 +66,7 @@ TextureManager::TextureManager(void)
 
 	//Weapon
 	weapon = new GTexture("Resource/sprites/Weapon/Weapon.png", 3, 3, 9);
+	morningStar = new GTexture("Resource/sprites/Weapon/whip.png", 3, 6, 18);
 
 	//Item
 	item_Axe = new GTexture("Resource/sprites/Sub_Weapons/Axe_Item.png", 1, 1, 1);
@@ -170,9 +171,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 	//	return Weapon;
 	//case EnumID::ChainWhip_ID:
 	//	return ChainWhip;
-	//case EnumID::MorningStar_ID:
-	//	return MorningStar;
-
+	case EnumID::MorningStar_Weapon_ID:
+		return morningStar;
 	//Item
 	case EnumID::Axe_ID:
 		return item_Axe;

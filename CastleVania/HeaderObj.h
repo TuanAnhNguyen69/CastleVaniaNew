@@ -33,6 +33,7 @@
 #include "Weapon.h"
 #include "Boomerang.h"
 #include "Knife.h"
+#include "MorningStar.h"
 
 
 #endif

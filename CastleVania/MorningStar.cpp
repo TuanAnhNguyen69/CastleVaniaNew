@@ -5,110 +5,119 @@ MorningStar::MorningStar(void) :GameObject()
 	
 }
 
-MorningStar::MorningStar(int posX_, int posY_, float vx_, float vy_, EnumID id_, int timeAnimation_) : GameObject(posX_, posY_, id_)
+MorningStar::MorningStar(int posX, int posY, int timeAnimation) : GameObject(posX, posY, id)
 {
-	abc = true;
-	vX = vx_;
-	vY = vy_;
+	isLeft = true;
 	damage = 1;
-	_morningStarSprite = new MorningStarSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_ID), 0, 2, timeAnimation_);
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 0, 2, timeAnimation);
 }
 
 void MorningStar::reset()
 {
-	_morningStarSprite->Reset();
+	level = 1;
+	damage = 1;
 }
 
-void MorningStar::Update(int deltaTime_)
-{
-	_morningStarSprite->Update(deltaTime_);
-}
 
-void MorningStar::Draw(GCamera* camera_)
+void MorningStar::Draw(GCamera* camera)
 {
-	D3DXVECTOR2 center = camera_->Transform(posX, posY);
-	if (vX > 0)
+	D3DXVECTOR2 pos = camera->Transform(x, y);
+	if (!isLeft)
 	{
-		_morningStarSprite->DrawFlipX(center.x, center.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 	}
 	else
 	{
-		_morningStarSprite->Draw(center.x, center.y);
+		sprite->Draw(pos.x, pos.y);
 	}
+}
+
+void MorningStar::updateDirection(bool isLeft) {
+	this->isLeft = isLeft;
 }
 
 Box MorningStar::GetBox()
 {
-	int currentState = _morningStarSprite->GetIndex();
+	int currentState = sprite->GetIndex();
 	if (currentState < 0 || currentState > 8)
 		return Box(0, 0, 0, 0);
-	CustomRect* morningStarSize = this->_morningStarSprite->getMorningStarSize().at(currentState);
-	return Box(posX - morningStarSize->width / 2, posY + morningStarSize->height / 2, morningStarSize->width, morningStarSize->height);
-}
-
-void MorningStar::updateXY(int _posX, int _posY)
-{
-	float morningStarX = 0;
-	float morningStarY = 0;
-	int morningState = this->_morningStarSprite->GetIndex();
-	posX = _posX;
-	posY = _posY;
+	float width, height;
+	int morningState = this->sprite->GetIndex();
 	switch (morningState % 3)
 	{
 	case 0:
-		morningStarX = posX - 30;
-		morningStarY = posY - 5;
+		width = 16;
+		height = 48;
 		break;
 	case 1:
-		morningStarX = posX - 30;
-		morningStarY = posY + 2;
+		width = 32;
+		height = 40;
 		break;
 	case 2:
-		morningStarX = posX + 50; // morningStar's width = 56
-		morningStarY = posY + 8;
+		width = 16;
+		height = 48;
 		break;
 	default:
-		int i = 0;
+		width = 42;
+		height = 16;
 		break;
 	}
+	return Box(x, y, width, height);
+}
 
-	if (vX <= 0)
-	{
-		// làm ngược lại, đưa roi ra phía sau Player
-		// player's width = 60
+void MorningStar::update(int _posX, int _posY, int deltaTime)
+{
+	sprite->Update(deltaTime);
+
+	float morningStarX = 0;
+	float morningStarY = 0;
+	int morningState = this->sprite->GetIndex();
+
+	if (!isLeft) {
 		switch (morningState % 3)
 		{
 		case 0:
-
-			//							                       - W  - 
-			morningStarX = (posX + 60) + (posX - morningStarX - 16 - 30); // 40
+			morningStarX = _posX - 90 + 20;
+			morningStarY = _posY;
 			break;
 		case 1:
-			morningStarX = (posX + 60)  + (posX - morningStarX - 32 - 25); // 30
+			morningStarX = _posX - 105 + 20;
+			morningStarY = _posY;
 			break;
 		case 2:
-			morningStarX = (posX + 60) + (posX - morningStarX - 56 - 0); //5
+			morningStarX = _posX + 32 - 145 + 20;
+			morningStarY = _posY;
+			break;
+		default:
+			int i = 0;
+			break;
+		}
+	} else 	{
+		switch (morningState % 3)
+		{
+		case 0:
+			morningStarX = _posX + 32 - 150; // 40
+			morningStarY = _posY;
+			break;
+		case 1:
+			morningStarX = _posX + 32 - 135; // 30
+			morningStarY = _posY;
+			break;
+		case 2:
+			morningStarX = _posX - 95; //5
+			morningStarY = _posY;
 			break;
 		default:
 			break;
 		}
 	}
-	this->posX = morningStarX;
-	this->posY = morningStarY;
-
-	// if not handle position
-	/*this->posX = _posX;
-	this->posY = _posY;*/
-
+	this->x = morningStarX;
+	this->y = morningStarY;
 }
 
-void MorningStar::updateVx(float vx)
-{
-	vX = vx;
-}
 void MorningStar::updateLevel()
 {
-	this->_morningStarSprite->updateLevel();
+	this->updateLevel();
 }
 
 void MorningStar::Collision(list<GameObject*> &obj, int dt){
@@ -116,21 +125,17 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 	for (_itBegin = obj.rbegin(); _itBegin != obj.rend(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
-	
-			float moveX = 0;
-			float moveY = 0;
 
 			Box box = this->GetBox();
 			Box boxOther = other->GetBox();
 
 
 			// edit AABB later
-			if (AABB(box, boxOther, moveX, moveY) == true)
+			if (AABBCheck(box, boxOther) == true)
 			{
-				abc = other->canBeKilled;
 					if ( other->canBeKilled )
 					{
-						if (other->id == EnumID::Medusa_ID)
+						/*if (other->id == EnumID::Medusa_ID)
 						{
 							Medusa* qm = (Medusa*)other;
 							if (qm->HasGetUp)
@@ -143,10 +148,10 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 							}
 							else
 								qm->getUp();
-						}
-						else if (other->id == EnumID::BreakableBrick_ID) {
+						}*/
+						/*else*/
+						if (other->id == EnumID::Breakable_ID) {
 							point += other->point;
-							(*_itBegin) = new RewardItem(3822, 94,true);
 						}
 						else
 						{
@@ -154,7 +159,6 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 							if (other->hp <= 0)
 							{
 								point += other->point;
-								(*_itBegin) = new RewardItem(other->posX, other->posY);
 							}
 							
 						}
@@ -167,13 +171,4 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 
 MorningStar::~MorningStar(void)
 {
-}
-
-MorningStarSprite* MorningStar::getSprite()
-{
-	return this->_morningStarSprite;
-}
-bool MorningStar::getdata()
-{
-	return abc;
 }

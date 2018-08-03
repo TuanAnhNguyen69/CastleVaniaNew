@@ -137,6 +137,9 @@
     <ClCompile Include="GameUI.cpp">
       <Filter>GameUI</Filter>
     </ClCompile>
+    <ClCompile Include="MorningStar.cpp">
+      <Filter>Objects\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -279,6 +282,9 @@
     </ClInclude>
     <ClInclude Include="GameUI.h">
       <Filter>GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MorningStar.h">
+      <Filter>Objects\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
