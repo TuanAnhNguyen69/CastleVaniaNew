@@ -248,8 +248,8 @@ void SceneGame::ProcessInput(int KeyCode) {
 		break;
 	case DIK_DOWN:
 	case DIK_S:
-		player->Sit();
 		player->goDownStair();
+		player->Sit();
 		break;
 	case DIK_UP:
 	case DIK_W:

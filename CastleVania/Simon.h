@@ -142,6 +142,7 @@ public:
 
 	//Xu ly dung tren nen dat
 	void StandGround(ECollisionDirection direction, float dt);
+	bool onBrick;
 
 	void onCollideBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
 	void onCollideStair(Stair *other);
