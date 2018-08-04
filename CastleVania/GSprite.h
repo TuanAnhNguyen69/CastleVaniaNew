@@ -34,11 +34,11 @@ public:
 	void Update(int ellapseTime);
 
 	// Render current sprite at location (X,Y) at the target surface
-	void Draw(int x, int y);
+	virtual void Draw(int x, int y);
 	void DrawScale(int x, int y, float scaleX, float scaleY);
 	
 	//Render with scale (-1, 1)
-	void DrawFlipX(int x, int y);
+	virtual void DrawFlipX(int x, int y);
 	void DrawFlipXScale(int x, int y, float scaleX, float scaleY);
 
 	//Render Rect of texture at (x,y)

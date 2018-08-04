@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ActiveObject.h"
 #include "MorningStar.h"
+#include "Stair.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -115,31 +116,22 @@ public:
 	void Jump();
 	void Attack();
 	void OnAttack(int deltaTime);
+	void onMovingOnStair(int deltaTime);
 
 	//Stair
-	GameObject* stair;		//đối tượng stair đang xét
-
-	bool colBottomStair;	//có lên cầu thang không
+	bool startStair;		//bắt đầu đi
 	bool onStair;			//có ở trên stair không
 	bool upStair;			//có đi lên stair không
 	bool downStair;			//có đi xuống stair không
 	bool colStair;			//có chạm vào 1 trong 2 đầu cầu thang không
 	bool standOnStair;		//có đứng trên cầu thang không
 	bool outStair;			//có ra ngoài cầu thang không
-	float rangeStair;		//khoảng các từ simon tới stair
+	int rangeStair;		//khoảng các từ simon tới stair
 	int timeOnStair;		//thời gian đi 1 bậc
-	EStairType stairType;	//loại stair
+	Stair* stair;	//loại stair
 
-	void UpStair();
-	void DownStair();
-	bool OnStair();
-	void OutStair();
-	void ResetStair();
-	void UpdateStair(int deltaTime);
-	void SetUpStair();
-	void SetDownStair();
-
-	GSprite *simonOnStair;
+	GSprite *simonUpStair;
+	GSprite *simonDownStair;
 	GSprite *simonAttackUpStair;
 	GSprite *simonAttackDownStair;
 
@@ -151,8 +143,17 @@ public:
 	//Xu ly dung tren nen dat
 	void StandGround(ECollisionDirection direction, float dt);
 
-	void StandBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
-	void TakeOnStairs(GameObject *other, int dt);
+	void onCollideBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
+	void onCollideStair(Stair *other);
+
+	void goUpStair();
+	void goDownStair();
+	float getStairStartPos();
+
+	void Die();
+	void fall();
+
+	void ReceiveDamage(GameObject *enemy);
 };
 
 

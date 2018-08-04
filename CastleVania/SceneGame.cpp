@@ -239,25 +239,21 @@ void SceneGame::ProcessInput(int KeyCode) {
 	switch (KeyCode)
 	{
 	case DIK_RIGHT:
-		player->RunRight();
 	case DIK_D:
 		player->RunRight();
 		break;
 	case DIK_LEFT:
-		player->RunLeft();
 	case DIK_A:
 		player->RunLeft();
-		break;
-	case DIK_UP:
-	case DIK_W:
-		player->UpStair();
-		break;
-	case DIK_E:
-		player->DownStair();
 		break;
 	case DIK_DOWN:
 	case DIK_S:
 		player->Sit();
+		player->goDownStair();
+		break;
+	case DIK_UP:
+	case DIK_W:
+		player->goUpStair();
 		break;
 	default:
 		player->Stop();

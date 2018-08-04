@@ -23,7 +23,7 @@ Simon::Simon(int _x, int _y)
 
 	//onStair = false;
 	outStair = false;
-	//colBottomStair = false;
+	//startStair = false;
 	upStair = false;
 	downStair = false;
 	standOnStair = false;
@@ -38,7 +38,9 @@ Simon::Simon(int _x, int _y)
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 20);
 	simonJum = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 	simonAttack = new  GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 8, 20);
-	simonOnStair = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 10, 13, 320);
+	simonUpStair = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 12, 13, 20);
+	simonDownStair = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 10, 11, 20);
+
 }
 
 Simon::~Simon()
@@ -60,27 +62,31 @@ void Simon::Draw(GCamera* camera)
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (isDie)
 	{
-		//simonDeath->DrawFlipX(center.x, center.y);
-		simonDeath->DrawFlipX(pos.x, pos.y);
+ 		simonDeath->DrawFlipX(pos.x, pos.y);
 	}
 	else
 	{
-		if (vX >0 || vLast > 0)
+		if (vX > 0 || vLast > 0)
 		{
 			if (action == Action::Attack)
 			{
 				//simonAttack->DrawFlipX(center.x, center.y);
 				simonAttack->DrawFlipX(pos.x, pos.y);
 				morningStar->Draw(camera);
-
 				return;
 			}
+
 			if (onStair)
 			{
-				if (stairType == EStairType::BotRight || stairType == EStairType::TopLeft)
-					simonOnStair->DrawFlipX(pos.x, pos.y);
+				if (vY > 0) {
+					simonUpStair->DrawFlipX(pos.x, pos.y);
+
+				}
+				else {
+					simonDownStair->DrawFlipX(pos.x, pos.y);
+				}
+				return;
 			}
-			//sprite->DrawFlipX(center.x, center.y);
 			sprite->DrawFlipX(pos.x, pos.y);
 		}
 		else
@@ -93,9 +99,16 @@ void Simon::Draw(GCamera* camera)
 				return;
 			}
 			if (onStair)
-			{
-				if (stairType == EStairType::BotLeft || stairType == EStairType::TopRight)		//Hình như không cần dòng này
-					simonOnStair->Draw(pos.x, pos.y);
+			{	
+				if (vY > 0) {
+					simonUpStair->Draw(pos.x, pos.y);
+
+				}
+				else {
+					simonDownStair->Draw(pos.x, pos.y);
+				}
+				return;
+				return;
 			}
 			//sprite->Draw(center.x, center.y);
 			sprite->Draw(pos.x, pos.y);
@@ -116,16 +129,17 @@ void Simon::Update(int deltaTime)
 	case Action::Attack:
 		this->OnAttack(deltaTime);
 		break;
+	case Action::UpStair:
+		simonUpStair->Update(deltaTime);
+		break;
+	case Action::DownStair:
+		simonDownStair->Update(deltaTime);
+		break;
 	default:
 		break;
 	}
-	//sprite->Update(deltaTime);
 
 	x += vX * deltaTime;
-	//vY = -(SPEED_Y + 0.3f);
-	//y += vY * deltaTime;
-	//if (colBottomStair)
-		UpdateStair(deltaTime);
 
 	if (isJump)
 	{
@@ -135,16 +149,25 @@ void Simon::Update(int deltaTime)
 		if (vY > -SPEED_Y)
 			vY += g * deltaTime;
 		return;
-	}
-	else {
+	} 
 		y += vY * deltaTime;
-	}
 }
 
 
 void Simon::RunLeft()
 {
 	morningStar->updateDirection(true);
+	isLeft = true;
+	if (onStair) {
+		if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+			goUpStair();
+		}
+		else if (stair->type == EStairType::BotRight || stair->type == EStairType::TopRight) {
+			goDownStair();
+		}
+		return;
+	}
+
 	if (isJump || isSit)
 		return;
 	if (isStop && vLast < 0)
@@ -162,7 +185,16 @@ void Simon::RunLeft()
 void Simon::RunRight()
 {
 	morningStar->updateDirection(false);
-
+	isLeft = false;
+	if (onStair) {
+		if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+			goDownStair();
+		}
+		else if (stair->type == EStairType::BotRight || stair->type == EStairType::TopRight) {
+			goUpStair();
+		}
+		return;
+	}
 	if (isJump || isSit)
 		return;
 	if (isStop && vLast > 0)
@@ -193,6 +225,9 @@ void Simon::Jump()
 
 void Simon::Sit()
 {
+	if (onStair) {
+		return;
+	}
 	if (isSit)
 		return;
 	if (!isJump)
@@ -228,9 +263,17 @@ void Simon::OnAttack(int deltaTime)
 	}
 }
 
+void Simon::onMovingOnStair(int deltaTime)
+{
+	simonUpStair->Update(deltaTime);
+}
+
 void Simon::Stop()
 {
 	vX = 0;
+	if (onStair) {
+		vY = 0;
+	}
 	switch (action)
 	{
 		case Action::Stand:
@@ -275,43 +318,28 @@ Box Simon::GetBox()
 	if (isJump || isSit)
 	{
 		//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
-		return Box(x + 12, y - 22, width - 29, height - 22, vX, vY);
+		return Box(x + 15, y - 22, width - 32, height - 22, vX, vY);
 		//return Box(x , y, width, height);
 	}
 	//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
-	return Box(x + 12, y - 3, width - 29, height - 6, vX, vY);
+	return Box(x + 15, y - 3, width - 32, height - 6, vX, vY);
 	//return Box(x, y , width, height);
 }
 
-void Simon::StandGround(ECollisionDirection colDirection, float dt)
+void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, float collisionTime)
 {
-	if (colDirection == ECollisionDirection::Colls_Bot) {
-		this->vY = 0;
-		isOnBrick = true;
-	}
-	else
-		isOnBrick = false;
-	
+	//colStair = false;
 
-	if (colDirection == ECollisionDirection::Colls_Left || colDirection == ECollisionDirection::Colls_Right) {
-		this->vX = 0;
-	}
-	action = Action::Stand;
-	isJump = false;
-	g = GRAVITATIONAL;
-	sprite->SelectIndex(0);
-}
 
-void Simon::StandBrick(Box other, int dt, ECollisionDirection colDirection, float collisionTime)
-{
 			if (colDirection == ECollisionDirection::Colls_Bot)
 			{
 				this->y = other.y + this->height -2;
 				//vY = 0;
 
 				this->vY = 0;
-
+				colStair = false;
 				action = Action::Stand;
+				onStair = false;
 				isJump = false;
 				g = GRAVITATIONAL;
 				sprite->SelectIndex(0);
@@ -333,454 +361,195 @@ void Simon::StandBrick(Box other, int dt, ECollisionDirection colDirection, floa
 			}
 }
 
-void Simon::Collision(list<GameObject*> &obj, float dt)
+void Simon::onCollideStair(Stair * other)
+{
+	colStair = true;
+	stair = other;
+}
+
+void Simon::goUpStair()
 {
 	
+	if (action == Action::Stand && !colStair) {
+		return;
+	}
+
+	float simonX = this->x;
+	float startPos = getStairStartPos();
+	int offset = abs(simonX - startPos);
+	if (offset > 10 && !onStair) {
+		if (this->x < getStairStartPos()) {
+			RunRight();
+			return;
+		}
+		else if (this->x  > getStairStartPos()) {
+			RunLeft();
+			return;
+		}
+	}
+	
+	onStair = true;
+	if (isSit || isJump)
+		return;
+	if (colStair)
+	{
+		action = Action::UpStair;
+		if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+			vX = -0.2;
+		}
+		else {
+			vX = 0.2;
+		}
+		vY = 0.2;
+	}
+}
+
+float Simon::getStairStartPos() {
+	if (stair->type == EStairType::BotRight || stair->type == EStairType::TopLeft) {
+		return stair->x - stair->width;
+	}
+
+	if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopRight) {
+		return stair->x + stair->width/2;
+	}
+}
+
+void Simon::goDownStair()
+{
+	if (action == Action::Sit && !colStair) {
+		return;
+	}
+
+	float simonX = this->x;
+	float startPos = getStairStartPos();
+	int offset = abs(simonX - startPos);
+	if (offset > 10 && !onStair) {
+		if (this->GetBox().x  < getStairStartPos()) {
+			RunRight();
+			return;
+		}
+		else if (this->GetBox().x > getStairStartPos()) {
+			RunLeft();
+			return;
+		}
+	}
+	onStair = true;
+
+	if (isSit || isJump)
+		return;
+	if (colStair)
+	{
+		action = Action::DownStair;
+		if (isLeft) {
+			vX = -0.2;
+		}
+		else {
+			vX = 0.2;
+		}
+		vY = -0.2;
+	}
+}
+
+void Simon::Collision(list<GameObject*> &obj, float dt)
+{
+	list<GameObject*> listObject;
+
 	list<GameObject*>::iterator _itBegin;
+	bool isCollideBottom = false;
+	Box fallBox = this->GetBox();
+	fallBox.h = fallBox.h + 10;
 	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
 		
+		
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
-		if (box.x + box.w >= 3865 && boxOther.x > 3865) {
-			int a = 0;
+
+		// Check if simon is standing on brick or stair
+		if (!isCollideBottom && other->id == EnumID::Brick_ID) {
+			isCollideBottom = AABBCheck(fallBox, boxOther);
 		}
+
+		if (other->id == EnumID::Brick_ID) {
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if ( collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+				{
+					onCollideBrick(boxOther, dt, colDirection, collisionTime);
+				}
+			}
+		}
+		else {
+			listObject.push_back(*_itBegin);
+		}
+	}
+
+	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
+	{
+		GameObject* other = (*_itBegin);
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+
+		// Check if simon is standing on brick or stair
+		if (!isCollideBottom && (other->id == EnumID::StairTopLeft_ID || other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairRight_ID || other->id == EnumID::StairLeft_ID)) {
+			isCollideBottom = AABBCheck(fallBox, boxOther);
+
+			//If stand on top stair
+			if (other->id == EnumID::StairTopLeft_ID || other->id == EnumID::StairTopRight_ID && !onStair) {
+				onCollideStair((Stair*)other);
+			}
+		}
+
 		if (AABBCheck(broadphasebox, boxOther))
 		{
 			ECollisionDirection colDirection;
 			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-			if ( collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+			if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
 			{
 				switch (other->id)
 				{
-				case EnumID::Brick_ID:
-					StandBrick(boxOther, dt, colDirection, collisionTime);
-					break;
 				case EnumID::StairBotLeft_ID:
 				case EnumID::StairBotRight_ID:
 				case EnumID::StairTopLeft_ID:
 				case EnumID::StairTopRight_ID:
-					TakeOnStairs(other, dt);
+					onCollideStair((Stair*)other);
+					break;
+				case EnumID::SpearGuard_ID:
+					this->ReceiveDamage(other);
+					sprite->SelectIndex(8);
 					break;
 				default:
 					break;
 				}
 			}
 		}
-		
+
 	}
+
+	if (!isCollideBottom && !isJump && !onStair) {
+		fall();
+	}
+
 }
 
-void Simon::SetUpStair()
+void Simon::Die()
 {
-	if (stairType == EStairType::TopRight)
-	{
-		vX = vLast = -1;
-		stairType = EStairType::BotRight;
-	}
-	if (stairType == EStairType::TopLeft)
-	{
-		vX = vLast = 1;
-		stairType = EStairType::BotLeft;
-	}
+
 }
 
-void Simon::SetDownStair()
+void Simon::fall()
 {
-	if (stairType == EStairType::BotRight)
-	{
-		vX = vLast = -1;
-		stairType = EStairType::TopRight;
-	}
-	if (stairType == EStairType::BotLeft)
-	{
-		vX = vLast = 1;
-		stairType = EStairType::TopLeft;
-	}
+	vY = -SPEED_Y;
 }
 
-void Simon::OutStair()
+
+
+void Simon::ReceiveDamage(GameObject *enemy)
 {
-	if (upStair || downStair)
-	{
-		upStair = false;
-		downStair = false;
-		onStair = false;
-		colStair = false;
-		vX = 0;
-		vY = -SPEED_Y;
-		sprite->SelectIndex(0);
-
-		switch (stair->id)
-		{
-		case EnumID::StairBotLeft_ID:
-			stairType = EStairType::BotLeft;
-			break;
-		case EnumID::StairBotRight_ID:
-			stairType = EStairType::BotRight;
-			break;
-		case EnumID::StairTopRight_ID:
-			stairType = EStairType::TopRight;
-			break;
-		case EnumID::StairTopLeft_ID:
-			stairType = EStairType::TopLeft;
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-bool Simon::OnStair()
-{
-	if ((stair->y == y - 14 && colStair &&
-		(stair->id == EnumID::StairTopRight_ID || stair->id == EnumID::StairTopLeft_ID)) || onStair)
-		return true;
-	return false;
-}
-
-void Simon::ResetStair()
-{
-	if (upStair || downStair)
-		upStair = downStair = false;
-	colStair = false;
-}
-
-void Simon::UpStair()
-{
-	if (!downStair)
-	{
-		upStair = true;
-		if (onStair)
-			SetUpStair();
-	}
-	if (isJump || action == Action::Attack)
-		return;
-	//if (colBottomStair)		//chưa hiểu lắm
-	//	return;
-
-	if (abs(rangeStair) <= 40)		//Cách 1 khoảng <= 40 khi nhấn lên sẽ di chuyển lại đầu cầu thang
-	{
-		if (colStair && stair->y == this->GetBox().y -14 && (stair->id == EnumID::StairBotLeft_ID || stair->id == EnumID::StairBotRight_ID))
-		{
-			if (!colBottomStair)			//bắt đầu đi lên
-				colBottomStair = true;
-			else
-			{
-				onStair = true;
-				timeOnStair = 0;
-			}
-
-			if (rangeStair != 0)			//Chưa tới vị trí đầu cầu thang
-				onStair = false;
-			else
-			{
-				onStair = true;
-				SetUpStair();
-				simonOnStair->SelectIndex(13);
-				timeOnStair = 0;
-			}
-		}
-	}
-	else
-		colStair = false;
-}
-
-void Simon::DownStair()
-{
-	if (!upStair)
-	{
-		downStair = true;
-		if (onStair)
-			SetDownStair();
-	}
-
-	if (isJump || action == Action::Attack)
-		return;
-	if (colBottomStair)		//chưa hiểu lắm
-		return;
-
-	if (abs(rangeStair) <= 40)
-	{
-		if (colStair && stair->y == y - 14 && (stair->id == EnumID::StairTopRight_ID || stair->id == EnumID::StairTopLeft_ID))
-		{
-			if (!colBottomStair)
-				colBottomStair = true;
-			else
-			{
-				onStair = true;
-				timeOnStair = 0;
-			}
-
-			if (rangeStair != 0)
-				onStair = false;
-			else
-			{
-				onStair = true;
-				SetDownStair();
-				simonOnStair->SelectIndex(11);
-				timeOnStair = 0;
-			}
-		}
-	}
-	else
-		colStair = false;
-}
-
-void Simon::UpdateStair(int dt)
-{
-	if (!onStair)
-	{
-		if (colBottomStair)
-		{
-			if (rangeStair < 0)			//Simon bên trái đầu cầu thang
-			{
-				vX = vLast = 1;
-				this->x += 1;
-				rangeStair += 1;		//Simon luôn hướng về vị trí rangeStair = 0
-			}
-			if (rangeStair > 0)			//Siomon bên phải đầu cầu thang
-			{
-				vX = vLast = -1;
-				this->x -= 1;
-				rangeStair -= 1;
-			}
-			if (rangeStair == 0)		//Simon ở điểm rangeStair =0 bắt đầu di chuyển trên cầu thang
-			{
-				onStair = true;
-				timeOnStair = 0;
-
-				switch (stair->id)
-				{
-				case EnumID::StairBotLeft_ID:
-					stairType = EStairType::BotLeft;
-					break;
-				case EnumID::StairBotRight_ID:
-					stairType = EStairType::BotRight;
-					break;
-				case EnumID::StairTopRight_ID:
-					stairType = EStairType::TopRight;
-					break;
-				case EnumID::StairTopLeft_ID:
-					stairType = EStairType::TopLeft;
-					break;
-				default:
-					break;
-				}
-
-				//Xét vX
-				if (stairType == EStairType::BotRight || stairType == EStairType::TopLeft)
-					vX = vLast = 1;
-				if (stairType == EStairType::BotLeft || stairType == EStairType::TopRight)
-					vX = vLast = -1;
-
-				//Xét vY
-				if (stairType == EStairType::BotRight || stairType == EStairType::BotLeft)
-				{
-					//Vì chỉ đi bước 1 chân lên cầu thang, chân trụ vẫn còn ở mặt đất
-					//Nên chỉ cao hơn khi đứng dưới đất 2 đơn vị
-					y += 2;			
-					simonOnStair->SelectIndex(12);
-				}
-				if (stairType == EStairType::TopLeft || stairType == EStairType::TopRight)
-				{
-					//Bước 1 chân xuống cầu thang, chân trụ khuỵu xuống
-					//Nên sẽ thấp hơn khi đứng ở mặt đất 16 đơn vị (bằng chênh lệch giữa ngồi và đứng)
-					y -= 16;		
-					simonOnStair->SelectIndex(10);
-				}
-			}
-			sprite->Update(dt);
-		}
-		else if (outStair)	//Ra khỏi cầu thang
-		{
-			colStair = false;	//Không va chạm với cầu thang nữa
-			sprite->SelectIndex(0);
-			stairType = EStairType::NoneType;
-			//action = Action::Stand;		//không chắc
-		}
-		
-	}
-	else			//Không ở đầu cầu thang => đang đi trên cầu thang
-	{
-		if (upStair)		//Đang đi lên
-		{
-			if (stairType == EStairType::BotRight)		//Đi lên bên phải
-			{
-				timeOnStair += 1;		//Thời gian đi trên cầu thang bắt đầu được tính
-				vX = vLast = 1;
-
-				//Nếu timeOnStair = 10 thì simon bước được 1 bậc rồi dừng lại
-				//Nếu nhấn phím lên 1 lần nữa, thì sẽ bước 1 bậc nữa
-				if (timeOnStair <= 10)
-				{
-					y += 1.6;
-					x += 1.6;
-					if (timeOnStair > 1 && timeOnStair < 6)
-						simonOnStair->SelectIndex(13);		//Động tác bước chân trước lên
-					else
-						simonOnStair->SelectIndex(12);		//Động tác bước chân sau lên theo
-
-					if (timeOnStair == 10)					//Hoàn thành 1 bậc
-					{
-						standOnStair = true;				//Sẽ đứng trên cầu thang
-						timeOnStair = 0;					//Reset timeOnStair để thực hiện động tác tiếp theo
-						return;
-					}
-				}
-				
-			}
-			if (stairType == EStairType::BotLeft)		//Đi lên bên trái
-			{
-				timeOnStair += 1;		//Thời gian đi trên cầu thang bắt đầu được tính
-				vX = vLast = -1;
-				if (timeOnStair <= 10)
-				{
-					y += 1.6;
-					x -= 1.6;
-					if (timeOnStair > 1 && timeOnStair < 6)
-						simonOnStair->SelectIndex(13);		
-					else
-						simonOnStair->SelectIndex(12);		
-
-					if (timeOnStair == 10)					
-					{
-						standOnStair = true;				
-						timeOnStair = 0;					
-						return;
-					}
-				}
-			}	
-		}
-		else if (downStair)								//Đi xuống
-		{
-
-			if (stairType == EStairType::TopLeft)
-			{
-				timeOnStair += 1;
-				vX = vLast = 1;
-
-				if (timeOnStair <= 10)
-				{
-					x += 1.6;
-					y -= 1.6;
-					if (timeOnStair > 1 && timeOnStair < 6)
-						simonOnStair->SelectIndex(10);
-					else
-						simonOnStair->SelectIndex(12);
-
-					if (timeOnStair == 10)
-					{
-						standOnStair = true;
-						timeOnStair = 0;
-						return;
-					}
-				}		
-			}
-			if (stairType == EStairType::TopLeft)
-			{
-				timeOnStair += 1;
-				vX = vLast = -1;
-				if (timeOnStair <= 10)
-				{
-					x -= 1.6;
-					y -= 1.6;
-					if (timeOnStair > 1 && timeOnStair < 6)
-						simonOnStair->SelectIndex(10);
-					else
-						simonOnStair->SelectIndex(12);
-
-					if (timeOnStair == 10)
-					{
-						standOnStair = true;
-						timeOnStair = 0;
-						return;
-					}
-				}
-			}
-		}
-	}
-}
-
-void Simon::TakeOnStairs(GameObject *other, int dt)
-{
-	Box simon = this->GetBox();
-	Box boxStair = other->GetBox();
-	stair = other;
-
-	//Nếu biến 
-	if (!colStair && !isJump)
-		colStair = true;
-	switch (other->id)
-	{
-		case EnumID::StairBotRight_ID:
-		{
-			if (!colBottomStair)
-				rangeStair = simon.x - (boxStair.x);	// - k);	k là số để điều chỉnh cho hợp lý với cầu thang
-			if (upStair && onStair)
-				stairType = EStairType::BotRight;
-			/*
-			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
-			if (compareHeight == 0 && stairType == EStairType::TopRight)
-			{
-				outStair = true;
-				OutStair();
-			}
-			*/
-		}
-		break;
-		case EnumID::StairBotLeft_ID:
-		{
-			if (!colBottomStair)
-				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
-			if (upStair&& onStair)
-				stairType = EStairType::BotLeft;
-			/*
-			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
-			if (compareHeight == 0 && stairType == EStairType::TopLeft)
-			{
-				outStair = true;
-				OutStair();
-			}
-			*/
-		}
-		break;
-		case EnumID::StairTopRight_ID:
-		{
-			if (!colBottomStair)
-				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
-			if (upStair&& onStair)
-				stairType = EStairType::TopRight;
-			/*
-			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
-			if (compareHeight == 0 && stairType == EStairType::BotRight)
-			{
-				outStair = true;
-				OutStair();
-			}
-			*/
-		}
-		break;
-		case EnumID::StairTopLeft_ID:
-		{
-			if (!colBottomStair)
-				rangeStair = simon.x - (boxStair.x);	// -k);		k là số để điều chỉnh cho hợp lý với cầu thang
-			if (upStair&& onStair)
-				stairType = EStairType::TopLeft;
-			/*
-			float compareHeight = (simon.y - simon.h) - (boxStair.y - boxStair.h);
-			if (compareHeight == 0 && stairType == EStairType::BotLeft)
-			{
-				outStair = true;
-				OutStair();
-			}
-			*/
-		}
-		break;
-		default:
-			break;
-	}
-
+	hp -= enemy->damage;
 }

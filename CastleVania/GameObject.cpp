@@ -147,6 +147,12 @@ Box GameObject::GetBox()
 	return result;
 }
 
+D3DXVECTOR2 GameObject::GetPos()
+{
+	D3DXVECTOR2 pos(x - width / 2, y - height / 2);
+	return pos;
+}
+
 void GameObject::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int t) {}
 void GameObject::OnKeyDown(int KeyCode) {}
 GameObject::~GameObject(void) {}

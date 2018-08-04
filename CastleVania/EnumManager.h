@@ -121,7 +121,9 @@ enum Action
 	Attack,
 	Sit,
 	Fall,
-	IntoCastle
+	IntoCastle,
+	UpStair,
+	DownStair
 };
 
 enum SimonAction
