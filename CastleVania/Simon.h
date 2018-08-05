@@ -119,6 +119,7 @@ public:
 	void onMovingOnStair(int deltaTime);
 
 	//Stair
+	bool onTopStair;
 	bool startStair;		//bắt đầu đi
 	bool onStair;			//có ở trên stair không
 	bool upStair;			//có đi lên stair không

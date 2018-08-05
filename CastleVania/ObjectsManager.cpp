@@ -105,7 +105,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				objects->push_back(new MovingPlatform(posX, posY));
 				break;
 			case EnumID::Tele_ID:
-				objects->push_back(new Tele(posX, posY));
+				//objects->push_back(new Tele(posX, posY));
 				break;
 			case EnumID::Trap_ID:
 				//_dynamicObject->push_back(new Trap(posX, posY));
