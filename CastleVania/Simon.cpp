@@ -25,10 +25,10 @@ Simon::Simon(int _x, int _y)
 	outStair = false;
 	//startStair = false;
 	upStair = false;
-	downStair = false;
 	standOnStair = false;
 	colStair = false;
 	onTopStair = false;
+	timeOnStair = 0;
 
 
 	live = 10;
@@ -52,21 +52,21 @@ Simon::~Simon()
 void Simon::Draw(GCamera* camera)
 {
 	//Rot xuong vuc
-	//if (posY < (camera->viewport.y - G_ScreenHeight))
+	//if (y < (camera->viewport.y - G_ScreenHeight))
 	if(y - height/2 < (camera->viewport.y - G_ScreenHeight))
 	{
 		hp = 0;
 		isDie = true;
 	}
 
-	//D3DXVECTOR2 center = camera->Transform(posX, posY);
+	//D3DXVECTOR2 center = camera->Transform(x, y);
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (isDie)
 	{
  		simonDeath->DrawFlipX(pos.x, pos.y);
 	}
 	else if (action == Action::Stand) {
-		if (isOnBrick) {
+		if (isOnBrick || onTopStair) {
 			sprite->SelectIndex(0);
 		}
 		else if (upStair) {
@@ -105,7 +105,6 @@ void Simon::Draw(GCamera* camera)
 				}
 				return;
 			}
-
 			sprite->DrawFlipX(pos.x, pos.y);
 		}
 		else
@@ -147,10 +146,12 @@ void Simon::Update(int deltaTime)
 		this->OnAttack(deltaTime);
 		break;
 	case Action::UpStair:
-		simonUpStair->Update(deltaTime);
+		UpdateOnStair(deltaTime);
+		return;
 		break;
 	case Action::DownStair:
-		simonDownStair->Update(deltaTime);
+		UpdateOnStair(deltaTime);
+		return;
 		break;
 	default:
 		break;
@@ -161,13 +162,70 @@ void Simon::Update(int deltaTime)
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
-		//posY += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
+		//y += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		y += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
 		if (vY > -SPEED_Y)
 			vY += g * deltaTime;
 		return;
 	} 
 		y += vY * deltaTime;
+}
+
+void Simon::UpdateOnStair(int t)
+{
+ 	if (onStair && !standOnStair)
+	{
+		vY = -1;
+		vX = 1;
+		if (upStair) {
+			vY = 1;
+		}
+
+		if (isLeft) {
+			vX = -1;     
+		}
+
+		timeOnStair += 1;
+		if (timeOnStair <= 10)
+		{
+
+			x += 3.2 * vX;
+			y += 3.2 * vY;
+			if (timeOnStair > 1 && timeOnStair < 4) {
+				if (upStair) {
+					simonUpStair->SelectIndex(13);
+				}
+				else {
+					simonDownStair->SelectIndex(11);
+				}
+			} else {
+				if (upStair) {
+					simonUpStair->SelectIndex(12);
+				}
+				else {
+					simonDownStair->SelectIndex(10);
+				}
+			}
+			if (timeOnStair == 5)
+			{
+				if (onTopStair) {
+					action = Action::Stand;
+					onStair = false;
+					standOnStair = false;
+					sprite->SelectIndex(0);
+					vY = 0;
+					timeOnStair = 0;
+					upStair = false;
+					isOnBrick = true;
+					return;
+				}
+				standOnStair = true;
+				timeOnStair = 0;
+				vY = 0;
+				return;
+			}
+		}
+	}
 }
 
 
@@ -298,18 +356,12 @@ void Simon::Stop()
 
 	if (onStair) {
 		vY = 0;
-		if ((int)(x + 16) / 16 != 0) {
-			x = (((int)x + 16) / 16) * 16;
-		}
-
-		if (((int)y - 60) / 16 != 0) {
-			y = ((((int)y - 60) / 16) * 16) + 60 + 16;
-		}
+		return;
 	}
 
 	if (isSit)
 	{
-		//posY += 16;
+		//y += 16;
 		//y += 16;
 		isSit = false;
 	}
@@ -343,20 +395,20 @@ Box Simon::GetBox()
 {
 	if (isJump || isSit)
 	{
-		//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 22);
+		//return Box(x - width / 2 + 14.5f, y + height / 2 - 3, width - 29, height - 22);
 		return Box(x + 16, y - 22, width - 32, height - 22, vX, vY);
 		//return Box(x , y, width, height);
 	}
-	//return Box(posX - width / 2 + 14.5f, posY + height / 2 - 3, width - 29, height - 6);
+	//return Box(x - width / 2 + 14.5f, y + height / 2 - 3, width - 29, height - 6);
 	return Box(x + 16, y - 3, width - 32, height - 6, vX, vY);
 	//return Box(x, y , width, height);
 }
 
 void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, float collisionTime)
 {	
-	if (onTopStair && isOnBrick) {
+	/*if (onTopStair && isOnBrick) {
 		return;
-	}
+	}*/
 	if (colDirection == ECollisionDirection::Colls_Bot)
 	{
 		this->y = other.y + this->height -2;
@@ -367,21 +419,25 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 		this->vY = 0;
 		action = Action::Stand;
 		isOnBrick = true;
+		upStair = false;
 		onStair = false;
+		if (collisionTime < 0.1) {
+			onStair = false;
+		}
 		isJump = false;
 		g = GRAVITATIONAL;
 		sprite->SelectIndex(0);
 		return;
 	}
 
-	if (colDirection == ECollisionDirection::Colls_Left)
+	if (colDirection == ECollisionDirection::Colls_Left && !onStair)
 	{
 		this->x += this->vX * collisionTime * dt + 5;
 		action = Action::Stand;
 		return;
 	}
 
-	if (colDirection == ECollisionDirection::Colls_Right)
+	if (colDirection == ECollisionDirection::Colls_Right && !onStair)
 	{
 		this->x += this->vX * collisionTime * dt - 5;
 		action = Action::Stand;
@@ -389,31 +445,60 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 	}
 }
 
+void Simon::OutStair()
+{
+	if (upStair)
+	{
+		upStair = false;
+		colBottomStair = false;
+		onStair = false;
+		colStair = false;
+		vY = -SPEED_Y;
+		vX = 0;
+		sprite->SelectIndex(0);
+		switch (stair->id)
+		{
+		case EnumID::StairTopLeft_ID:
+			stairType = EStairType::TopLeft;
+			break;
+		case EnumID::StairTopRight_ID:
+			stairType = EStairType::TopRight;
+			break;
+		case EnumID::StairBotLeft_ID:
+			stairType = EStairType::BotLeft;
+			break;
+		case EnumID::StairBotRight_ID:
+			stairType = EStairType::BotRight;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 void Simon::onCollideStair(Stair * other)
 {
 	colStair = true;
 	stair = other;
-	/*onTopStair = false;
-	if (other->id == EnumID::StairTopLeft_ID || other->id == EnumID::StairTopRight_ID) {
-		onTopStair = true;
-	}*/
+	onTopStair = false;
+	//if (other->id == EnumID::StairBotLeft_ID || other->id == EnumID::StairBotRight_ID) {
+	//	colBottomStair = true;
+	//}
 }
 
 void Simon::goUpStair()
 {
-	if (isSit || isJump)
+	if (isSit || isJump || onTopStair)
 		return;
 
-	if (onTopStair && !isOnBrick) {
+	/*if (onTopStair && !isOnBrick) {
 		action = Action::Stand;
 		onStair = false;
 		upStair = false;
 		isOnBrick = true;
 		vY = 0;
-		y += 16;
-		x += 16;
 		return;
-	}
+	}*/
 
 	if (isOnBrick && !colStair) {
 		return;
@@ -436,6 +521,7 @@ void Simon::goUpStair()
 	onStair = true;
 	isOnBrick = false;
 	upStair = true;
+	standOnStair = false;
 	action = Action::UpStair;
 
 	if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
@@ -471,7 +557,7 @@ void Simon::goDownStair()
 	float simonX = this->GetBox().x;
 	float startPos = getStairStartPos();
 	int offset = abs(simonX - startPos);
-	if (offset > 5 && !onStair) {
+	if (offset > 8 && !onStair) {
 		if (this->GetBox().x < getStairStartPos()) {
 			RunRight();
 			return;
@@ -485,6 +571,7 @@ void Simon::goDownStair()
 	onStair = true;
 	isOnBrick = false;
 	upStair = false;
+	standOnStair = false;
 	action = Action::DownStair;
 
 	if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft || stair->type == EStairType::Left) {
@@ -565,8 +652,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				case EnumID::StairBotRight_ID:
 				case EnumID::StairTopLeft_ID:
 				case EnumID::StairTopRight_ID:
-				case EnumID::StairLeft_ID:
-				case EnumID::StairRight_ID:
 					onCollideStair((Stair*)other);
 					break;
 				case EnumID::SpearGuard_ID:
