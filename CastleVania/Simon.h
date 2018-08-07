@@ -2,6 +2,9 @@
 #include "ActiveObject.h"
 #include "MorningStar.h"
 #include "Stair.h"
+#include "Weapon.h"
+#include "Boomerang.h"
+#include "Knife.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -117,6 +120,12 @@ public:
 	void Attack();
 	void OnAttack(int deltaTime);
 	void onMovingOnStair(int deltaTime);
+
+	//Sub weapon
+	EnumID swID;
+	list<Weapon*> *sub_weapon;			//danh sách các đối tượng weapon được tạo ra khi dùng
+	void UseBoomerang();
+	void UseKnife();
 
 	//Stair
 	bool onTopStair;

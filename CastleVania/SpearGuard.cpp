@@ -28,7 +28,7 @@ SpearGuard::SpearGuard(float _x, float _y)
 	point = 500;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 1000);
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 80);
 	x0 = x;
 }
 SpearGuard::~SpearGuard()

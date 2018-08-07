@@ -1,7 +1,7 @@
 #pragma once
 #include "ActiveObject.h"
 
-#define SPEARGUARD_SPEED 0.8f
+#define SPEARGUARD_SPEED 0.3f
 #define SPEARGUARD_RANGE 100
 
 class SpearGuard :

@@ -28,7 +28,7 @@ TextureManager::TextureManager(void)
 	deadSimon = new GTexture("Resource/sprites/Simon/Simon_Death.png", 1, 1, 1);
 
 	//Enemy
-	bat = new GTexture("Resource\\sprites\\Enemies\\Bat.png", 4, 1, 4);
+	bat = new GTexture("Resource/sprites/Enemies/Bat.png", 4, 1, 4);
 	bonePillar = new GTexture("Resource/sprites/Enemies/Bone_Pillar.png", 1, 1, 1);
 	medusaHead = new GTexture("Resource/sprites/Enemies/Medusa_Head.png", 2, 1, 2);
 	spearGuard = new GTexture("Resource/sprites/Enemies/Spear_Guard.png", 4, 1, 4);

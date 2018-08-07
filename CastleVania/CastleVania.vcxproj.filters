@@ -140,6 +140,9 @@
     <ClCompile Include="MorningStar.cpp">
       <Filter>Objects\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Whip.cpp" />
+    <ClCompile Include="WhipRect.cpp" />
+    <ClCompile Include="WhipSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -286,6 +289,9 @@
     <ClInclude Include="MorningStar.h">
       <Filter>Objects\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="Whip.h" />
+    <ClInclude Include="WhipRect.h" />
+    <ClInclude Include="WhipSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">

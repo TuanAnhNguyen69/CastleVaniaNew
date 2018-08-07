@@ -271,6 +271,11 @@ void SceneGame::OnKeyDown(int KeyCode) {
 	case DIK_J:
 		player->Attack();
 		break;
+	case DIK_1:
+		player->UseBoomerang();
+		break;
+	case DIK_2:
+		player->UseKnife();
 	}
 
 }

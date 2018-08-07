@@ -118,7 +118,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				//_dynamicObject->push_back(_medusa);
 				break;
 			case EnumID::MedusaHead_ID:
-				objects->push_back(new MovingPlatform(posX, posY));
+				objects->push_back(new MedusaHead(posX, posY));
 				break;
 			case EnumID::Ghost_ID:
 				objects->push_back(new Ghost(posX, posY));

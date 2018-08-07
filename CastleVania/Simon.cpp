@@ -30,6 +30,8 @@ Simon::Simon(int _x, int _y)
 	onTopStair = false;
 	timeOnStair = 0;
 
+	sub_weapon = new list<Weapon*>();
+	swID = EnumID::None_ID;
 
 	live = 10;
 	weaponCount = 10;
@@ -57,6 +59,15 @@ void Simon::Draw(GCamera* camera)
 	{
 		hp = 0;
 		isDie = true;
+	}
+
+	if (!isDie)
+	{
+		for (list<Weapon*>::iterator wp = sub_weapon->begin(); wp != sub_weapon->end(); wp++)
+		{
+			if ((*wp)->active)
+				(*wp)->Draw(camera);
+		}
 	}
 
 	//D3DXVECTOR2 center = camera->Transform(x, y);
@@ -134,6 +145,20 @@ void Simon::Draw(GCamera* camera)
 
 void Simon::Update(int deltaTime)
 {
+	list<Weapon*>::iterator wp = sub_weapon->begin();
+	while (wp != sub_weapon->end())
+	{
+		if (!(*wp)->active)
+		{
+			sub_weapon->erase(wp++);
+		}
+		else
+		{
+			(*wp)->Update(deltaTime);
+			wp++;
+		}
+	}
+
 	switch (action)
 	{
 	case Action::Run_Right:
@@ -587,6 +612,8 @@ void Simon::goDownStair()
 
 void Simon::Collision(list<GameObject*> &obj, float dt)
 {
+
+
 	list<GameObject*> listObject;
 	colStair = false;
 
@@ -658,6 +685,10 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					this->ReceiveDamage(other);
 					sprite->SelectIndex(8);
 					break;
+				//case EnumID::Boomerang_Weapon_ID:
+					//other->active = false;
+					//other->Update(dt);
+					break;
 				default:
 					break;
 				}
@@ -687,4 +718,16 @@ void Simon::fall()
 void Simon::ReceiveDamage(GameObject *enemy)
 {
 	hp -= enemy->damage;
+}
+
+void Simon::UseBoomerang()
+{
+	//swID = EnumID::Boomerang_Weapon_ID;
+	sub_weapon->push_back(new Boomerang(x, y-13, vLast));
+}
+
+void Simon::UseKnife()
+{
+	//swID = EnumID::Knife_Weapon_ID;
+	sub_weapon->push_back(new Knife(x, y-13, vLast));
 }

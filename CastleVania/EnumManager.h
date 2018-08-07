@@ -92,6 +92,7 @@ enum EnumID
 	//Gournd
 	//StairDownLeft_ID,
 	//StairDownRight_ID,
+	None_ID,
 };
 
 enum EStairType

@@ -36,7 +36,8 @@ Bat::~Bat()
 void Bat::MovePath(int deltaTime)
 {
 	//posX += vX * deltaTime;
-	x += vX * deltaTime;
+	x += vX * deltaTime*2;
+	y = std::sin(x * 0.03)*3 + y;
 }
 
 void Bat::Draw(GCamera* camera)

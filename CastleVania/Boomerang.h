@@ -8,6 +8,10 @@ class Boomerang :
 	public Weapon
 {
 public:
+	int range;
+	float x0;
+	bool isLeft;
+	//int lifeTime;
 	Boomerang();
 	Boomerang(float _posX, float _posY, float _direction);
 	~Boomerang();
@@ -15,6 +19,8 @@ public:
 	void Update(int deltaTime);
 
 	//Va cham, chua dinh nghia
-	void Collision();
+	void Collision(list<GameObject*> &obj, int dt);
+
+
 };
 

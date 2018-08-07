@@ -13,8 +13,8 @@ public:
 	Weapon(float _posX, float _posY, float _direction, EnumID id);
 	~Weapon();
 
-	void Draw(GCamera* cammera);
-	void Update(int deltaTime);
+	virtual void Draw(GCamera* cammera);
+	virtual void Update(int deltaTime);
 
 	//Va cham, chua dinh nghia
 	void Collision();
