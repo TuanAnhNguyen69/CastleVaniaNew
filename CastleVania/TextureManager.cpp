@@ -62,11 +62,10 @@ TextureManager::TextureManager(void)
 	boomerang = new GTexture("Resource/sprites/Sub_Weapons/Boomerang.png", 3, 1, 3);
 	knife = new GTexture("Resource/sprites/Sub_Weapons/Knife.png", 1, 1, 1);
 	fireBomb = new GTexture("Resource/sprites/Sub_Weapons/HolyWater.png", 3, 1, 3);
-	//StopWatch khong co animation su dung
 
 	//Weapon
 	weapon = new GTexture("Resource/sprites/Weapon/Weapon.png", 3, 3, 9);
-	morningStar = new GTexture("Resource/sprites/Weapon/whip.png", 3, 6, 18);
+	morningStar = new GTexture("Resource/sprites/Weapon/whip.png", 3, 5, 15);
 
 	//Item
 	item_Axe = new GTexture("Resource/sprites/Sub_Weapons/Axe_Item.png", 1, 1, 1);
@@ -135,6 +134,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 	//Ground
 	case EnumID::Brick_ID:
 		return testBrick;
+	case EnumID::Tele_ID:
+		return transparentSprite;
 	case EnumID::Breakable_ID:
 		return transparentSprite;
 	case EnumID::Candle_ID:

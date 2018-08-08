@@ -111,7 +111,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 void SceneGame::LoadStage(int stage)
 {
 
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1.1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
@@ -270,6 +270,12 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		break;
 	case DIK_J:
 		player->Attack();
+		break;
+	case DIK_K:
+		player->KnockBack();
+		break;
+	case DIK_Q:
+		player->UpGradeMorningStar();
 		break;
 	}
 

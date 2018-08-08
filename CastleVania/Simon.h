@@ -21,7 +21,7 @@
 #define SPEED_X 0.3f
 #define SPEED_Y 0.4f
 #define MAX_HEIGHT 70.0f
-#define GRAVITATIONAL 0.005f			//gia toc trong truong
+#define GRAVITATIONAL 0.02f			//gia toc trong truong
 
 #define MAX_HEIGHT_KNOCKBACK 32.0f
 #define MAX_WIDTH_KNOCKBACK 38.0f
@@ -54,11 +54,17 @@ protected:
 	bool _isDownkJump; // có thả phím nhảy // có nhấn phím nhảy
 
 	//Sprite
-	GSprite* simonJum;
+	GSprite* simonJump;
 	GSprite* simonAttack;
 	GSprite* simonSit;
+	GSprite* simonSitAttack;
 	GSprite* simonDeath;
-	GSprite* simonKnockBack;
+	GSprite* simonKnockedBack;
+	GSprite *simonUpStair;
+	GSprite *simonDownStair;
+	GSprite *simonAttackUpStair;
+	GSprite *simonAttackDownStair;
+	GSprite *simonMove;
 
 	float y0;
 
@@ -117,6 +123,7 @@ public:
 	void Attack();
 	void OnAttack(int deltaTime);
 	void onMovingOnStair(int deltaTime);
+	
 
 	//Stair
 	bool onTopStair;
@@ -132,18 +139,12 @@ public:
 	Stair* stair;	//loại stair
 	EStairType stairType;
 
-	GSprite *simonUpStair;
-	GSprite *simonDownStair;
-	GSprite *simonAttackUpStair;
-	GSprite *simonAttackDownStair;
-
 	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int deltaTime);
 
 	Box GetBox();
 
 	//Xu ly dung tren nen dat
-	void StandGround(ECollisionDirection direction, float dt);
 	bool onBrick;
 
 	void onCollideBrick(Box other, int dt, ECollisionDirection colDirection, float colTime);
@@ -155,11 +156,15 @@ public:
 	float getStairStartPos();
 	void OutStair();
 
+	void KnockBack();
+	int knockBackTime;
+	bool isKnockedBack;
 
+	void UpGradeMorningStar();
 	void Die();
 	void fall();
 
-	void ReceiveDamage(GameObject *enemy);
+	void ReceiveDamage(int damage);
 };
 
 

@@ -114,32 +114,17 @@ enum ObjectType {
 
 enum Action
 {
-	Stand,
-	Run_Right,
-	Run_Left,
-	Jump,
-	Attack,
-	Sit,
-	Fall,
-	IntoCastle,
-	UpStair,
-	DownStair
-};
-
-enum SimonAction
-{
 	SimonStand,
-	SimonMove,
+	SimonRunRight,
+	SimonRunLeft,
+	SimonJump,
+	SimonAttack,
+	SimonSit,
+	SimonFall,
 	SimonUpStair,
 	SimonDownStair,
-	SimonSit,
-	SimonJump,
-	SimonThrow,
-	SimonAttack,
-	SimonHit,
-	SimonDie,
-	SimonUpgrade
-
+	SimonDead,
+	SimonHit
 };
 
 enum ECollisionDirection

@@ -16,14 +16,22 @@ public:
 	int level;
 	int damage;
 
-	void reset();
+	GSprite* lv1;
+	GSprite* lv2;
+	GSprite* lv3;
+
+	int deltaTime;
+
+
+	void resetLevel();
+	void resetSprite();
 	bool isLeft;
 	virtual void Draw(GCamera* camera);
 	virtual Box GetBox();
 
 	void update(int posX, int posY, int deltaTime);
 	void updateDirection(bool);
-	void updateLevel();
+	void UpdateLevel();
 	bool getdata();
 	void Collision(list<GameObject*> &obj, int dt);
 	~MorningStar(void);

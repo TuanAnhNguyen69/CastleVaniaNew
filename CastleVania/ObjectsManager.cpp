@@ -64,7 +64,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 		float enumValue;
 		map >> id >> posX >> posY >> width >> height;
 		posY = G_MapHeight - posY;
-		if (id > 20) {
+		if (id != 19 && id != 21 && id != 25) {
 			int a = 0;
 		}
 		// ứng với giá trị value tương ứng để khởi tạo các object tương tứng
@@ -105,7 +105,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				objects->push_back(new MovingPlatform(posX, posY));
 				break;
 			case EnumID::Tele_ID:
-				//objects->push_back(new Tele(posX, posY));
+				objects->push_back(new Tele(posX, posY));
 				break;
 			case EnumID::Trap_ID:
 				//_dynamicObject->push_back(new Trap(posX, posY));
@@ -158,8 +158,10 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::PorkChop_ID:
 			case EnumID::SmallHeart_ID:
 			case EnumID::SpiritBall_ID:
-			case EnumID::StopWatch_ID:
 			case EnumID::TreasureChest_ID:
+				objects->push_back(new RewardItem(posX, posY, static_cast<EnumID>(id)));
+				break;
+			case EnumID::StopWatch_ID:
 				objects->push_back(new RewardItem(posX, posY, static_cast<EnumID>(id)));
 				break;
 			}
@@ -185,7 +187,8 @@ D3DXVECTOR2 ObjectsManager::GetPosDoor()
 
 void ObjectsManager::Draw(GCamera *camera)
 {
-	for (list<GameObject*>::iterator i = objects->begin(); i != objects->end(); i++)
+	int a = 0;
+	for (list<GameObject*>::iterator i = objects->begin(); i != objects->end(); i++, a++)
 	{ 
 		GameObject* obj = (*i);
 	

@@ -79,7 +79,6 @@ void GSprite::Draw(int X, int Y)
 {
 	RECT srect;
 
-
 	srect.left = (_index % _texture->Cols)*(_texture->FrameWidth);// + 1;
 	srect.top = (_index / _texture->Cols)*(_texture->FrameHeight);// + 1;
 	srect.right = srect.left + _texture->FrameWidth;
@@ -91,7 +90,7 @@ void GSprite::Draw(int X, int Y)
 	//position.x = X - _texture->FrameWidth/2;
 	//position.y = Y - _texture->FrameHeight/2;
 	position.x = X;
-	position.y = Y;
+	position.y = Y; 
 	G_SpriteHandler->Draw(
 		_texture->Texture,
 		&srect,

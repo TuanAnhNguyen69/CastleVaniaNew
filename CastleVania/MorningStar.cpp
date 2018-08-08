@@ -9,13 +9,23 @@ MorningStar::MorningStar(int posX, int posY, int timeAnimation) : GameObject(pos
 {
 	isLeft = true;
 	damage = 1;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 0, 2, timeAnimation);
+	level = 1;
+	damage = 1;
+	lv1 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 0, 2, timeAnimation);
+	lv2 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 3, 5, timeAnimation);
+	lv3 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 6, 14, timeAnimation / 3);
+	sprite = lv1;
 }
 
-void MorningStar::reset()
+void MorningStar::resetLevel()
 {
 	level = 1;
 	damage = 1;
+}
+
+void MorningStar::resetSprite()
+{
+	sprite->Reset();
 }
 
 
@@ -68,11 +78,21 @@ Box MorningStar::GetBox()
 void MorningStar::update(int _posX, int _posY, int deltaTime)
 {
 	sprite->Update(deltaTime);
-
 	float morningStarX = 0;
 	float morningStarY = 0;
 	int morningState = this->sprite->GetIndex();
-
+	if (level == 3) {
+		if (morningState <= 8) {
+			morningState = 0;
+		}
+		else if (morningState >= 12) {
+			morningState = 2;
+		}
+		else {
+			morningState = 1;
+		}
+	}
+	
 	if (!isLeft) {
 		switch (morningState % 3)
 		{
@@ -115,9 +135,29 @@ void MorningStar::update(int _posX, int _posY, int deltaTime)
 	this->y = morningStarY;
 }
 
-void MorningStar::updateLevel()
+void MorningStar::UpdateLevel()
 {
-	this->updateLevel();
+	if (level == 3) {
+		return;
+	}
+
+	this->level++;
+
+	switch (level)
+	{
+	case 1:
+		sprite = lv1;
+		break;
+	case 2:
+		sprite = lv2;
+
+		break;
+	case 3:
+		sprite = lv3;
+		break;
+	default:
+		break;
+	}
 }
 
 void MorningStar::Collision(list<GameObject*> &obj, int dt){

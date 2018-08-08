@@ -17,7 +17,7 @@ BackgroundController::BackgroundController(int level)
 	switch (level)
 	{
 	case 1:
-		tileFileName = "Resource/map/lv-2.1.txt";
+		tileFileName = "Resource/map/lv-2.txt";
 		quadtreeFileName = "Resource/map/lv-2.1Quadtree.txt";
 
 		break;
@@ -42,7 +42,7 @@ BackgroundController::BackgroundController(int level)
 		switch (level)
 		{
 		case 1:
-			bgSprite = new GSprite(new GTexture("Resource\\map\\lv-2.1.bmp", count, 1, count), 1000);
+			bgSprite = new GSprite(new GTexture("Resource\\map\\lv-2.bmp", count, 1, count), 1000);
 			break;
 		case 2:
 			bgSprite = new GSprite(new GTexture("Resource\\map\\Level2.png", count, 1, count), 1000);
@@ -78,7 +78,7 @@ void BackgroundController::GetAvailableTiles(int viewportX, int viewportY)
 		if (listTile->find(index)->second->posX > viewportX && listTile->find(index)->second->posY < viewportY) {
 			currentTiles->push_back(index);
 		}
-	}
+	} 
 }
 
 void BackgroundController::Draw(GCamera *camera)

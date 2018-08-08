@@ -539,13 +539,148 @@ namespace MapEditor
 
         }
 
+        private EnumID curentType;
+
+        private void Draw(EnumID type)
+        {
+            switch (type)
+            {
+                case EnumID.MedusaHead_ID:
+                    drawItem(@"resource\image\enemy\medusahead.png", (int)EnumID.MedusaHead_ID);
+                    break;
+                case EnumID.Bat_ID:
+                    drawItem(@"resource\image\enemy\bat.png", (int)EnumID.Bat_ID);
+                    break;
+                case EnumID.SpearGuard_ID:
+                    drawItem(@"resource\image\enemy\spearman.png", (int)EnumID.SpearGuard_ID);
+                    break;
+                case EnumID.BonePillar_ID:
+                    drawItem(@"resource\image\enemy\turret.png", (int)EnumID.BonePillar_ID);
+                    break;
+                case EnumID.Ghost_ID:
+                    drawItem(@"resource\image\enemy\ghost.png", (int)EnumID.Ghost_ID);
+                    break;
+                case EnumID.PhantomBat_ID:
+                    drawItem(@"resource\image\enemy\phantombat.png", (int)EnumID.PhantomBat_ID);
+                    break;
+                case EnumID.Eagle_ID:
+                    drawItem(@"resource\image\enemy\eagle.png", (int)EnumID.Eagle_ID);
+                    break;
+                case EnumID.Skeletons_ID:
+                    drawItem(@"resource\image\enemy\skeleton.png", (int)EnumID.Skeletons_ID);
+                    break;
+                case EnumID.Pleaman_ID:
+                    drawItem(@"resource\image\enemy\pleaman.png", (int)EnumID.Pleaman_ID);
+                    break;
+                case EnumID.MovingPlatform_ID:
+                    drawItem(@"resource\image\ground\movingground.png", (int)EnumID.MovingPlatform_ID);
+                    break;
+                case EnumID.StairLeft_ID:
+                    drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairLeft_ID);
+                    break;
+                case EnumID.StairRight_ID:
+                    drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairRight_ID);
+                    break;
+                case EnumID.StairTopLeft_ID:
+                    drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairTopLeft_ID);
+                    break;
+                case EnumID.StairTopRight_ID:
+                    drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairTopRight_ID);
+                    break;
+                case EnumID.StairBotLeft_ID:
+                    drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairBotLeft_ID);
+                    break;
+                case EnumID.StairBotRight_ID:
+                    drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairBotRight_ID);
+                    break;
+                case EnumID.Door_ID:
+                    drawItem(@"resource\image\ground\door.png", (int)EnumID.Door_ID);
+                    break;
+                case EnumID.Tele_ID:
+                    drawItem(@"resource\image\ground\tele.png", (int)EnumID.Tele_ID);
+                    break;
+                case EnumID.Trap_ID:
+                    drawItem(@"resource\image\ground\trap.png", (int)EnumID.Trap_ID);
+                    break;
+                case EnumID.Brick_ID:
+                    drawItem(@"resource\image\ground\ground.png", (int)EnumID.Brick_ID);
+                    break;
+                case EnumID.Breakable_ID:
+                    drawItem(@"resource\image\ground\break.png", (int)EnumID.Breakable_ID);
+                    break;
+                case EnumID.Candle_ID:
+                    drawItem(@"resource\image\ground\candle.png", (int)EnumID.Candle_ID);
+                    break;
+                case EnumID.Medusa_ID:
+                    drawItem(@"resource\image\boss\medusa.png", (int)EnumID.Medusa_ID);
+                    break;
+                case EnumID.Count_Dracula_ID:
+                    drawItem(@"resource\image\boss\dracula.png", (int)EnumID.Count_Dracula_ID);
+                    break;
+                case EnumID.MorningStar_ID:
+                    drawItem(@"resource\image\item\morningstar.png", (int)EnumID.MorningStar_ID);
+                    break;
+                case EnumID.SmallHeart_ID:
+                    drawItem(@"resource\image\item\smallheart.png", (int)EnumID.SmallHeart_ID);
+                    break;
+                case EnumID.BigHeart_ID:
+                    drawItem(@"resource\image\item\bigheart.png", (int)EnumID.BigHeart_ID);
+                    break;
+                case EnumID.MoneyBag400_ID:
+                    drawItem(@"resource\image\item\moneybag400.png", (int)EnumID.MoneyBag400_ID);
+                    break;
+                case EnumID.MoneyBag700_ID:
+                    drawItem(@"resource\image\item\moneybag700.png", (int)EnumID.MoneyBag700_ID);
+                    break;
+                case EnumID.PorkChop_ID:
+                    drawItem(@"resource\image\item\porkchop.png", (int)EnumID.PorkChop_ID);
+                    break;
+                case EnumID.Crown_ID:
+                    drawItem(@"resource\image\item\crown.png", (int)EnumID.Crown_ID);
+                    break;
+                case EnumID.TreasureChest_ID:
+                    drawItem(@"resource\image\item\treasure.png", (int)EnumID.TreasureChest_ID);
+                    break;
+                case EnumID.DoubleShot_ID:
+                    drawItem(@"resource\image\item\doubleshot.png", (int)EnumID.DoubleShot_ID);
+                    break;
+                case EnumID.TripleShot_ID:
+                    drawItem(@"resource\image\item\tripleshot.png", (int)EnumID.TripleShot_ID);
+                    break;
+                case EnumID.SpiritBall_ID:
+                    drawItem(@"resource\image\item\magicball.png", (int)EnumID.SpiritBall_ID);
+                    break;
+                case EnumID.Cross_ID:
+                    drawItem(@"resource\image\item\cross.png", (int)EnumID.Cross_ID);
+                    break;
+                case EnumID.Axe_ID:
+                    drawItem(@"resource\image\item\axe.png", (int)EnumID.Axe_ID);
+                    break;
+                case EnumID.Boomerang_ID:
+                    drawItem(@"resource\image\item\boomerang.png", (int)EnumID.Boomerang_ID);
+                    break;
+                case EnumID.Knife_ID:
+                    drawItem(@"resource\image\item\dagger.png", (int)EnumID.Knife_ID);
+                    break;
+                case EnumID.FireBomb_ID:
+                    drawItem(@"resource\image\item\firebomb.png", (int)EnumID.FireBomb_ID);
+                    break;
+                case EnumID.StopWatch_ID:
+                    drawItem(@"resource\image\item\watch.png", (int)EnumID.StopWatch_ID);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
         private void pictureBox1_MouseDown_1(object sender, MouseEventArgs e)
         {
-            textBox1.Text = e.X + "/" + e.Y;
+            textBox1.Text = curentType.ToString();
             currentMouse = new Point(e.X, e.Y);
             if (e.Button.Equals(MouseButtons.Left))
             {
-                drawItem(@"resource\image\ground\ground.png", (int)EnumID.Brick_ID);
+                Draw(curentType);
             }
 
             if (e.Button.Equals(MouseButtons.Middle))
@@ -554,13 +689,15 @@ namespace MapEditor
             }
         }
 
+
      
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             currentMouse = new Point(e.X, e.Y);
             if (e.Button.Equals(MouseButtons.Left))
             {
-                drawItem(@"resource\image\ground\ground.png", (int) EnumID.Brick_ID);
+                Draw(curentType);
+
             }
             if (e.Button.Equals(MouseButtons.Middle))
             {
@@ -570,213 +707,187 @@ namespace MapEditor
 
         private void batToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\boss\dracula.png", (int) EnumID.Count_Dracula_ID);
+            curentType = EnumID.Count_Dracula_ID;
         }
 
         private void maskToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\boss\medusa.png", (int)EnumID.Medusa_ID);
+            curentType = EnumID.Medusa_ID;
         }
 
         private void batToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\bat.png", (int)EnumID.Bat_ID);
-
+            curentType = EnumID.Bat_ID;
         }
 
         private void ghostToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\phantombat.png", (int)EnumID.PhantomBat_ID);
-
+            curentType = EnumID.PhantomBat_ID;
         }
 
         private void catToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\pleaman.png", (int)EnumID.Pleaman_ID);
+            curentType = EnumID.Pleaman_ID;
         }
 
         private void mermanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\ghost.png", (int)EnumID.Ghost_ID);
+            curentType = EnumID.Ghost_ID;
         }
 
         private void spearGuardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\spearman.png", (int)EnumID.SpearGuard_ID);
+            curentType = EnumID.SpearGuard_ID;
         }
 
         private void medusaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\medusahead.png", (int)EnumID.MedusaHead_ID);
+            curentType = EnumID.MedusaHead_ID;
         }
 
         private void skeletonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\skeleton.png", (int)EnumID.Skeletons_ID);
+            curentType = EnumID.Skeletons_ID;
         }
 
         private void eagleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\eagle.png", (int)EnumID.Eagle_ID);
+            curentType = EnumID.Eagle_ID;
         }
 
         private void bonePillarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\enemy\turret.png", (int)EnumID.BonePillar_ID);
-
+            curentType = EnumID.BonePillar_ID;
         }
 
         private void fireToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\trap.png", (int)EnumID.Trap_ID);
-
+            curentType = EnumID.Trap_ID;
         }
 
         private void fireToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\candle.png", (int)EnumID.Candle_ID);
-
+            curentType = EnumID.Candle_ID;
         }
 
         private void tileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\ground.png", (int)EnumID.Brick_ID);
-
+            curentType = EnumID.Brick_ID;
         }
 
         private void bigTileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\movingground.png", (int)EnumID.MovingPlatform_ID);
-
+            curentType = EnumID.MovingPlatform_ID;
         }
 
         private void gateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\door.png", (int)EnumID.Door_ID);
-
+            curentType = EnumID.Door_ID;
         }
 
         private void stairToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairRight_ID);
-
+            curentType = EnumID.StairRight_ID;
         }
 
         private void stairLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairLeft_ID);
-
+            curentType = EnumID.StairLeft_ID;
         }
 
         private void smallHeartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\smallheart.png", (int)EnumID.SmallHeart_ID);
-
+            curentType = EnumID.SmallHeart_ID;
         }
 
         private void bigHeartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\bigheart.png", (int)EnumID.BigHeart_ID);
-
+            curentType = EnumID.BigHeart_ID;
         }
 
         private void axeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\axe.png", (int)EnumID.Axe_ID);
-
+            curentType = EnumID.Axe_ID;
         }
 
         private void boomerangToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\boomerang.png", (int)EnumID.Boomerang_ID);
-
+            curentType = EnumID.Boomerang_ID;
         }
 
         private void crossToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\cross.png", (int)EnumID.Cross_ID);
-
+            curentType = EnumID.Cross_ID;
         }
 
         private void daggerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\dagger.png", (int)EnumID.Knife_ID);
-
+            curentType = EnumID.Knife_ID;
         }
 
         private void doubleShotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\doubleshot.png", (int)EnumID.DoubleShot_ID);
+            curentType = EnumID.DoubleShot_ID;
         }
 
         private void fireBombToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\firebomb.png", (int)EnumID.FireBomb_ID);
-
+            curentType = EnumID.FireBomb_ID;
         }
 
         private void morningStarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\morningstar.png", (int)EnumID.MorningStar_ID);
+            curentType = EnumID.MorningStar_ID;
         }
 
         private void porkChopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\porkchop.png", (int)EnumID.PorkChop_ID);
-           
+            curentType = EnumID.PorkChop_ID;           
         }
 
         private void trippleShotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\tripleshot.png", (int)EnumID.TripleShot_ID);
-
+            curentType = EnumID.TripleShot_ID;
         }
 
         private void ưToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\watch.png", (int)EnumID.StopWatch_ID);
-
+            curentType = EnumID.StopWatch_ID;
         }
 
         private void magicBallToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\magicball.png", (int)EnumID.SpiritBall_ID);
-
+            curentType = EnumID.SpiritBall_ID;
         }
 
         private void breakableToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\break.png", (int)EnumID.Breakable_ID);
-
+            curentType = EnumID.Breakable_ID;
         }
 
         private void teleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\tele.png", (int)EnumID.Tele_ID);
-
+            curentType = EnumID.Tele_ID;
         }
 
         private void moneyBag400ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\moneybag400.png", (int)EnumID.MoneyBag400_ID);
-
+            curentType = EnumID.MoneyBag400_ID;
         }
 
         private void moneyBag700ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\moneybag700.png", (int)EnumID.MoneyBag700_ID);
+            curentType = EnumID.MoneyBag700_ID;
         }
 
         private void treasureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\treasure.png", (int)EnumID.TreasureChest_ID);
-
+            curentType = EnumID.TreasureChest_ID;
         }
 
         private void crowwnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\item\crown.png", (int)EnumID.Crown_ID);
-
+            curentType = EnumID.Crown_ID;
         }
 
         private void drawItem(String path,int ID)
@@ -798,26 +909,29 @@ namespace MapEditor
 
         private void stairTopLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairTopLeft_ID);
-
+            curentType = EnumID.StairTopLeft_ID;
         }
 
         private void stairTopRightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairTopRight_ID);
+            curentType = EnumID.StairTopRight_ID;
 
         }
 
         private void stairBotLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairleft.png", (int)EnumID.StairBotLeft_ID);
+            curentType = EnumID.StairBotLeft_ID;
 
         }
 
         private void stairBotRightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawItem(@"resource\image\ground\stairright.png", (int)EnumID.StairBotRight_ID);
+            curentType = EnumID.StairBotRight_ID;
 
+        }
+        private void brickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            curentType = EnumID.Brick_ID;
         }
 
         void addObject(ObjectGame obj)
