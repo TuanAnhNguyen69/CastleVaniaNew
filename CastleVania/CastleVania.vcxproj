@@ -87,6 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActiveObject.cpp" />
+    <ClCompile Include="Axe.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BonePillar.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="GCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="Knife.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GSprite.cpp" />
@@ -113,6 +115,7 @@
     <ClCompile Include="MedusaHead.cpp" />
     <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="Panther.cpp" />
     <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="ObjectsManager.cpp" />
     <ClCompile Include="QNode.cpp" />
@@ -136,9 +139,11 @@
     <ClCompile Include="Whip.cpp" />
     <ClCompile Include="WhipRect.cpp" />
     <ClCompile Include="WhipSprite.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActiveObject.h" />
+    <ClInclude Include="Axe.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BonePillar.h" />
@@ -162,11 +167,13 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GTexture.h" />
+    <ClInclude Include="HolyWater.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="Medusa.h" />
     <ClInclude Include="MedusaHead.h" />
     <ClInclude Include="MorningStar.h" />
     <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="Panther.h" />
     <ClInclude Include="PhantomBat.h" />
     <ClInclude Include="ObjectsManager.h" />
     <ClInclude Include="QNode.h" />
@@ -189,6 +196,7 @@
     <ClInclude Include="Whip.h" />
     <ClInclude Include="WhipRect.h" />
     <ClInclude Include="WhipSprite.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

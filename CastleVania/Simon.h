@@ -5,6 +5,9 @@
 #include "Weapon.h"
 #include "Boomerang.h"
 #include "Knife.h"
+#include "Axe.h"
+#include "HolyWater.h"
+#include "Fire.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -51,6 +54,9 @@ protected:
 	bool isAttacking;
 	void setSimonAction(SimonAction action); // thiết lập hành động
 	*/
+
+	//Test
+	list<ActiveObject*> *listFire;
 
 	//Key control
 	bool _kLeft, _kRight, _kJump, _kUp, _kDown, _kAttack;
@@ -126,6 +132,8 @@ public:
 	list<Weapon*> *sub_weapon;			//danh sách các đối tượng weapon được tạo ra khi dùng
 	void UseBoomerang();
 	void UseKnife();
+	void UseAxe();
+	void UseHolyWater();
 
 	//Stair
 	bool onTopStair;
@@ -168,7 +176,7 @@ public:
 	void Die();
 	void fall();
 
-	void ReceiveDamage(GameObject *enemy);
+	void ReceiveDamage(int damage);
 };
 
 

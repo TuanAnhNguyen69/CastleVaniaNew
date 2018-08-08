@@ -1,5 +1,8 @@
 #pragma once
 #include "Weapon.h"
+
+#define KNIFE_SPEED 1.0f
+
 class Knife :
 	public Weapon
 {

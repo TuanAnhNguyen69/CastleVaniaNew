@@ -12,13 +12,19 @@ Boomerang::Boomerang() : Weapon()
 Boomerang::Boomerang(float _posX, float _posY, float _direction)
 	: Weapon(_posX, _posY, _direction, EnumID::Boomerang_Weapon_ID)
 {
-	//active = true;
-	range = 0;
+	active = true;
 	x0 = _posX;
 	if (_direction < 0.0)
+	{
+		vX = -BOOMERANG_SPEED;
 		isLeft = true;
+	}
 	else
+	{
+		vX = BOOMERANG_SPEED;
 		isLeft = false;
+	}
+		
 }
 
 Boomerang::~Boomerang()
@@ -40,26 +46,10 @@ void Boomerang::Update(int deltaTime)
 		else
 			if ((x - x0) > 200)
 				vX = -vX;
+		sprite->Update(deltaTime);
 	}
 
 	
-	/*
-	if (lifeTime != 0 && lifeTime <= BOOMERANG_LIFE_TIME)
-	{
-		lifeTime += deltaTime;
-	}
-	else
-	{
-		range += vX * deltaTime;
-		x += vX * deltaTime;
-		if (abs(range) > BOOMERANG_RAGE && lifeTime == 0)
-		{
-			lifeTime += deltaTime;
-			vX = -vX;
-		}
-	}
-	*/
-	sprite->Update(deltaTime);
 }
 
 void Boomerang::Collision(list<GameObject*> &obj, int dt)
@@ -73,9 +63,21 @@ void Boomerang::Collision(list<GameObject*> &obj, int dt)
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
-		if (other->id == EnumID::Simon_ID && AABBCheck(box, boxOther))
+		if (AABBCheck(broadphasebox, boxOther))
 		{
-			this->active = false;
+			ECollisionDirection colDirection;
+			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+			if (collisionTime < 1.0f && collisionTime > 0.0)
+			{
+				switch (other->id)
+				{
+				case EnumID::Simon_ID:
+					this->active = false;
+					break;
+				default:
+					break;
+				}
+			}
 		}
 	}
 }

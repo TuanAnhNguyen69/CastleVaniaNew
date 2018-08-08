@@ -17,6 +17,6 @@ public:
 	virtual void Update(int deltaTime);
 
 	//Va cham, chua dinh nghia
-	void Collision();
+	virtual void Collision(list<GameObject*> &obj, int dt);
 };
 

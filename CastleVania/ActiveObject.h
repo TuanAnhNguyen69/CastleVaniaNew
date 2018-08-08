@@ -27,6 +27,5 @@ public:
 	virtual void Collision(list<GameObject*> obj, int dt);
 
 	virtual void SetActive(float _vX, float _vy);
-	virtual void ReceiveDamage(int damage);
 };
 

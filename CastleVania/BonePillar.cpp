@@ -6,14 +6,17 @@ BonePillar::BonePillar() : ActiveObject()
 {
 }
 
-BonePillar::BonePillar(float _posX, float _posY) : ActiveObject(_posX, _posY, 0, 0, EnumID::BonePillar_ID)
+BonePillar::BonePillar(float _posX, float _posY, bool _isLeft) : ActiveObject(_posX, _posY, 0, 0, EnumID::BonePillar_ID)
 {
 	listFire = new list<ActiveObject*>();
 	type = ObjectType::Enemy_Type;
-	hp = 8;
+	hp = 6;
+	damage = 2;
+	point = 400;
 	active = true;
 	lifeTime = 0;
 	canBeKilled = true;
+	isLeft = _isLeft;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::BonePillar_ID), 12);
 }
 
@@ -32,18 +35,17 @@ void BonePillar::UpdateFire(float deltaTime)
 		else
 		{
 			(*obj)->Update(deltaTime);
-			obj++;
+			++obj;
 		}
 	}
 }
 
 void BonePillar::DrawFire(GCamera* camera)
 {
-	list<ActiveObject*>::iterator obj = listFire->begin();
-	while (obj != listFire->end())
+	for (list<ActiveObject*>::iterator fire = listFire->begin(); fire != listFire->end(); fire++)
 	{
-		(*obj)->Draw(camera);
-		obj++;
+		//DynamicObject* fire = (*iter);
+		(*fire)->Draw(camera);
 	}
 }
 
@@ -54,7 +56,10 @@ void BonePillar::Update(int deltaTime)
 		lifeTime += deltaTime;
 		if (lifeTime % 30 == 0)
 		{
-			listFire->push_back(new Fire(x, y + 10));
+			if(isLeft)
+				listFire->push_back(new Fire(x, y - 10, -1));
+			else
+				listFire->push_back(new Fire(x, y - 10, 1));
 		}
 
 		UpdateFire(deltaTime);
@@ -64,8 +69,11 @@ void BonePillar::Update(int deltaTime)
 
 void BonePillar::Draw(GCamera* camera)
 {
-	D3DXVECTOR2 center = camera->Transform(x, y);
-	sprite->Draw(center.x, center.y);
+	D3DXVECTOR2 pos = camera->Transform(x, y);
+	if(isLeft)
+		sprite->Draw(pos.x, pos.y);
+	else
+		sprite->DrawFlipX(pos.x, pos.y);
 	this->DrawFire(camera);
 }
 

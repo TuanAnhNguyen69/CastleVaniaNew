@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ActiveObject.h"
 
 #define PANTHER_JUMP_HEIGHT 20.0f
@@ -12,6 +12,7 @@ public:
 
 	bool isGrounding;
 	bool isJump;
+	bool hasJump;			//Đã thực hiện trạng thái nhảy hay chưa
 
 	Panther();
 	Panther(float _posX, float _posY);
@@ -30,6 +31,6 @@ public:
 
 
 	//Va cham, chua dinh nghia
-	void Collision();
+	void Collision(list<GameObject*> &obj, int dt);
 };
 

@@ -96,6 +96,15 @@ void GameObject::CreateSprite()
 	case EnumID::Knife_Weapon_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
 		break;
+	case EnumID::Axe_Weapon_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
+	case EnumID::HolyWater_Weapon_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
+	case EnumID::Fire_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
 	}
 }
 

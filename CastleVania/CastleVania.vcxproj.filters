@@ -143,6 +143,18 @@
     <ClCompile Include="Whip.cpp" />
     <ClCompile Include="WhipRect.cpp" />
     <ClCompile Include="WhipSprite.cpp" />
+    <ClCompile Include="Axe.cpp">
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyWater.cpp">
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Panther.cpp">
+      <Filter>Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -292,6 +304,18 @@
     <ClInclude Include="Whip.h" />
     <ClInclude Include="WhipRect.h" />
     <ClInclude Include="WhipSprite.h" />
+    <ClInclude Include="Axe.h">
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="HolyWater.h">
+      <Filter>Objects\Weapons\Sub_Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Panther.h">
+      <Filter>Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Objects\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">

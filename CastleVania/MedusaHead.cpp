@@ -10,6 +10,9 @@ MedusaHead::MedusaHead() : ActiveObject()
 MedusaHead::MedusaHead(float _posX, float _posY)
 	: ActiveObject(_posX, _posY, MEDUSAHEAD_SPEED, 0, EnumID::MedusaHead_ID)
 {
+	hp = 1;
+	damage = 2;
+	point = 300;
 	active = true;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;

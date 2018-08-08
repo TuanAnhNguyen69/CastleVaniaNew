@@ -7,13 +7,18 @@ Panther::Panther() : ActiveObject()
 	active = true;
 }
 
-Panther::Panther(float _posX, float _posY)
-	: ActiveObject(_posX, _posY, PANTHER_SPEED, 0, EnumID::Panther_ID)
+Panther::Panther(float _x, float _y)
+	: ActiveObject(_x, _y, PANTHER_SPEED, 0, EnumID::Panther_ID)
 {
+	hp = 1;
+	damage = 2;
+	point = 200;
 	active = true;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
+	hasJump = false;
 	isJump = false;
+	isGrounding = false;
 }
 Panther::~Panther()
 {
@@ -21,19 +26,30 @@ Panther::~Panther()
 
 void Panther::Draw(GCamera* camera)
 {
-	ActiveObject::Draw(camera);
+	if (sprite == NULL || !active)
+		return;
+	if (x <= camera->viewport.x || x >= camera->viewport.x + G_ScreenWidth)
+	{
+		active = false;
+		return;
+	}
+	D3DXVECTOR2 pos = camera->Transform(x, y);
+	if (vX > 0)
+		sprite->DrawFlipX(pos.x, pos.y);
+	else
+		sprite->Draw(pos.x, pos.y);
 }
 
 void Panther::Update(int deltaTime)
 {
-	posX += vX * deltaTime;
-	if (posX <= width / 2 + 5 || posX >= G_MapWidth - width / 2 - 5)
+	x += vX * deltaTime;
+	if (x <= width / 2 + 5 || x >= G_MapWidth - width / 2 - 5)
 		vX = -vX;
 	
 	if(isJump)
 	{
-		posY += vY;
-		if (posY >= PANTHER_JUMP_HEIGHT)
+		y += vY;
+		if (y >= PANTHER_JUMP_HEIGHT)
 			vY = -vY;
 
 		//Neu cham dat, chua dinh nghia
@@ -46,17 +62,24 @@ void Panther::Update(int deltaTime)
 	}
 	else
 		sprite->Update(deltaTime);
+
+	if (hasJump && isGrounding)
+	{
+		vX = -vX;
+		x += vX * deltaTime;
+		sprite->Update(deltaTime);
+	}
 }
 
 void Panther::SetActive(float _posX_Simon, float _posY_Siomon)
 {
 	bool simonLeft = true;
-	if (posX < _posX_Simon)
+	if (x < _posX_Simon)
 		simonLeft = false;
 
-	if (abs(posX - _posX_Simon) <= 200)
+	if (abs(x - _posX_Simon) <= 200)
 	{
-		if ((posY - _posY_Siomon) <= 0 && (posY - _posY_Siomon) >= -50)
+		if ((y - _posY_Siomon) <= 0 && (y - _posY_Siomon) >= -50)
 		{
 			if (!simonLeft)
 				vX = PANTHER_SPEED;
@@ -64,7 +87,7 @@ void Panther::SetActive(float _posX_Simon, float _posY_Siomon)
 				vX = -PANTHER_SPEED;
 		}
 		else
-			if ((posY - _posY_Siomon) >= 30 && (posY - _posY_Siomon) <= 150)
+			if ((y - _posY_Siomon) >= 30 && (y - _posY_Siomon) <= 150)
 				Jump();
 	}
 }
@@ -80,7 +103,29 @@ void Panther::Jump()
 	
 }
 
-void Panther::Collision()
+void Panther::Collision(list<GameObject*> &obj, int dt)
 {
-	//Chua dinh nghia
+	list<GameObject*>::iterator it;
+	for (it = obj.begin(); it != obj.end(); it++)
+	{
+		GameObject* other = (*it);
+
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+
+		if (other->id == EnumID::Brick_ID) 
+		{
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0)
+				{
+					this->y = other->y + this->height;
+					isGrounding = true;
+				}
+			}
+		}
+	}
 }

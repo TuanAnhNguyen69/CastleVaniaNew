@@ -10,6 +10,7 @@ public:
 
 	list<ActiveObject*> *listFire;
 	int lifeTime;
+	bool isLeft;
 
 	void UpdateFire(float deltaTime);
 	void DrawFire(GCamera* camera);
@@ -21,7 +22,7 @@ public:
 
 
 	BonePillar();
-	BonePillar(float _posX, float _posY);
+	BonePillar(float _x, float _y, bool _isLeft);
 	~BonePillar();
 };
 

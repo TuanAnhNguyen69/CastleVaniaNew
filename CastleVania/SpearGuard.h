@@ -22,5 +22,7 @@ public:
 	~SpearGuard();
 
 	Box GetBox();
+
+	void Collision(list<GameObject*> &obj, int dt);
 };
 
