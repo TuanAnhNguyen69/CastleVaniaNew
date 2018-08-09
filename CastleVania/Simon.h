@@ -2,6 +2,12 @@
 #include "ActiveObject.h"
 #include "MorningStar.h"
 #include "Stair.h"
+#include "Weapon.h"
+#include "Boomerang.h"
+#include "Knife.h"
+#include "Axe.h"
+#include "HolyWater.h"
+#include "Fire.h"
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -18,7 +24,7 @@
 #define SIMON_RATE 10
 #define HURT_STATE 25
 
-#define SPEED_X 0.3f
+#define SPEED_X 0.4f
 #define SPEED_Y 0.4f
 #define MAX_HEIGHT 70.0f
 #define GRAVITATIONAL 0.02f			//gia toc trong truong
@@ -49,6 +55,9 @@ protected:
 	void setSimonAction(SimonAction action); // thiết lập hành động
 	*/
 
+	//Test
+	list<ActiveObject*> *listFire;
+
 	//Key control
 	bool _kLeft, _kRight, _kJump, _kUp, _kDown, _kAttack;
 	bool _isDownkJump; // có thả phím nhảy // có nhấn phím nhảy
@@ -67,6 +76,8 @@ protected:
 	GSprite *simonMove;
 
 	float y0;
+
+	bool canPress;
 
 	//Da chet
 	bool isDie;
@@ -124,6 +135,14 @@ public:
 	void OnAttack(int deltaTime);
 	void onMovingOnStair(int deltaTime);
 	
+
+	//Sub weapon
+	EnumID swID;
+	list<Weapon*> *sub_weapon;			//danh sách các đối tượng weapon được tạo ra khi dùng
+	void UseBoomerang();
+	void UseKnife();
+	void UseAxe();
+	void UseHolyWater();
 
 	//Stair
 	bool onTopStair;

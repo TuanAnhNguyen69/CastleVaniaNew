@@ -39,7 +39,7 @@ private:
 	GTexture* axe;
 	GTexture* boomerang;
 	GTexture* knife;
-	GTexture* fireBomb;
+	GTexture* holyWater;
 	GTexture* stopWatch;
 	
 	//Weapon

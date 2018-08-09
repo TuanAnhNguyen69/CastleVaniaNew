@@ -48,7 +48,7 @@ void SceneGame::LoadLevel(int level)
 	//player = new Player(345, 1310); //-> Stage 6 
 	//player = new Player(287, 1310);
 
-	player = new Simon(3776, 150);
+	player = new Simon(3740, 150);
 	//player = new Simon(3776, 130, 32, 64); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
@@ -83,7 +83,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 		}
 
 		player->Update(t);
-		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->x, player->y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
+		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->GetBox().x, player->GetBox().y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
 		qGameObject->Update(player, t);
 		player->Collision(*(qGameObject->inSightObjects), t);
 		qGameObject->Collision(t);
@@ -110,7 +110,6 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 void SceneGame::LoadStage(int stage)
 {
-
 	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
@@ -248,7 +247,6 @@ void SceneGame::ProcessInput(int KeyCode) {
 		break;
 	case DIK_DOWN:
 	case DIK_S:
-		player->goDownStair();
 		player->Sit();
 		break;
 	case DIK_UP:
@@ -276,6 +274,17 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		break;
 	case DIK_Q:
 		player->UpGradeMorningStar();
+	/*case DIK_1:
+		player->UseBoomerang();
+		break;
+	case DIK_2:
+		player->UseKnife();
+		break;
+	case DIK_3:
+		player->UseAxe();
+		break;
+	case DIK_4:
+		player->UseHolyWater();*/
 		break;
 	}
 

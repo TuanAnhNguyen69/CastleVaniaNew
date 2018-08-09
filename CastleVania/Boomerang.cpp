@@ -5,12 +5,26 @@
 Boomerang::Boomerang() : Weapon()
 {
 	active = true;
+	range = 0;
+
 }
 
 Boomerang::Boomerang(float _posX, float _posY, float _direction)
-	: Weapon(_posX, _posY, _direction, EnumID::Boomerang_ID)
+	: Weapon(_posX, _posY, _direction, EnumID::Boomerang_Weapon_ID)
 {
 	active = true;
+	x0 = _posX;
+	if (_direction < 0.0)
+	{
+		vX = -BOOMERANG_SPEED;
+		isLeft = true;
+	}
+	else
+	{
+		vX = BOOMERANG_SPEED;
+		isLeft = false;
+	}
+		
 }
 
 Boomerang::~Boomerang()
@@ -19,27 +33,51 @@ Boomerang::~Boomerang()
 
 void Boomerang::Update(int deltaTime)
 {
-	int range = 0;
-	int lifeTime = 0;
-
-	if (lifeTime > 0 && lifeTime <= BOOMERANG_LIFE_TIME)
-	{
-		lifeTime += deltaTime;
-	}
+	if (!active)
+		return;
 	else
 	{
-		range += vX * deltaTime;
 		x += vX * deltaTime;
-		if (abs(range) > BOOMERANG_RAGE && lifeTime == 0)
+		if (isLeft)
 		{
-			lifeTime += deltaTime;
-			vX = -vX;
+			if ((x0 - x) > 200)
+				vX = -vX;
 		}
+		else
+			if ((x - x0) > 200)
+				vX = -vX;
+		sprite->Update(deltaTime);
 	}
-	sprite->Update(deltaTime);
+
+	
 }
 
-void Boomerang::Collision()
+void Boomerang::Collision(list<GameObject*> &obj, int dt)
 {
-	//Chua dinh nghia
+	list<GameObject*> listObject;
+	list<GameObject*>::iterator it;
+	for (it = obj.begin(); it != obj.end(); it++)
+	{
+		GameObject* other = (*it);
+
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+		if (AABBCheck(broadphasebox, boxOther))
+		{
+			ECollisionDirection colDirection;
+			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+			if (collisionTime < 1.0f && collisionTime > 0.0)
+			{
+				switch (other->id)
+				{
+				case EnumID::Simon_ID:
+					this->active = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
 }

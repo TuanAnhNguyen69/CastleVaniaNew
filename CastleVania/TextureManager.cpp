@@ -28,7 +28,7 @@ TextureManager::TextureManager(void)
 	deadSimon = new GTexture("Resource/sprites/Simon/Simon_Death.png", 1, 1, 1);
 
 	//Enemy
-	bat = new GTexture("Resource\\sprites\\Enemies\\Bat.png", 4, 1, 4);
+	bat = new GTexture("Resource/sprites/Enemies/Bat.png", 4, 1, 4);
 	bonePillar = new GTexture("Resource/sprites/Enemies/Bone_Pillar.png", 1, 1, 1);
 	medusaHead = new GTexture("Resource/sprites/Enemies/Medusa_Head.png", 2, 1, 2);
 	spearGuard = new GTexture("Resource/sprites/Enemies/Spear_Guard.png", 4, 1, 4);
@@ -61,7 +61,8 @@ TextureManager::TextureManager(void)
 	axe = new GTexture("Resource/sprites/Sub_Weapons/Axe.png", 4, 1, 4);
 	boomerang = new GTexture("Resource/sprites/Sub_Weapons/Boomerang.png", 3, 1, 3);
 	knife = new GTexture("Resource/sprites/Sub_Weapons/Knife.png", 1, 1, 1);
-	fireBomb = new GTexture("Resource/sprites/Sub_Weapons/HolyWater.png", 3, 1, 3);
+	holyWater = new GTexture("Resource/sprites/Sub_Weapons/HolyWater.png", 3, 1, 3);
+	//StopWatch khong co animation su dung
 
 	//Weapon
 	weapon = new GTexture("Resource/sprites/Weapon/Weapon.png", 3, 3, 9);
@@ -162,8 +163,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return boomerang;
 	case EnumID::Knife_Weapon_ID:
 		return knife;
-	case EnumID::FireBomb_Weapon_ID:
-		return fireBomb;
+	case EnumID::HolyWater_Weapon_ID:
+		return holyWater;
 	case EnumID::StopWatch_Weapon_ID:
 		return stopWatch;
 
@@ -181,7 +182,7 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return item_Boomerang;
 	case EnumID::Knife_ID:
 		return item_Knife;
-	case EnumID::FireBomb_ID:
+	case EnumID::HolyWater_ID:
 		return item_FireBomb;
 	case EnumID::StopWatch_ID:
 		return item_StopWatch;
@@ -221,6 +222,5 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return hp;
 	case EnumID::GameUI_ID:
 		return gameScore;
-
 	}
 }

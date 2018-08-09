@@ -22,6 +22,9 @@ Bat::Bat(float _posX, float _posY, int _width, int _height)
 Bat::Bat(float _x, float _y)
 	: ActiveObject(_x, _y, BAT_SPEED, 0, EnumID::Bat_ID)
 {
+	damage = 2;
+	hp = 1;
+	point = 200;
 	active = true;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
@@ -36,7 +39,8 @@ Bat::~Bat()
 void Bat::MovePath(int deltaTime)
 {
 	//posX += vX * deltaTime;
-	x += vX * deltaTime;
+	x += vX * deltaTime*2;
+	y = std::sin(x * 0.03)*3 + y;
 }
 
 void Bat::Draw(GCamera* camera)

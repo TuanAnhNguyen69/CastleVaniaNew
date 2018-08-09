@@ -23,12 +23,12 @@ SpearGuard::SpearGuard(float _x, float _y)
 	: ActiveObject(_x, _y, SPEARGUARD_SPEED, 0, EnumID::SpearGuard_ID)
 {
 	active = true;
-	hp = 3;
-	damage = 3;
-	point = 500;
+	hp = 6;
+	damage = 2;
+	point = 400;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 1000);
+	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 80);
 	x0 = x;
 }
 SpearGuard::~SpearGuard()
@@ -80,4 +80,34 @@ Box SpearGuard::GetBox()
 	box.w = 32;
 	box.h = 64;
 	return box;
+}
+
+void SpearGuard::Collision(list<GameObject*> &obj, int dt)
+{
+	list<GameObject*>::iterator it;
+	for (it = obj.begin(); it != obj.end(); it++)
+	{
+		GameObject* other = (*it);
+
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+
+		if (other->id == EnumID::Brick_ID)
+		{
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0)
+				{
+					if (colDirection == ECollisionDirection::Colls_Left ||
+						colDirection == ECollisionDirection::Colls_Right)
+					{
+						this->vX = -vX;
+					}		
+				}
+			}
+		}
+	}
 }

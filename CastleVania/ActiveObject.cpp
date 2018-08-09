@@ -132,10 +132,6 @@ void ActiveObject::SetActive(float _vX, float _vY)
 	//chua dinh nghia
 }
 
-void ActiveObject::ReceiveDamage(int damage)
-{
-	//chua dinh nghia
-}
 
 bool ActiveObject::IntoScreen(float _x, float _y, GCamera* camera)
 {

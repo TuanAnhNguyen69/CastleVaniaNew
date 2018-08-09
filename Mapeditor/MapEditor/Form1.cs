@@ -892,7 +892,7 @@ namespace MapEditor
 
         private void drawItem(String path,int ID)
         {
-
+            string pa = Path.Combine(Application.StartupPath, path);
             Bitmap bm = new Bitmap(Path.Combine(Application.StartupPath, path));
             if(ID == (int) EnumID.Brick_ID || ID == (int)EnumID.StairLeft_ID || ID == (int)EnumID.StairRight_ID 
                 || ID == (int)EnumID.Door_ID || ID == (int)EnumID.StairTopLeft_ID || ID == (int)EnumID.StairTopRight_ID 

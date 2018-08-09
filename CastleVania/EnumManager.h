@@ -60,7 +60,7 @@ enum EnumID
 	Axe_ID,
 	Boomerang_ID,
 	Knife_ID,
-	FireBomb_ID,
+	HolyWater_ID,
 	StopWatch_ID,
 
 	// Simon
@@ -74,7 +74,7 @@ enum EnumID
 	Axe_Weapon_ID,
 	Boomerang_Weapon_ID,
 	Knife_Weapon_ID,
-	FireBomb_Weapon_ID,
+	HolyWater_Weapon_ID,
 	StopWatch_Weapon_ID,
 
 	//Effect
@@ -92,6 +92,11 @@ enum EnumID
 	//Gournd
 	//StairDownLeft_ID,
 	//StairDownRight_ID,
+	None_ID,
+
+	//Enemy lv1
+	Panther_ID,
+	Zombie_ID,
 };
 
 enum EStairType

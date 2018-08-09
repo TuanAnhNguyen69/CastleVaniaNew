@@ -118,7 +118,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				//_dynamicObject->push_back(_medusa);
 				break;
 			case EnumID::MedusaHead_ID:
-				objects->push_back(new MovingPlatform(posX, posY));
+				objects->push_back(new MedusaHead(posX, posY));
 				break;
 			case EnumID::Ghost_ID:
 				objects->push_back(new Ghost(posX, posY));
@@ -127,7 +127,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				objects->push_back(new Bat(posX, posY));
 				break;
 			case EnumID::BonePillar_ID:
-				objects->push_back(new BonePillar(posX, posY));
+				objects->push_back(new BonePillar(posX, posY, true));
 				break;
 			case EnumID::Eagle_ID:
 				/*objects->push_back(new Eagle(posX, posY, EnumID::DoorLeft_ID));*/
@@ -143,7 +143,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 				break;
 			case EnumID::SpearGuard_ID:
 				objects->push_back(new SpearGuard(posX, posY));
-					break;
+				break;
 			case EnumID::Axe_ID:
 			case EnumID::BigHeart_ID:
 			case EnumID::Boomerang_ID:
@@ -151,7 +151,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::Cross_ID:
 			case EnumID::Crown_ID:
 			case EnumID::DoubleShot_ID:
-			case EnumID::FireBomb_ID:
+			case EnumID::HolyWater_ID:
 			case EnumID::MoneyBag400_ID:
 			case EnumID::MoneyBag700_ID:
 			case EnumID::MorningStar_ID:

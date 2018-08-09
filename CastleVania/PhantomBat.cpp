@@ -6,7 +6,9 @@ PhantomBat::PhantomBat()
 
 PhantomBat::PhantomBat(float _posX, float _posY) : ActiveObject(_posX, _posY, 0.0f, 0.0f, EnumID::PhantomBat_ID)
 {
-
+	hp = 1;
+	damage = 2;
+	point = 200;
 }
 
 PhantomBat::~PhantomBat()

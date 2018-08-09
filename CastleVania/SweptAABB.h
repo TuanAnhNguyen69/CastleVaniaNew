@@ -118,7 +118,7 @@ inline float sweptAABB(const Box& b1, const Box& b2, ECollisionDirection& result
 	float entryTime = xEntry > yEntry ? xEntry : yEntry;
 	float exitTime = xExit < yExit ? xExit : yExit;
 
-	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
+	if (entryTime > exitTime || xEntry > 1.0f || yEntry > 1.0f)
 	{
 		result = ECollisionDirection::Colls_None;
 		return 1.0f;

@@ -11,6 +11,7 @@ class Zombie :
 	public ActiveObject
 {
 public:
+	float x0;
 	Zombie();
 	Zombie(float _posX, float _posY);
 	~Zombie();
