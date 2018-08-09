@@ -1,5 +1,5 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 #include "GSprite.h"
 #include "GTexture.h"
 #include <vector>
@@ -14,7 +14,7 @@ public:
 	~Weapon();
 
 	virtual void Draw(GCamera* cammera);
-	virtual void Update(int deltaTime);
+	virtual void Update(int dt);
 
 	//Va cham, chua dinh nghia
 	virtual void Collision(list<GameObject*> &obj, int dt);

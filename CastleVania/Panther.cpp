@@ -2,13 +2,13 @@
 
 
 
-Panther::Panther() : ActiveObject()
+Panther::Panther() : Enemy()
 {
 	active = true;
 }
 
 Panther::Panther(float _x, float _y)
-	: ActiveObject(_x, _y, PANTHER_SPEED, 0, EnumID::Panther_ID)
+	: Enemy(_x, _y, PANTHER_SPEED, 0, EnumID::Panther_ID)
 {
 	hp = 1;
 	damage = 2;
@@ -40,9 +40,9 @@ void Panther::Draw(GCamera* camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-void Panther::Update(int deltaTime)
+void Panther::Update(int dt)
 {
-	x += vX * deltaTime;
+	x += vX * dt;
 	if (x <= width / 2 + 5 || x >= G_MapWidth - width / 2 - 5)
 		vX = -vX;
 	
@@ -61,13 +61,13 @@ void Panther::Update(int deltaTime)
 		}
 	}
 	else
-		sprite->Update(deltaTime);
+		sprite->Update(dt);
 
 	if (hasJump && isGrounding)
 	{
 		vX = -vX;
-		x += vX * deltaTime;
-		sprite->Update(deltaTime);
+		x += vX * dt;
+		sprite->Update(dt);
 	}
 }
 

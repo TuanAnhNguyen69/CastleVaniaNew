@@ -2,13 +2,13 @@
 
 
 
-Zombie::Zombie() : ActiveObject()
+Zombie::Zombie() : Enemy()
 {
 	active = true;
 }
 
 Zombie::Zombie(float _x, float _y)
-	:ActiveObject(_x, _y, ZOMBIE_SPEED, 0, EnumID::Zombie_ID)
+	: Enemy(_x, _y, ZOMBIE_SPEED, 0, EnumID::Zombie_ID)
 {
 	hp = 1;
 	damage = 2;

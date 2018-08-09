@@ -29,28 +29,22 @@ ActiveObject::~ActiveObject()
 {
 }
 
-void ActiveObject::Update(int deltaTime)
+void ActiveObject::Update(int dt)
 {
 	if (sprite == NULL || !active)
 		return;
-	//posX += vX * deltaTime;
-	x += vX * deltaTime;
+	//posX += vX * dt;
+	x += vX * dt;
 	//if (posX <= width / 2 + 2 || posX >= G_MapWidth - (width / 2 - 2))
 	if(x <= width + 2 || x >= G_MapWidth - width + 2)
 		vX = -vX;
-	//posY += vY * deltaTime;
-	y += vY * deltaTime;
-	sprite->Update(deltaTime);
-}
-
-void ActiveObject::Update(Box playerBox, int deltaTime)
-{
-	//chua dinh nghia
+	//posY += vY * dt;
+	y += vY * dt;
+	sprite->Update(dt);
 }
 
 Box ActiveObject::GetBox()
 {
-	//Box box(posX - width / 2, posY - height / 2, width, height, vX, 0);
 	Box box(x, y, width, height, vX, 0);
 	return box;
 }
@@ -81,57 +75,8 @@ void ActiveObject::Draw(GCamera* camera)
 
 void ActiveObject::Collision(list<GameObject*> obj, int dt)
 {
-	//list<GameObject*>::iterator _itBegin;
-	//for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
-	//{
-	//	float moveX = 0;
-	//	float moveY = 0;
-	//	float normalx;
-	//	float normaly;
-	//	GameObject* other = (*_itBegin);
-	//	if (other->id == EnumID::Brick_ID)
-	//	{
-	//		Box box = this->GetBox();
-	//		Box boxOther = other->GetBox();
-
-	//		if (AABBCheck(box, boxOther, moveX, moveY) == true)
-	//		{
-	//			if (vY < 0)
-	//			{
-	//				//posY += moveY + 20;
-	//				y += moveY;
-	//				vY = 0;
-	//				return;
-	//			}
-	//			/*
-	//			if ((posX - width / 2 + 10) - (other->posX - other->width / 2) <= 0
-	//				|| (posX + width / 2 - 10) - (other->posX + other->width / 2) >= 0)
-	//				vX = -vX;
-	//			*/
-	//			if ((x + 10) - (other->x) <= 0 || (x - 10) - (other->x) >= 0)
-	//				vX = -vX;
-	//		}
-	//		else
-	//			if (AABB(box, boxOther, moveX, moveY) == false)
-	//			{
-	//				if (other->canMove == true)
-	//				{
-	//					box.vx -= boxOther.vx;
-	//					box.vy -= boxOther.vy;
-	//					boxOther.vx = 0;
-	//					boxOther.vy = 0;
-	//				}
-	//			}
-	//	}
-	//}
 
 }
-
-void ActiveObject::SetActive(float _vX, float _vY)
-{
-	//chua dinh nghia
-}
-
 
 bool ActiveObject::IntoScreen(float _x, float _y, GCamera* camera)
 {

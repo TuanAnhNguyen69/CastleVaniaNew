@@ -13,7 +13,7 @@ public:
 	float x0;
 	float y0;
 
-	float timeLife;
+	float timeBurn;
 	bool isBroken;
 
 	GSprite* spriteBroken;

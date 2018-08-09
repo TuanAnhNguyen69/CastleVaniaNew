@@ -22,8 +22,8 @@
 #include "PhantomBat.h"
 #include "Bat.h"
 #include "BonePillar.h"
-#include "Medusa.h"
 #include "SpearGuard.h"
+#include "MedusaBoss.h"
 
 
 // Item

@@ -1,5 +1,5 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 
 #define	MEDUSAHEAD_SPEED 0.2f
 #define MEDUSAHEAD_DAMAGE 2
@@ -8,16 +8,16 @@
 
 
 class MedusaHead :
-	public ActiveObject
+	public Enemy
 {
 public:
 	MedusaHead();
-	MedusaHead(float _posX, float _posY);
+	MedusaHead(float _x, float _y);
 	~MedusaHead();
 
-	void MovePath(int deltaTime);
+	void MovePath(int dt);
 	void Draw(GCamera* camera);
-	void Update(int deltaTime);
+	void Update(int dt);
 
 	//Va cham, chua dinh nghia
 	void Collision();

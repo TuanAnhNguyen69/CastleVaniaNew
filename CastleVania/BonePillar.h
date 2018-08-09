@@ -1,21 +1,21 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 
 #include "Fire.h"
 
 class BonePillar :
-	public ActiveObject
+	public Enemy
 {
 public:
 
 	list<ActiveObject*> *listFire;
-	int lifeTime;
+	int reloadTime;
 	bool isLeft;
 
-	void UpdateFire(float deltaTime);
+	void UpdateFire(float dt);
 	void DrawFire(GCamera* camera);
 
-	void Update(int deltaTime);
+	void Update(int dt);
 	void Draw(GCamera* camera);
 
 	void Collision();

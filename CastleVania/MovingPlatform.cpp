@@ -17,7 +17,10 @@ MovingPlatform::~MovingPlatform()
 {
 }
 
-void MovingPlatform::Draw(GCamera* camera)
+void MovingPlatform::Update(int dt)
 {
-	//chua dinh nghia
+	if (!active)
+		return;
+	x += vX * dt;
+	sprite->Update(dt);
 }

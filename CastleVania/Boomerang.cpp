@@ -31,13 +31,13 @@ Boomerang::~Boomerang()
 {
 }
 
-void Boomerang::Update(int deltaTime)
+void Boomerang::Update(int dt)
 {
 	if (!active)
 		return;
 	else
 	{
-		x += vX * deltaTime;
+		x += vX * dt;
 		if (isLeft)
 		{
 			if ((x0 - x) > 200)
@@ -46,7 +46,7 @@ void Boomerang::Update(int deltaTime)
 		else
 			if ((x - x0) > 200)
 				vX = -vX;
-		sprite->Update(deltaTime);
+		sprite->Update(dt);
 	}
 
 	

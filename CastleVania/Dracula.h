@@ -1,7 +1,7 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 class Dracula :
-	public ActiveObject
+	public Enemy
 {
 public:
 	Dracula();

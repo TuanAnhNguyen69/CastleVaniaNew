@@ -13,6 +13,8 @@ HolyWater::HolyWater(float _xSimon, float _ySimon, float _direction) :
 	spriteThrow = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 0, 16);
 	isBroken = false;
 
+	timeBurn = 0;
+
 	active = true;
 	damage = 4;
 
@@ -56,8 +58,11 @@ void HolyWater::Update(int dt)
 	}
 	else
 	{
+		timeBurn += dt;
 		sprite = spriteBroken;
 		sprite->Update(dt);
+		if (timeBurn > 500)
+			active = false;
 	}
 		
 		//sprite = spriteBroken;

@@ -2,25 +2,13 @@
 
 
 
-Bat::Bat() : ActiveObject()
+Bat::Bat() : Enemy()
 {
 	active = true;
 }
-
-/*
-Bat::Bat(float _posX, float _posY, int _width, int _height)
-	: ActiveObject(_posX, _posY, _width, _height, BAT_SPEED, 0, EnumID::Bat_ID)
-{
-	active = true;
-	canBeKilled = true;
-	type = ObjectType::Enemy_Type;
-	getUp = false;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 1, 3, 100);
-}
-*/
 
 Bat::Bat(float _x, float _y)
-	: ActiveObject(_x, _y, BAT_SPEED, 0, EnumID::Bat_ID)
+	: Enemy(_x, _y, BAT_SPEED, 0, EnumID::Bat_ID)
 {
 	damage = 2;
 	hp = 1;
@@ -29,17 +17,19 @@ Bat::Bat(float _x, float _y)
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
 	getUp = false;
-	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 1, 3, 100);
+	spriteSleep = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 0, 0, 100);
+	spriteFly = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Bat_ID), 1, 3, 100);
+
+	sprite = spriteSleep;
 }
 
 Bat::~Bat()
 {
 }
 
-void Bat::MovePath(int deltaTime)
+void Bat::MovePath(int dt)
 {
-	//posX += vX * deltaTime;
-	x += vX * deltaTime*2;
+	x += vX * dt*2;
 	y = std::sin(x * 0.03)*3 + y;
 }
 
@@ -67,40 +57,29 @@ void Bat::Draw(GCamera* camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-void Bat::Update(int deltaTime)
+void Bat::Update(int dt)
 {
-	// (getUp)
+	if(getUp)
 	{
-		this->MovePath(deltaTime);
-		sprite->Update(deltaTime);
+		this->MovePath(dt);
+		sprite->Update(dt);
 	}
-	/*
-	if (hp <= 0)
-	{
-		Score += point;
-		isDeath = true;
-		return;
-	}
-	*/
-	
 }
 
-void Bat::SetActive(float _x_Simon, float _y_Simon)
+void Bat::SetActive(float _xSimon, float _ySimon)
 {
-	getUp = true;
-	vX = BAT_SPEED;
-	/*
-	if (abs(posX - _posX_Simon) <= 300 && abs(posY - _posY_Simon) <= 300)
+	if (getUp)
+		return;
+
+	if (abs(x - _xSimon) <= 100 && abs(y - _ySimon) <= 100)
 	{
 		getUp = true;
-		if (posX - _posX_Simon > 0)
+		sprite = spriteFly;
+		if (x - _xSimon > 0)
 			vX = -BAT_SPEED;
 		else
 			vX = BAT_SPEED;
-		sprite->_start = 1;
 	}
-	*/
-	
 }
 
 void Bat::Collision()

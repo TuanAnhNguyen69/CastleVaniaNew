@@ -10,28 +10,7 @@ GameObject::GameObject(void)
 	height = 0;
 	canMove = false;
 	canBeKilled = true;
-
-	neededPlayerPosition = false;
 }
-
-/*
-GameObject::GameObject(float _posX, float _posY, int _width, int _height, EnumID _id)
-{
-	posX = _posX;
-	posY = _posY;
-	vX = 0;
-	vY = 0;
-	id = _id;
-	
-	hp = 1;
-	point = 1;
-	type = ObjectType::None;
-	canMove = false;
-	active = true;
-	width = _width;
-	height = _height;
-}
-*/
 
 GameObject::GameObject(float _x, float _y, EnumID _id)
 {
@@ -54,6 +33,11 @@ GameObject::GameObject(float _x, float _y, EnumID _id)
 		height = sprite->_texture->FrameHeight;
 	}
 }
+
+GameObject::~GameObject(void) 
+{
+}
+
 
 void GameObject::CreateSprite()
 {
@@ -105,36 +89,44 @@ void GameObject::CreateSprite()
 	case EnumID::Fire_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
 		break;
+	case EnumID::Medusa_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 4, 100);
+		break;
+	case EnumID::Snake_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
 	}
 }
 
 
-void GameObject::Update(int deltaTime)
+void GameObject::Update(int dt)
 {
 	if (sprite != NULL)
-		sprite->Update(deltaTime);
+		sprite->Update(dt);
 }
-void GameObject::Update(int, int, int dt) {
+void GameObject::Update(float _xSimon, float _ySimon, int dt)
+{
 
 }
 void GameObject::Draw(GCamera* camera)
 {
 	if (sprite != NULL)
 	{
-		//D3DXVECTOR2 center = camera->Transform(posX, posY);
 		D3DXVECTOR2 pos = camera->Transform(x, y);
 		sprite->Draw(pos.x, pos.y);
 	}
 }
-void GameObject::ReceiveDamage(int damage)
+
+
+void GameObject::ReceiveDamage(int _damage)
 {
-	if (hp > 0) {
-		hp -= damage;
-	}
-	else {
-		isDeath = true;
-	}
 }
+
+void GameObject::SetActive(float _xSimon, float _ySimon)
+{
+
+}
+
 void GameObject::Collision(list<GameObject*> obj, int dt)
 {
 }
@@ -144,17 +136,9 @@ void GameObject::Remove()
 	isDeath = true;
 }
 
-/*
-Box GameObject::GetBox()
-{
-	Box result(posX - width / 2, posY + height / 2, width, height);
-	return result;
-}
-*/
 
 Box GameObject::GetBox()
 {
-	//Box result(posX - width / 2, posY - height / 2, width, height);
 	Box result(x, y, width, height);
 	return result;
 }
@@ -163,16 +147,6 @@ D3DXVECTOR2 GameObject::GetPos()
 {
 	D3DXVECTOR2 pos(x - width / 2, y - height / 2);
 	return pos;
-}
-
-void GameObject::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int t) {}
-void GameObject::OnKeyDown(int KeyCode) {}
-GameObject::~GameObject(void) {}
-void GameObject::SetActive(float x, float y){}
-void GameObject::SetActive()
-{
-	if (!active)
-		active = true;
 }
 
 /*

@@ -16,7 +16,7 @@ public:
 	Boomerang(float _posX, float _posY, float _direction);
 	~Boomerang();
 
-	void Update(int deltaTime);
+	void Update(int dt);
 
 	//Va cham, chua dinh nghia
 	void Collision(list<GameObject*> &obj, int dt);

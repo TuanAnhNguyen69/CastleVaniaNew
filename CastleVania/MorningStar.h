@@ -2,9 +2,9 @@
 #define _MORNINGSTAR_H_
 
 #include "GameObject.h"
-#include "Medusa.h"
 #include <vector>
 #include "RewardItem.h"
+#include "Enemy.h"
 using namespace std;
 
 class MorningStar :
@@ -29,7 +29,7 @@ public:
 	virtual void Draw(GCamera* camera);
 	virtual Box GetBox();
 
-	void update(int posX, int posY, int deltaTime);
+	void update(int posX, int posY, int dt);
 	void updateDirection(bool);
 	void UpdateLevel();
 	bool getdata();

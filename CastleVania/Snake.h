@@ -1,15 +1,22 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
+
+#define SNAKE_SPEED 0.6f
+
 class Snake :
-	public ActiveObject
+	public Enemy
 {
 public:
+	
+	int lifeTime;
+
 	Snake();
-	Snake(float _posX, float _posY, float _vX, float _vY, EnumID id);
+	Snake(float _x, float _y, float _direction);
 	~Snake();
 	void Draw(GCamera* camera);
+	void Update(int dt);
 
 	//Va cham, chua dinh nghia
-	void Collision();
+	void Collision(list<GameObject*> &obj, int dt);
 };
 

@@ -10,13 +10,9 @@ public:
 	ActiveObject(float _x, float _y, float _vX, float _vY, EnumID id);
 	~ActiveObject();
 
-	virtual void Update(int deltaTime);
-
-	//Update phu thuoc vao Simon
-	virtual void Update(Box playerBox, int deltaTime);
+	virtual void Update(int dt);
 
 	virtual void Draw(GCamera* camera);
-
 
 	virtual Box GetBox();
 
@@ -25,7 +21,5 @@ public:
 
 	//Va cham, chua dinh nghia
 	virtual void Collision(list<GameObject*> obj, int dt);
-
-	virtual void SetActive(float _vX, float _vy);
 };
 

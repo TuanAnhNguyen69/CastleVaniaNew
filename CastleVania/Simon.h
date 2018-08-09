@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 #include "MorningStar.h"
 #include "Stair.h"
 #include "Weapon.h"
@@ -35,7 +35,7 @@
 #define AUTO_MOVE_RANGE 5
 
 class Simon :
-	public ActiveObject
+	public Enemy
 {
 protected:
 	/*
@@ -120,7 +120,7 @@ public:
 	EnumID weaponID;
 	MorningStar* morningStar;
 	virtual void Draw(GCamera* camera);
-	virtual void Update(int deltaTime);
+	virtual void Update(int dt);
 	virtual void Collision(list<GameObject*> &obj, float dt);
 	//Simon(int _posX, int _posY, int _width, int _height);
 	Simon(int _x, int _y);
@@ -132,9 +132,8 @@ public:
 	void Stop();
 	void Jump();
 	void Attack();
-	void OnAttack(int deltaTime);
-	void onMovingOnStair(int deltaTime);
-	
+	void OnAttack(int dt);
+	void onMovingOnStair(int dt);
 
 	//Sub weapon
 	EnumID swID;
@@ -159,7 +158,7 @@ public:
 	EStairType stairType;
 
 	//Tu dong di chuyen khi di vao cong
-	bool AutoMove(int &rangeMove, int deltaTime);
+	bool AutoMove(int &rangeMove, int dt);
 
 	Box GetBox();
 
@@ -182,8 +181,6 @@ public:
 	void UpGradeMorningStar();
 	void Die();
 	void fall();
-
-	void ReceiveDamage(int damage);
 };
 
 

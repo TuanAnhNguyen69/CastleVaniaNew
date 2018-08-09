@@ -1,4 +1,4 @@
-#ifndef _GAMEOBJECT_H_
+﻿#ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
 #include "GSprite.h"
@@ -42,9 +42,6 @@ public:
 	//da chet hay chua
 	bool isDeath;
 
-	//Object co phu thuoc vao vi tri cua Simon khong
-	bool neededPlayerPosition;
-	
 	//Cac thong so
 	EnumID id;
 	int hearts;
@@ -56,18 +53,10 @@ public:
 
 	virtual void Update(int dt);
 	virtual void Draw(GCamera*);
-	virtual void Update(int , int, int dt);
-
-	virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int t);
-	virtual void OnKeyDown(int KeyCode);
+	virtual void Update(float _xSimon, float _ySimon, int dt);
 
 	//Tao bien sprite
 	virtual void CreateSprite();
-
-	//Thay doi gia tri bien active
-	virtual void SetActive(float x, float y);
-	virtual void SetActive();
-	
 	
 	//Va cham
 	virtual void Collision(list<GameObject*> obj, int dt);
@@ -77,16 +66,22 @@ public:
 
 	//Lay thuoc tinh cua Box
 	virtual Box GetBox();
-	virtual D3DXVECTOR2 GetPos();
 
-	//Nhan damage
-	virtual void ReceiveDamage(int damage);
+	//Lấy vị trí của object
+	virtual D3DXVECTOR2 GetPos();
 
 	//Xoa object
 	virtual void Remove();
 
 
-	//virtual void Pause();
+	//Dành cho Enemy
+	//Tính damage
+	virtual void ReceiveDamage(int _damage);
+	
+	//Xét hành động của Enemy, dựa vào Simon
+	virtual void SetActive(float _xSimon, float _ySimon);
+
+
 	GameObject(void);
 	//GameObject(float _posX, float _posY, int _width, int _height, EnumID id);
 	GameObject(float _x, float _y, EnumID id);

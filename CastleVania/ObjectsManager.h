@@ -40,7 +40,6 @@ public:
 	void Collision(int dt);
 	int RemoveAllObjectInCamera(D3DXVECTOR2);
 	void RemoveAllObject();
-	Medusa* getMedusa();
 
 	// For StopWatch
 	DWORD _deltaHurtTime;

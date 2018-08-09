@@ -1,17 +1,17 @@
 #pragma once
-#include "ActiveObject.h";
+#include "Enemy.h";
 
 
-class PhantomBat : public ActiveObject {
+class PhantomBat : public Enemy {
 public:
 	bool getUp;
 	PhantomBat();
 	PhantomBat(float _posX, float _posY);
 	~PhantomBat();
 
-	void MovePath(int deltaTime);
+	void MovePath(int dt);
 	void Draw(GCamera* camera);
-	void Update(int deltaTime);
+	void Update(int dt);
 
 	void SetActive(float _posX_Simon, float _posY_Simon);
 

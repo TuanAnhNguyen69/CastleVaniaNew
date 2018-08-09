@@ -2,12 +2,12 @@
 
 
 
-Simon::Simon():ActiveObject()
+Simon::Simon():Enemy()
 {
 }
 
 Simon::Simon(int _x, int _y) 
-	: ActiveObject(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
+	: Enemy(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 10;
 	action = Action::SimonStand;
@@ -30,8 +30,10 @@ Simon::Simon(int _x, int _y)
 	canPress = true;
 	timeOnStair = 0;
 	knockBackTime = 0;
+	type = ObjectType::None;
 
-
+	sub_weapon = new list<Weapon*>();
+	swID = EnumID::None_ID;
 	live = 10;
 	weaponCount = 10;
 	weaponID = EnumID::Boomerang_ID;
@@ -147,6 +149,20 @@ void Simon::Draw(GCamera* camera)
 
 void Simon::Update(int deltaTime)
 {
+	list<Weapon*>::iterator wp = sub_weapon->begin();
+	while (wp != sub_weapon->end())
+	{
+		if (!(*wp)->active)
+		{
+			sub_weapon->erase(wp++);
+		}
+		else
+		{
+			(*wp)->Update(deltaTime);
+			wp++;
+		}
+	}
+
 	switch (action)
 	{
 	case Action::SimonAttack:
@@ -164,7 +180,6 @@ void Simon::Update(int deltaTime)
 		sprite->Update(deltaTime);
 		break;
 	}
-
 
 	if (isJump)
 	{
@@ -460,7 +475,7 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 			vY = 0;
 			action = Action::SimonStand;
 		}
-		this->x += this->vX * collisionTime * dt + 5;
+		this->x += this->vX * collisionTime * dt + 7;
 		this->vX = 0;
 		action = Action::SimonRunLeft;
 		return;
@@ -472,7 +487,7 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 			vY = 0;
 			action = Action::SimonStand;
 		}
-		this->x += this->vX * collisionTime * dt - 5;
+		this->x += this->vX * collisionTime * dt - 7;
 		this->vX = 0;
 		action = Action::SimonRunRight;
 		return;
@@ -672,6 +687,11 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
+
+		//Set Active cho Enemy
+		(other)->SetActive(x, y);
+		other->Update(x, y, dt);
+
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
@@ -700,9 +720,18 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					break;
 				case EnumID::SpearGuard_ID:
 					this->ReceiveDamage(other->damage);
+				case EnumID::Boomerang_Weapon_ID:
+					other->active = false;
+					//other->Update(dt);
 					break;
 				default:
 					break;
+				}
+
+				if (other->type == ObjectType::Enemy_Type)
+				{
+					this->ReceiveDamage((other)->damage);
+					//Hàm knockback ở đây
 				}
 			}
 		}
@@ -727,9 +756,24 @@ void Simon::fall()
 	vX = 0;
 }
 
-
-
-void Simon::ReceiveDamage(int dâmge)
+void Simon::UseBoomerang()
 {
-	hp -= damage;
+	//swID = EnumID::Boomerang_Weapon_ID;
+	sub_weapon->push_back(new Boomerang(x, y-13, vLast));
+}
+
+void Simon::UseKnife()
+{
+	//swID = EnumID::Knife_Weapon_ID;
+	sub_weapon->push_back(new Knife(x, y-13, vLast));
+}
+
+void Simon::UseAxe()
+{
+	sub_weapon->push_back(new Axe(x, y - 13, vLast));
+}
+
+void Simon::UseHolyWater()
+{
+	sub_weapon->push_back(new HolyWater(x, y - 13, vLast));
 }

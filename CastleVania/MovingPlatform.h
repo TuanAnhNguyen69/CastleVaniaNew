@@ -7,6 +7,6 @@ public:
 	MovingPlatform();
 	MovingPlatform(float x, float y);
 	~MovingPlatform();
-	void Draw(GCamera* camera);
+	void Update(int dt);
 };
 
