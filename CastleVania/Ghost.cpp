@@ -1,10 +1,10 @@
 #include "Ghost.h"
 
-Ghost::Ghost(void) : ActiveObject()
+Ghost::Ghost(void) : Enemy()
 {
 }
 
-Ghost::Ghost(float _posX, float _posY) : ActiveObject(_posX, _posY, 0.08f, 0, EnumID::Ghost_ID)
+Ghost::Ghost(float _x, float _y) : Enemy(_x, _y, 0.08f, 0, EnumID::Ghost_ID)
 {
 	type = ObjectType::Enemy_Type;
 	point = 300;
@@ -22,7 +22,7 @@ Ghost::~Ghost(void)
 }
 
 
-void Ghost::Update(int deltaTime)
+void Ghost::Update(int dt)
 {
 	int random = rand() % 10;
 	if (sprite == NULL || !active)
@@ -30,20 +30,20 @@ void Ghost::Update(int deltaTime)
 	if (random % 2 == 0)
 	{
 
-		x += vX * deltaTime;
+		x += vX * dt;
 		if (x <= width + 2 || x >= G_MapWidth - (width - 2))
 			vX = -vX;
-		y += vY * deltaTime;
+		y += vY * dt;
 
 	}
 	else
 	{
 
-		x += vX * deltaTime;
-		y = posY0 + A * cos(2 * PI*deltaTime / T + deltaPhi); // Phuong trinh chuyen dong duong hinh sin x = 2pi. t/ lamda
-		deltaPhi += 2 * PI*deltaTime / T;
+		x += vX * dt;
+		y = posY0 + A * cos(2 * PI*dt / T + deltaPhi); // Phuong trinh chuyen dong duong hinh sin x = 2pi. t/ lamda
+		deltaPhi += 2 * PI*dt / T;
 	}
 
 
-	sprite->Update(deltaTime);
+	sprite->Update(dt);
 }

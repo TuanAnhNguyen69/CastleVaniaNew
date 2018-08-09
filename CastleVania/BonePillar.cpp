@@ -2,11 +2,11 @@
 
 
 
-BonePillar::BonePillar() : ActiveObject()
+BonePillar::BonePillar() : Enemy()
 {
 }
 
-BonePillar::BonePillar(float _posX, float _posY, bool _isLeft) : ActiveObject(_posX, _posY, 0, 0, EnumID::BonePillar_ID)
+BonePillar::BonePillar(float _x, float _y, bool _isLeft) : Enemy(_x, _y, 0, 0, EnumID::BonePillar_ID)
 {
 	listFire = new list<ActiveObject*>();
 	type = ObjectType::Enemy_Type;
@@ -14,7 +14,7 @@ BonePillar::BonePillar(float _posX, float _posY, bool _isLeft) : ActiveObject(_p
 	damage = 2;
 	point = 400;
 	active = true;
-	lifeTime = 0;
+	reloadTime = 0;
 	canBeKilled = true;
 	isLeft = _isLeft;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::BonePillar_ID), 12);
@@ -25,7 +25,7 @@ BonePillar::~BonePillar()
 	delete listFire;
 }
 
-void BonePillar::UpdateFire(float deltaTime)
+void BonePillar::UpdateFire(float dt)
 {
 	list<ActiveObject*>::iterator obj = listFire->begin();
 	while (obj != listFire->end())
@@ -34,7 +34,7 @@ void BonePillar::UpdateFire(float deltaTime)
 			listFire->erase(obj++);
 		else
 		{
-			(*obj)->Update(deltaTime);
+			(*obj)->Update(dt);
 			++obj;
 		}
 	}
@@ -49,12 +49,12 @@ void BonePillar::DrawFire(GCamera* camera)
 	}
 }
 
-void BonePillar::Update(int deltaTime)
+void BonePillar::Update(int dt)
 {
 	if(active)
 	{
-		lifeTime += deltaTime;
-		if (lifeTime % 30 == 0)
+		reloadTime += dt;
+		if (reloadTime % 30 == 0)
 		{
 			if(isLeft)
 				listFire->push_back(new Fire(x, y - 10, -1));
@@ -62,7 +62,7 @@ void BonePillar::Update(int deltaTime)
 				listFire->push_back(new Fire(x, y - 10, 1));
 		}
 
-		UpdateFire(deltaTime);
+		UpdateFire(dt);
 
 	}
 }

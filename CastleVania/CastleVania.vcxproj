@@ -96,6 +96,7 @@
     <ClCompile Include="Candle.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HitEffect.cpp" />
@@ -111,7 +112,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GTexture.cpp" />
-    <ClCompile Include="Medusa.cpp" />
+    <ClCompile Include="MedusaBoss.cpp" />
     <ClCompile Include="MedusaHead.cpp" />
     <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="dxutil.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HeaderObj.h" />
@@ -169,7 +171,7 @@
     <ClInclude Include="GTexture.h" />
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="Knife.h" />
-    <ClInclude Include="Medusa.h" />
+    <ClInclude Include="MedusaBoss.h" />
     <ClInclude Include="MedusaHead.h" />
     <ClInclude Include="MorningStar.h" />
     <ClInclude Include="MovingPlatform.h" />

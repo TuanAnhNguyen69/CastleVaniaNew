@@ -116,6 +116,7 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::Medusa_ID:
 				//_medusa = new Medusa(posX, posY);
 				//_dynamicObject->push_back(_medusa);
+				objects->push_back(new MedusaBoss(posX, posY));
 				break;
 			case EnumID::MedusaHead_ID:
 				objects->push_back(new MedusaHead(posX, posY));
@@ -171,11 +172,6 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 	}
 	_pausing = false;
 	_startToPauseTime = 0;
-}
-
-Medusa* ObjectsManager::getMedusa()
-{
-	return NULL;
 }
 
 D3DXVECTOR2 ObjectsManager::GetPosDoor()

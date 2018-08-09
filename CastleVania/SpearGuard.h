@@ -1,11 +1,11 @@
 #pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 
 #define SPEARGUARD_SPEED 0.3f
 #define SPEARGUARD_RANGE 100
 
 class SpearGuard :
-	public ActiveObject
+	public Enemy
 {
 public:
 
@@ -13,7 +13,7 @@ public:
 	int x0;
 
 
-	void Update(int deltaTime);
+	void Update(int dt);
 	void Draw(GCamera* camera);
 
 	SpearGuard();

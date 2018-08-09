@@ -2,20 +2,19 @@
 
 
 
-Fire::Fire()
+Fire::Fire() : Enemy()
 {
 	active = true;
 }
 
 Fire::Fire(float _x, float _y, float _direction) :
-	ActiveObject(_x, _y, 0, 0, EnumID::Fire_ID)
+	Enemy(_x, _y, 0, 0, EnumID::Fire_ID)
 {
 	hp = 1;
 	damage = 2;
 	lifeTime = 0;
 	active = true;
 	canBeKilled = true;
-	damage = 4;
 	type = ObjectType::Enemy_Type;
 	if (_direction > 0)
 		vX = SPEED_FIRE;
@@ -29,12 +28,12 @@ Fire::~Fire()
 {
 }
 
-void Fire::Update(int deltaTime)
+void Fire::Update(int dt)
 {
-	lifeTime += deltaTime;
-	x += vX * deltaTime;
-	//if (lifeTime >= 3000) 
-		//active = false;
+	lifeTime += dt;
+	x += vX * dt;
+	if (lifeTime >= 3000) 
+		active = false;
 }
 
 void Fire::Draw(GCamera *camera)

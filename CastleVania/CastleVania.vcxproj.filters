@@ -64,9 +64,6 @@
     <ClCompile Include="Snake.cpp">
       <Filter>Objects\Bosses</Filter>
     </ClCompile>
-    <ClCompile Include="Medusa.cpp">
-      <Filter>Objects\Bosses</Filter>
-    </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -155,6 +152,12 @@
     <ClCompile Include="Zombie.cpp">
       <Filter>Objects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="MedusaBoss.cpp">
+      <Filter>Objects\Bosses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -221,9 +224,6 @@
       <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
-      <Filter>Objects\Bosses</Filter>
-    </ClInclude>
-    <ClInclude Include="Medusa.h">
       <Filter>Objects\Bosses</Filter>
     </ClInclude>
     <ClInclude Include="EnumManager.h">
@@ -315,6 +315,12 @@
     </ClInclude>
     <ClInclude Include="Zombie.h">
       <Filter>Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="MedusaBoss.h">
+      <Filter>Objects\Bosses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

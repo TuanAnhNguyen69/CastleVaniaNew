@@ -2,13 +2,13 @@
 
 
 
-MedusaHead::MedusaHead() : ActiveObject()
+MedusaHead::MedusaHead() : Enemy()
 {
 	active = true;
 }
 
-MedusaHead::MedusaHead(float _posX, float _posY)
-	: ActiveObject(_posX, _posY, MEDUSAHEAD_SPEED, 0, EnumID::MedusaHead_ID)
+MedusaHead::MedusaHead(float _x, float _y)
+	: Enemy(_x, _y, MEDUSAHEAD_SPEED, 0, EnumID::MedusaHead_ID)
 {
 	hp = 1;
 	damage = 2;
@@ -23,9 +23,9 @@ MedusaHead::~MedusaHead()
 {
 }
 
-void MedusaHead::MovePath(int deltaTime)
+void MedusaHead::MovePath(int dt)
 {
-	x += vX * deltaTime;
+	x += vX * dt;
 	y = std::sin(x * 0.03) * 3 + y;
 }
 
@@ -48,10 +48,10 @@ void MedusaHead::Draw(GCamera* camera)
 }
 
 
-void MedusaHead::Update(int deltaTime)
+void MedusaHead::Update(int dt)
 {
-	MovePath(deltaTime);
-	sprite->Update(deltaTime);
+	MovePath(dt);
+	sprite->Update(dt);
 }
 
 void MedusaHead::Collision()

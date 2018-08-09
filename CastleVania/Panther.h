@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "ActiveObject.h"
+#include "Enemy.h"
 
 #define PANTHER_JUMP_HEIGHT 20.0f
 #define PANTHER_SPEED 0.4f
 #define PANTHET_JUMP_SPEED 0.3f
 
 class Panther :
-	public ActiveObject
+	public Enemy
 {
 public:
 
@@ -21,7 +21,7 @@ public:
 	void Draw(GCamera* camera);
 
 	//Chua dinh nghia
-	void Update(int deltaTime);
+	void Update(int dt);
 
 	//Xet dieu kien hoat dong
 	void SetActive(float _posX_Simon, float _posY_Siomon);

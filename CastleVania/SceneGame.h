@@ -16,7 +16,6 @@ public:
 	SceneGame();
 	~SceneGame();
 protected:
-	Medusa* _medusa;
 	LPDIRECT3DSURFACE9 BackgroundWhite;
 	D3DXVECTOR2 cameraPosition;
 	D3DXVECTOR2 revivePosition; //Vi tri hoi sinh

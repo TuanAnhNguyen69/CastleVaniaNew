@@ -111,7 +111,7 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 void SceneGame::LoadStage(int stage)
 {
 
-	qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

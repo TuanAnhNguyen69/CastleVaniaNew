@@ -40,13 +40,13 @@ void Weapon::Draw(GCamera* camera)
 		sprite->DrawFlipX(pos.x, pos.y);
 }
 
-void Weapon::Update(int deltaTime)
+void Weapon::Update(int dt)
 {
 	if (sprite == NULL || !active)
 		return;
-	x += vX * deltaTime;
-	y += vY * deltaTime;
-	sprite->Update(deltaTime);
+	x += vX * dt;
+	y += vY * dt;
+	sprite->Update(dt);
 }
 
 void Weapon::Collision(list<GameObject*> &obj, int dt)
@@ -57,30 +57,11 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 		GameObject* other = (*it);
 
 		Box box = this->GetBox();
-		Box boxOther = other->GetBox();
-		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
-		switch (other->id)
+		
+		if (other->type = ObjectType::Enemy_Type)
 		{
-		case EnumID::Bat_ID:
-		case EnumID::BonePillar_ID:
-		case EnumID::Fire_ID:
-		case EnumID::Ghost_ID:
-		case EnumID::MedusaHead_ID:
-		case EnumID::Panther_ID:
-		case EnumID::SpearGuard_ID:
-		case EnumID::Zombie_ID:
 			other->ReceiveDamage(this->damage);
-			break;
-		case EnumID::Simon_ID:
-			if (this->id == EnumID::Boomerang_Weapon_ID)
-			{
-				other->sprite->SelectIndex(8);
-				this->active = false;
-			}	
-			break;
-		default:
-			break;
 		}
 	}
 }

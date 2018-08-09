@@ -2,12 +2,12 @@
 
 
 
-Simon::Simon():ActiveObject()
+Simon::Simon():Enemy()
 {
 }
 
 Simon::Simon(int _x, int _y) 
-	: ActiveObject(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
+	: Enemy(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
 	hp = 10;
 	action = Action::Stand;
@@ -29,6 +29,8 @@ Simon::Simon(int _x, int _y)
 	colStair = false;
 	onTopStair = false;
 	timeOnStair = 0;
+
+	type = ObjectType::None;
 
 	sub_weapon = new list<Weapon*>();
 	swID = EnumID::None_ID;
@@ -144,7 +146,7 @@ void Simon::Draw(GCamera* camera)
 	}
 }
 
-void Simon::Update(int deltaTime)
+void Simon::Update(int dt)
 {
 	list<Weapon*>::iterator wp = sub_weapon->begin();
 	while (wp != sub_weapon->end())
@@ -155,7 +157,7 @@ void Simon::Update(int deltaTime)
 		}
 		else
 		{
-			(*wp)->Update(deltaTime);
+			(*wp)->Update(dt);
 			wp++;
 		}
 	}
@@ -165,38 +167,38 @@ void Simon::Update(int deltaTime)
 	switch (action)
 	{
 	case Action::Run_Right:
-		sprite->Update(deltaTime);
+		sprite->Update(dt);
 		break;
 	case Action::Run_Left:
-		sprite->Update(deltaTime);
+		sprite->Update(dt);
 		break;
 	case Action::Attack:
-		this->OnAttack(deltaTime);
+		this->OnAttack(dt);
 		break;
 	case Action::UpStair:
-		UpdateOnStair(deltaTime);
+		UpdateOnStair(dt);
 		return;
 		break;
 	case Action::DownStair:
-		UpdateOnStair(deltaTime);
+		UpdateOnStair(dt);
 		return;
 		break;
 	default:
 		break;
 	}
 
-	x += vX * deltaTime;
+	x += vX * dt;
 
 	if (isJump)
 	{
 		sprite->SelectIndex(4);
-		//y += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
-		y += vY * deltaTime + 0.4 * deltaTime * deltaTime * g;
+		//y += vY * dt + 0.4 * dt * dt * g;
+		y += vY * dt + 0.4 * dt * dt * g;
 		if (vY > -SPEED_Y)
-			vY += g * deltaTime;
+			vY += g * dt;
 		return;
 	} 
-		y += vY * deltaTime;
+		y += vY * dt;
 }
 
 void Simon::UpdateOnStair(int t)
@@ -354,11 +356,11 @@ void Simon::Attack()
 	action = Action::Attack;
 }
 
-void Simon::OnAttack(int deltaTime)
+void Simon::OnAttack(int dt)
 {
 	isAttack = true;
-	simonAttack->Update(deltaTime);
-	morningStar->update(x, y, deltaTime);
+	simonAttack->Update(dt);
+	morningStar->update(x, y, dt);
 	if (!isSit && simonAttack->GetIndex() >= 8)
 	{
 		action = Action::Stand;
@@ -366,9 +368,9 @@ void Simon::OnAttack(int deltaTime)
 	}
 }
 
-void Simon::onMovingOnStair(int deltaTime)
+void Simon::onMovingOnStair(int dt)
 {
-	simonUpStair->Update(deltaTime);
+	simonUpStair->Update(dt);
 }
 
 void Simon::Stop()
@@ -664,6 +666,11 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
+
+		//Set Active cho Enemy
+		(other)->SetActive(x, y);
+		other->Update(x, y, dt);
+
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
@@ -690,16 +697,18 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				case EnumID::StairTopRight_ID:
 					onCollideStair((Stair*)other);
 					break;
-				case EnumID::SpearGuard_ID:
-					this->ReceiveDamage(other->damage);
-					sprite->SelectIndex(8);
-					break;
 				case EnumID::Boomerang_Weapon_ID:
 					other->active = false;
 					//other->Update(dt);
 					break;
 				default:
 					break;
+				}
+
+				if (other->type == ObjectType::Enemy_Type)
+				{
+					this->ReceiveDamage((other)->damage);
+					//Hàm knockback ở đây
 				}
 			}
 		}
@@ -722,12 +731,6 @@ void Simon::fall()
 	vY = -SPEED_Y;
 }
 
-
-
-void Simon::ReceiveDamage(int damage)
-{
-	hp -= damage;
-}
 
 void Simon::UseBoomerang()
 {

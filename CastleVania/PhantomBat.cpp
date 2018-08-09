@@ -1,10 +1,10 @@
 #include "PhantomBat.h"
 
-PhantomBat::PhantomBat()
+PhantomBat::PhantomBat() : Enemy()
 {
 }
 
-PhantomBat::PhantomBat(float _posX, float _posY) : ActiveObject(_posX, _posY, 0.0f, 0.0f, EnumID::PhantomBat_ID)
+PhantomBat::PhantomBat(float _posX, float _posY) : Enemy(_posX, _posY, 0.0f, 0.0f, EnumID::PhantomBat_ID)
 {
 	hp = 1;
 	damage = 2;
@@ -15,7 +15,7 @@ PhantomBat::~PhantomBat()
 {
 }
 
-void PhantomBat::MovePath(int deltaTime)
+void PhantomBat::MovePath(int dt)
 {
 }
 
@@ -23,7 +23,7 @@ void PhantomBat::Draw(GCamera * camera)
 {
 }
 
-void PhantomBat::Update(int deltaTime)
+void PhantomBat::Update(int dt)
 {
 }
 

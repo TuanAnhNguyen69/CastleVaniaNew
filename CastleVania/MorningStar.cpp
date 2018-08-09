@@ -65,9 +65,9 @@ Box MorningStar::GetBox()
 	return Box(x, y, width, height);
 }
 
-void MorningStar::update(int _posX, int _posY, int deltaTime)
+void MorningStar::update(int _posX, int _posY, int dt)
 {
-	sprite->Update(deltaTime);
+	sprite->Update(dt);
 
 	float morningStarX = 0;
 	float morningStarY = 0;

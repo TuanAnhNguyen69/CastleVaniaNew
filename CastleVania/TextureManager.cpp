@@ -41,7 +41,7 @@ TextureManager::TextureManager(void)
 
 	//dracula = new GTexture("Resource/sprites/Bosses/Vampire_Bat.png", 3, 1, 3);
 
-	snake = new GTexture("Resource/sprites/Bosses/Snake.png", 2, 1, 2);
+	snake = new GTexture("Resource/sprites/Bosses/Snake_3.png", 2, 1, 2);
 
 	//Ground
 	brick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
