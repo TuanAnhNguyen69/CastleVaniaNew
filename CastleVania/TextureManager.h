@@ -34,6 +34,7 @@ private:
 	GTexture* door;
 	GTexture* trap;
 	GTexture* transparentSprite;
+	GTexture* tele;
 
 	//Sub-Weapon
 	GTexture* axe;

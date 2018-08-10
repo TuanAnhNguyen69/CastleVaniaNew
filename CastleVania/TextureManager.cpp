@@ -49,6 +49,8 @@ TextureManager::TextureManager(void)
 	stairTop = new GTexture("Resource/sprites/Ground/stairTop.png", 1, 1, 1);
 	stairBot = new GTexture("Resource/sprites/Ground/stairBot.png", 1, 1, 1);
 	transparentSprite = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
+	tele = new GTexture("Resource/sprites/Ground/tele.png", 1, 1, 1);
+
 		//Xem lai
 	breakableBrick = new GTexture("Resource/sprites/Ground/NULL.png", 1, 1, 1);
 
@@ -136,7 +138,7 @@ GTexture* TextureManager::getTexture(EnumID id)
 	case EnumID::Brick_ID:
 		return testBrick;
 	case EnumID::Tele_ID:
-		return transparentSprite;
+		return tele;
 	case EnumID::Breakable_ID:
 		return transparentSprite;
 	case EnumID::Candle_ID:

@@ -7,8 +7,8 @@ Tele::Tele()
 
 Tele::Tele(float _posX, float _posY) : GameObject(_posX, _posY, EnumID::Tele_ID) 
 {
-	//width = _width;
-	//height = _height;
+	width = 96;
+	height = 32;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Tele_ID), 0, 0, 1000);
 
 }

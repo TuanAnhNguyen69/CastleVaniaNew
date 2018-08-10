@@ -160,6 +160,13 @@ public:
 	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int dt);
 
+	// Door
+	bool colDoor;
+	EDoorDirection doorDirection;
+	GameObject * door;
+	void onCollideDoor(GameObject *obj, ECollisionDirection direction);
+
+
 	Box GetBox();
 
 	//Xu ly dung tren nen dat
@@ -177,6 +184,8 @@ public:
 	void KnockBack();
 	int knockBackTime;
 	bool isKnockedBack;
+
+	EDoorDirection GetDirectDoor();
 
 	void UpGradeMorningStar();
 	void Die();

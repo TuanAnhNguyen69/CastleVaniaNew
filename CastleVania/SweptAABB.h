@@ -58,7 +58,7 @@ inline bool AABBCheck(Box b1, Box b2)
 inline Box getSweptBroadphaseBox(const Box& object, float t)
 {
 	float x = object.vx > 0 ? object.x : object.x + object.vx * t;
-	float y = object.vy > 0 ? object.y : object.y + object.vy * t;
+	float y = object.vy > 0 ? object.y + object.vy * t : object.y;
 	float w = object.w + abs(object.vx *t);
 	float h = object.h + abs(object.vy *t);
 
