@@ -694,6 +694,8 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
+		box.vx -= boxOther.vx;
+		box.vy -= boxOther.vy;
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 		if ((other->id == EnumID::StairBotRight_ID || other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairBotLeft_ID || other->id == EnumID::StairTopLeft_ID))
 		{
@@ -703,6 +705,10 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					onTopStair = true;
 				}
 			}
+		}
+
+		if (other->id == EnumID::SpearGuard_ID) {
+			int a = 0;
 		}
 		if (AABBCheck(broadphasebox, boxOther))
 		{
@@ -718,8 +724,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				case EnumID::StairTopRight_ID:
 					onCollideStair((Stair*)other);
 					break;
-				case EnumID::SpearGuard_ID:
-					this->ReceiveDamage(other->damage);
 				case EnumID::Boomerang_Weapon_ID:
 					other->active = false;
 					//other->Update(dt);
@@ -731,7 +735,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				if (other->type == ObjectType::Enemy_Type)
 				{
 					this->ReceiveDamage((other)->damage);
-					//Hàm knockback ở đây
+					KnockBack();
 				}
 			}
 		}

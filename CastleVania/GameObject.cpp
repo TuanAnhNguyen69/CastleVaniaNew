@@ -139,7 +139,7 @@ void GameObject::Remove()
 
 Box GameObject::GetBox()
 {
-	Box result(x, y, width, height);
+	Box result(x, y, width, height, vX, vY);
 	return result;
 }
 

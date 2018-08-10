@@ -50,16 +50,6 @@ void SpearGuard::Draw(GCamera* camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-Box SpearGuard::GetBox()
-{
-	Box box = Box(0, 0, 0,0);
-	box.x = this->x;
-	box.y = this->y;
-	box.w = 32;
-	box.h = 64;
-	return box;
-}
-
 void SpearGuard::Collision(list<GameObject*> &obj, int dt)
 {
 	list<GameObject*>::iterator it;
