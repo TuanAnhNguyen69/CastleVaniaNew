@@ -62,7 +62,7 @@ bool QNode::IsContain(GameObject* object)
 {
 	Box* bound = &object->GetBox();
 
-	return !(bound->x + bound->w < m_region->x ||
+ 	return !(bound->x + bound->w < m_region->x ||
 		bound->y + bound->h < m_region->y ||
 		bound->x > m_region->x + m_region->w ||
 		bound->y > m_region->y + m_region->h);

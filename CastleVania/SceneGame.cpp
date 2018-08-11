@@ -4,12 +4,12 @@
 #define CAMERA_MOVE_SPEED 4
 SceneGame::SceneGame(void) : Scene(EnumSceneState::Scene_Game)
 {
-	_levelNow = 1;
-	_stageNow = 1;
-	_playerDie = false;
+	levelNow = 1;
+	stageNow = 1;
+	playerDie = false;
 	camera = new GCamera();
 	bg = NULL;
-	_stateCamera = ECameraState::Update_Camera;
+	stateCamera = ECameraState::Update_Camera;
 	score = 0;
 	totalResets = 3;
 	gameUI = NULL;
@@ -32,8 +32,7 @@ void SceneGame::LoadResources(LPDIRECT3DDEVICE9 d3ddv) {
 	if (bg != NULL)
 		delete bg;
 
-	LoadLevel(_levelNow);
-	LoadStage(_stageNow);
+	LoadLevel(levelNow);
 }
 
 void SceneGame::LoadLevel(int level)
@@ -56,7 +55,7 @@ void SceneGame::LoadLevel(int level)
 								  // stage 5: - trapdoor, viewport = 1253
 								  //		player = new Player(1146, 860); 
 
-	_stageReset = 1;
+	stageReset = 1;
 
 	// Position to reset
 
@@ -65,25 +64,61 @@ void SceneGame::LoadLevel(int level)
 	cameraPosition = camera->viewport;
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
+	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
+	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
 void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
 
-		if (_stateCamera == ECameraState::Update_Camera)
+	if (stateCamera == ECameraState::Update_Camera)
+	{
+		camera->UpdateCamera(player->x);
+		ChangeCamera(player->GetDirectDoor());
+	}
+	else {
+		door = player->door;
+		if (beginMoveCamera)
 		{
-			camera->UpdateCamera(player->x);
+			MoveCamera(rangeMoveCamera);
 		}
+		if (firstMoveCameraDone)
+		{
+			if (door->isAnimating())
+				door->RenderOpen();
+			if (!door->isAnimating())
+			{
+				player->AutoMove(rangeMovePlayer, t);
+				if (rangeMovePlayer == 0)
+				{
+					player->doorDirection = EDoorDirection::NoneDoor;
+					door->RenderClose();
+
+					//player->_allowPress = false;// lúc đang đóng cửa player không hoạt động
+					if (!door->isAnimating())
+					{
+						MoveCamera(rangeMoveCamera2);
+					}
+					else
+					{
+						player->canPress = true;
+					}
+				}
+			}
+		}
+	}
+		
+#pragma endregion 
 
 		if (gameUI->getTimer() <= 0)
 		{
-			if (_levelNow == 1)
+			if (levelNow == 1)
 				gameUI->initTimer(200);
 			else gameUI->initTimer(300);
 		}
 
 		player->Update(t);
-		gameUI->updateScore(_stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->GetBox().x, player->GetBox().y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
+		gameUI->updateScore(stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->GetBox().x, player->GetBox().y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
 		qGameObject->Update(player, t);
 		player->Collision(*(qGameObject->inSightObjects), t);
 		qGameObject->Collision(t);
@@ -103,133 +138,165 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 			G_SpriteHandler->End();
 			gameUI->drawScore();
 		}
-		
 }
 
-
-
-void SceneGame::LoadStage(int stage)
-{
-	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
-	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
+void SceneGame::SetSizeMap() {
+	switch (levelNow) {
+	case 1:
+		switch (stageNow)
+		{
+		case 1:
+			G_LeftCamera = 3572;
+			G_RightCamera = 4096;
+			break;
+		case 2:
+			G_LeftCamera = 3072;
+			G_RightCamera = 4096;
+			break;
+		case 3:
+			G_LeftCamera = 1535;
+			G_RightCamera = 3072;
+			break;
+		case 4:
+			G_LeftCamera = 1535;
+			G_RightCamera = 3072;
+			break;
+		case 5:
+			G_LeftCamera = 0;
+			G_RightCamera = 1535;
+			break;
+		case 6:
+			G_LeftCamera = 0;
+			G_RightCamera = 1535;
+			break;
+		default:
+			break;
+		}
+	}
 }
 
-
-void SceneGame::ChangeCamera(EDoorDirection _directDoor)
+void SceneGame::ChangeCamera(EDoorDirection directDoor)
 {
 
-	//if (_directDoor != EDoorDirection::NoneDoor)
-	//{
-	//	switch (_directDoor)
-	//	{
-	//	case TeleDown:
-	//	{
-	//		camera->viewport.y -= (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
-	//		player->y -= 32;
+	if (directDoor != EDoorDirection::NoneDoor)
+	{
+		switch (directDoor)
+		{
+		case TeleDown:
+		{
+			camera->viewport.y -= (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
+			player->y -= 32;
 
-	//		if (_stageNow >= 1) {
-	//			_stageNow--;
-	//			LoadStage(_stageNow);
-	//		}
-	//	}
-	//	break;
-	//	case TeleUp:
-	//	{
-	//		camera->viewport.y += (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
-	//		player->y += 64;
+			if (stageNow >= 1) {
+				stageNow--;
+				player->doorDirection = NoneDoor;
+			}
+		}
+		break;
+		case TeleUp:
+		{
+			camera->viewport.y += (32 * 12); //do cao 1 stage = 32pixcel * 12 dong
+			player->y += 64;
+			stageNow++;
+			player->doorDirection = NoneDoor;
 
-	//		_stageNow++;
-	//		LoadStage(_stageNow);
-	//	}
-	//	break;
-	//	case DoorLeft:
-	//	{
-	//		_stateCamera = ECameraState::NoUpdate_Camera;
-	//		_beginMoveCamera = true;
-	//		_firstMoveCameraDone = false;
-	//		_secondMoveCameraDone = false;
-	//		_rangeMoveCamera = -264;//-264;
-	//		_rangeMoveCamera2 = -264;
-	//		_rangeMovePlayer = -120; // -120;
-	//		_doorDirect = -1;
-	//	}
-	//	break;
-	//	case DoorRight:
-	//	{
-	//		_stateCamera = ECameraState::NoUpdate_Camera;
-	//		_beginMoveCamera = true;
-	//		_firstMoveCameraDone = false;
-	//		_secondMoveCameraDone = false;
-	//		_rangeMoveCamera = 264;
-	//		_rangeMoveCamera2 = 264;
-	//		_rangeMovePlayer = 120;
-	//		_doorDirect = 1;
-	//	}
-	//	break;
-	//	default:
-	//		break;
-	//	}
-	//}
+		}
+		break;
+		case DoorLeft:
+		{
+			stateCamera = ECameraState::NoUpdate_Camera;
+			beginMoveCamera = true;
+			firstMoveCameraDone = false;
+			secondMoveCameraDone = false;
+			rangeMoveCamera = -264;//-264;
+			rangeMoveCamera2 = -264;
+			rangeMovePlayer = -120; // -120;
+			doorDirect = -1;
+			stageNow++;
+		}
+		break;
+		case DoorRight:
+		{
+			stateCamera = ECameraState::NoUpdate_Camera;
+			beginMoveCamera = true;
+			firstMoveCameraDone = false;
+			secondMoveCameraDone = false;
+			rangeMoveCamera = 264;
+			rangeMoveCamera2 = 264;
+			rangeMovePlayer = 120;
+			doorDirect = 1;
+			stageNow++;
+		}
+		break;
+		default:
+			break;
+		}
+		SetSizeMap();
+		camera->SetSizeMap(G_RightCamera, G_LeftCamera);
+	}
+	
 
 }
 
 void SceneGame::MoveCamera(int &_moveRange)
 {
-	//if (_rangeMoveCamera == 0)
-	//	_rangeMoveCamera = _moveRange;
-	//if (_beginMoveCamera)
-	//{
-	//	player->Stop();
-	//	if (_rangeMoveCamera == 0 && !_firstMoveCameraDone)
-	//	{
-	//		_firstMoveCameraDone = true;
-	//		_beginMoveCamera = false;
-	//		return;
-	//	}
-	//	// qua phải
-	//	if (_rangeMoveCamera > 0)
-	//	{
-	//		_rangeMoveCamera -= CAMERA_MOVE_SPEED;
-	//		camera->viewport.x += CAMERA_MOVE_SPEED;
-	//	}
-	//	// qua trái
-	//	else
-	//	{
-	//		_rangeMoveCamera += CAMERA_MOVE_SPEED;
-	//		camera->viewport.x -= CAMERA_MOVE_SPEED;
-	//	}
-	//}
-	//else if (_firstMoveCameraDone)
-	//{
-	//	player->Stop();
-	//	if (_rangeMoveCamera2 == 0 && !_secondMoveCameraDone)
-	//	{
-	//		_firstMoveCameraDone = false;
-	//		_beginMoveCamera = false;
-	//		_secondMoveCameraDone = true;
-	//		_stageNow++;
-	//		
-	//		LoadStage(_stageNow);
-	//		_stateCamera = ECameraState::Update_Camera;
-	//		//---------Luu vi tri stage moi de hoi sinh -----------------
-	//		_stageReset = _stageNow;
-	//		revivePosition.x = player->x;
-	//		revivePosition.y = player->y;
-	//		cameraPosition = camera->viewport;
-	//		//-----------------------------
-	//		return;
-	//	}
-	//	if (_rangeMoveCamera2 > 0)
-	//	{
-	//		_rangeMoveCamera2 -= CAMERA_MOVE_SPEED;
-	//		camera->viewport.x += CAMERA_MOVE_SPEED;
-	//	}
-	//	else
-	//	{
-	//		_rangeMoveCamera2 += CAMERA_MOVE_SPEED;
-	//		camera->viewport.x -= CAMERA_MOVE_SPEED;
-	//	}
-	//}
+	if (rangeMoveCamera == 0)
+		rangeMoveCamera = _moveRange;
+	if (beginMoveCamera)
+	{
+		player->Stop();
+		if (rangeMoveCamera == 0 && !firstMoveCameraDone)
+		{
+			firstMoveCameraDone = true;
+			beginMoveCamera = false;
+			return;
+		}
+		// qua phải
+		if (rangeMoveCamera > 0)
+		{
+			rangeMoveCamera -= CAMERA_MOVE_SPEED;
+			camera->viewport.x += CAMERA_MOVE_SPEED;
+		}
+		// qua trái
+		else
+		{
+			rangeMoveCamera += CAMERA_MOVE_SPEED;
+			camera->viewport.x -= CAMERA_MOVE_SPEED;
+		}
+	}
+	else if (firstMoveCameraDone)
+	{
+		player->Stop();
+		if (rangeMoveCamera2 == 0 && !secondMoveCameraDone)
+		{
+			firstMoveCameraDone = false;
+			beginMoveCamera = false;
+			secondMoveCameraDone = true;
+			stageNow++;
+
+			stateCamera = ECameraState::Update_Camera;
+			player->doorDirection = EDoorDirection::NoneDoor;
+			door->ResetDoor();
+			//---------Luu vi tri stage moi de hoi sinh -----------------
+			stageReset = stageNow;
+			revivePosition.x = player->x;
+			revivePosition.y = player->y;
+			cameraPosition = camera->viewport;
+			//-----------------------------
+			return;
+		}
+		if (rangeMoveCamera2 > 0)
+		{
+			rangeMoveCamera2 -= CAMERA_MOVE_SPEED;
+			camera->viewport.x += CAMERA_MOVE_SPEED;
+		}
+		else
+		{
+			rangeMoveCamera2 += CAMERA_MOVE_SPEED;
+			camera->viewport.x -= CAMERA_MOVE_SPEED;
+		}
+	}
+
 
 }
 

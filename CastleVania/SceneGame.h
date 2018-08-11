@@ -24,42 +24,43 @@ protected:
 	ObjectsManager* qGameObject;
 
 
-	int _levelNow, _stageNow;
+	int levelNow, stageNow;
 	GCamera *camera;
 	Simon* player;
 	
-	bool _beginMoveCamera;
+	bool beginMoveCamera;
 
 	// Score
 	int score;
 	// Player die
-	bool _playerDie;
+	bool playerDie;
 	int totalResets;
 	int resetTime;
 	//camera
 	void MoveCamera(int &_moveRange);
 	void ChangeCamera(EDoorDirection _directDoor);
-	ECameraState _stateCamera;
-	int _rangeMoveCamera;
-	int _rangeMoveCamera2;
-	int _rangeMovePlayer;
+	ECameraState stateCamera;
+	int rangeMoveCamera;
+	int rangeMoveCamera2;
+	int rangeMovePlayer;
 	
 
 	// door open and close
-	int _stageReset;
+	int stageReset;
 	
 	// UI
 	GameUI *gameUI;
 
-	bool _firstMoveCameraDone;	//Di chuyen camera lan 1
-	bool _secondMoveCameraDone;	//Di chuyen camera lan 2
-	int _doorDirect; //Huong mo cua
+	bool firstMoveCameraDone;	//Di chuyen camera lan 1
+	bool secondMoveCameraDone;	//Di chuyen camera lan 2
+	int doorDirect; //Huong mo cua
+	Door * door;
+	void SetSizeMap();
 
 	void RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t);
 	void ProcessInput(int keyCode);
 	void LoadResources(LPDIRECT3DDEVICE9 d3ddv);
 	void LoadLevel(int);
-	void LoadStage(int);
 	void OnKeyDown(int KeyCode);
 };
 #endif

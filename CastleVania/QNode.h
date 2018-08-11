@@ -6,8 +6,8 @@
 #include <list>
 using namespace std;
 
-#define MAX_LEVEL                4
-#define MAX_OBJECT_IN_REGION     4
+#define MAX_LEVEL                3
+#define MAX_OBJECT_IN_REGION     10
 
 class QNode
 {

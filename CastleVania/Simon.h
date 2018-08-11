@@ -8,6 +8,8 @@
 #include "Axe.h"
 #include "HolyWater.h"
 #include "Fire.h"
+#include "Door.h"
+
 /*
 #define AX_GO 0.0004
 #define VX_GO 0.18
@@ -76,8 +78,6 @@ protected:
 	GSprite *simonMove;
 
 	float y0;
-
-	bool canPress;
 
 	//Da chet
 	bool isDie;
@@ -160,11 +160,13 @@ public:
 	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int dt);
 
+	bool canPress;
+
 	// Door
 	bool colDoor;
 	EDoorDirection doorDirection;
-	GameObject * door;
-	void onCollideDoor(GameObject *obj, ECollisionDirection direction);
+	Door * door;
+	void onCollideDoor(Door *obj, ECollisionDirection direction);
 
 
 	Box GetBox();

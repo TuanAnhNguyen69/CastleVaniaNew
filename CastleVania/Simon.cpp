@@ -39,6 +39,8 @@ Simon::Simon(int _x, int _y)
 	weaponID = EnumID::Boomerang_ID;
 	morningStar = new MorningStar(x, y, 42);
 
+	doorDirection = NoneDoor;
+
 	simonMove = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 2, 20);
 	simonJump = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 4, 4, 300);
 	simonAttack = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Simon_ID), 5, 7, 42);
@@ -416,7 +418,7 @@ void Simon::Stop()
 
 bool Simon::AutoMove(int &rangeMove, int dt)
 {
-	Stop();
+	action = SimonRunLeft;
 	if (rangeMove == 0)
 		return true;
 	if (rangeMove > 0)
@@ -433,8 +435,11 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	return false;
 }
 
-void Simon::onCollideDoor(GameObject * obj, ECollisionDirection direction)
+void Simon::onCollideDoor(Door * obj, ECollisionDirection direction)
 {
+	door = obj;
+	door->animating = true;
+
 	if (obj->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
 			doorDirection = TeleUp;
@@ -455,6 +460,7 @@ void Simon::onCollideDoor(GameObject * obj, ECollisionDirection direction)
 		}
 		return;
 	}
+
 }
 
 //Do sprite lon hon co the thuc cua Simon
@@ -675,14 +681,13 @@ void Simon::goDownStair()
 
 void Simon::Collision(list<GameObject*> &obj, float dt)
 {
-	list<GameObject*> listObject;
 	colStair = false;
-
+	onTopStair = false;
+	list<GameObject*> listObject;
 	list<GameObject*>::iterator _itBegin;
 	bool isCollideBottom = false;
 	Box fallBox = this->GetBox();
 	fallBox.h = fallBox.h + 10;
-	onTopStair = false;
 	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
@@ -740,13 +745,14 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 		
 		if (AABBCheck(broadphasebox, boxOther))
 		{
-			if (other->id == EnumID::Tele_ID) {
-				int a = 0;
-			}
+			
 			ECollisionDirection colDirection;
 			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
 			if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
 			{
+				if (other->id == EnumID::StairTopRight_ID) {
+					int a = 0;
+				}
 				switch (other->id)
 				{
 				case EnumID::StairBotLeft_ID:
@@ -757,7 +763,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					break;
 				case EnumID::Tele_ID:
 				case EnumID::Door_ID:
-					onCollideDoor(other, colDirection);
+					onCollideDoor((Door*)other, colDirection);
 					break;
 				case EnumID::Boomerang_Weapon_ID:
 					other->active = false;
@@ -777,7 +783,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 	}
 
-	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack) {
+	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack && !onTopStair) {
 		fall();
 	}
 
