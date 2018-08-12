@@ -341,9 +341,10 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		break;
 	case DIK_Q:
 		player->UpGradeMorningStar();
-	/*case DIK_1:
+	case DIK_1:
 		player->UseBoomerang();
 		break;
+	
 	case DIK_2:
 		player->UseKnife();
 		break;
@@ -351,7 +352,7 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		player->UseAxe();
 		break;
 	case DIK_4:
-		player->UseHolyWater();*/
+		player->UseHolyWater();
 		break;
 	}
 

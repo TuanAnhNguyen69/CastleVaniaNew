@@ -77,7 +77,10 @@ void BonePillar::Draw(GCamera* camera)
 	this->DrawFire(camera);
 }
 
-void BonePillar::Collision()
+void BonePillar::CollSimon(GameObject* simon, int dt)
 {
-
+	for (list<ActiveObject*>::iterator fire = listFire->begin(); fire != listFire->end(); fire++)
+	{
+		(*fire)->CollSimon(simon, dt);
+	}
 }

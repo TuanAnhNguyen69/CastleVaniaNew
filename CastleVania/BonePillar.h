@@ -18,7 +18,7 @@ public:
 	void Update(int dt);
 	void Draw(GCamera* camera);
 
-	void Collision();
+	void CollSimon(GameObject* simon, int dt);
 
 
 	BonePillar();

@@ -59,7 +59,7 @@ void MedusaBoss::DrawSnake(GCamera * camera)
 void MedusaBoss::MovePath(int dt)
 {
 	x += vX * dt * 2;
-	y = std::sin(x * 0.02) * 2 + y + 0.00000001;
+	y = std::sin(x * 0.02) * 2 + y + 0.0000001;
 }
 
 void MedusaBoss::Draw(GCamera * camera)
@@ -103,7 +103,7 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 				isLeft = true;
 			}
 				
-			if (abs(x - _xSimon) > 160)
+			if (abs(x - _xSimon) > 161)
 				vX = -vX;
 
 			if (_ySimon > y)
@@ -128,7 +128,7 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 	
 }
 
-void MedusaBoss::Collision(list<GameObject*>& obj, int dt)
+void MedusaBoss::Collision(list<GameObject*> &obj, int dt)
 {
 	list<GameObject*>::iterator it;
 	for (it = obj.begin(); it != obj.end(); it++)
@@ -150,10 +150,25 @@ void MedusaBoss::Collision(list<GameObject*>& obj, int dt)
 					if (colDirection == ECollisionDirection::Colls_Left ||
 						colDirection == ECollisionDirection::Colls_Right)
 					{
-						this->vX = -vX;
+						//this->vX = -vX;
+						//this->vX = -vX;
+						this->active = false;
 					}
 				}
 			}
 		}
+	}
+
+	for (list<ActiveObject*>::iterator snake = listSnake->begin(); snake != listSnake->end(); snake++)
+	{
+		(*snake)->Collision(obj, dt);
+	}	
+}
+
+void MedusaBoss::CollSimon(GameObject* simon, int dt)
+{
+	for (list<ActiveObject*>::iterator snake = listSnake->begin(); snake != listSnake->end(); snake++)
+	{
+		(*snake)->CollSimon(simon, dt);
 	}
 }

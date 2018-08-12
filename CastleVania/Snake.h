@@ -18,5 +18,6 @@ public:
 
 	//Va cham, chua dinh nghia
 	void Collision(list<GameObject*> &obj, int dt);
+	void CollSimon(GameObject* simon, int dt);
 };
 

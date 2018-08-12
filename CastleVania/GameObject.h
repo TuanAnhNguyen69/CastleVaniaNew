@@ -61,6 +61,9 @@ public:
 	//Va cham
 	virtual void Collision(list<GameObject*> obj, int dt);
 
+	//Va chạm với Simon (Chỉ dành cho boomerang)
+	virtual void CollSimon(GameObject* simon, int dt);
+
 	//Tra ve kieu va cham
 	ECollisionDirection GetCollisionDirect(float normalx, float normaly);
 
