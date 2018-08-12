@@ -4,11 +4,11 @@ class Door :
 	public GameObject
 {
 private:
-	bool isOpen;
 	bool playedOpen;
 	bool playedClose;
 public:
 	int _timeCount;
+	bool isOpen;
 	bool animating;
 	Door(void);
 	Door(float _posX, float _posY, int _width, int _height);

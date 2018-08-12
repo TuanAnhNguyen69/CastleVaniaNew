@@ -24,8 +24,9 @@ Door::~Door()
 
 void Door::RenderOpen()
 {
-	if (animating)
+	if (!isOpen)
 	{
+		animating = true;
 		if (!playedOpen)
 		{
 			//SoundManager::GetInst()->PlaySoundEffect(ESoundEffect::ES_Door);
@@ -55,8 +56,9 @@ void Door::RenderOpen()
 
 void Door::RenderClose()
 {
-	if (animating)
+	if (isOpen)
 	{
+		animating = true;
 		if (!playedClose)
 		{
 			//SoundManager::GetInst()->PlaySoundEffect(ESoundEffect::ES_Door);

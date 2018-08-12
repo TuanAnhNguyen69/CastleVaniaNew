@@ -90,7 +90,7 @@ void Simon::Draw(GCamera* camera)
 		break;
 	case SimonRunRight:
 	case SimonRunLeft:
-
+		sprite = simonMove;
 		break;
 	case SimonJump:
 		sprite = simonJump;
@@ -429,17 +429,14 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	else
 	{
 		rangeMove += AUTO_MOVE_RANGE;
-		y -= AUTO_MOVE_RANGE;
+		x -= AUTO_MOVE_RANGE;
 	}
-	sprite->Update(dt);
 	return false;
 }
 
 void Simon::onCollideDoor(Door * obj, ECollisionDirection direction)
 {
 	door = obj;
-	door->animating = true;
-
 	if (obj->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
 			doorDirection = TeleUp;
