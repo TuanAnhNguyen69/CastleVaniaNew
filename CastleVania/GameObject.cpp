@@ -130,6 +130,11 @@ void GameObject::SetActive(float _xSimon, float _ySimon)
 void GameObject::Collision(list<GameObject*> obj, int dt)
 {
 }
+
+void GameObject::CollSimon(GameObject* simon, int dt)
+{
+}
+
 void GameObject::Remove()
 {
 	active = false;

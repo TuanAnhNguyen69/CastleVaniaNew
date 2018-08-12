@@ -18,7 +18,5 @@ public:
 
 	void FlightPath(int dt);
 	void Update(int dt);
-
-	void Collision();
 };
 

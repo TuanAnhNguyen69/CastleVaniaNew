@@ -73,10 +73,11 @@ void ActiveObject::Draw(GCamera* camera)
 		sprite->DrawFlipX(pos.x, pos.y);
 }
 
+
 void ActiveObject::Collision(list<GameObject*> obj, int dt)
 {
-
 }
+
 
 bool ActiveObject::IntoScreen(float _x, float _y, GCamera* camera)
 {

@@ -6,7 +6,7 @@ RewardItem::RewardItem() : GameObject()
 {
 }
 
-RewardItem::RewardItem(float _posX, float _posY, EnumID _typeReward) : GameObject(_posX, _posY, _typeReward)
+RewardItem::RewardItem(float _x, float _y, EnumID _typeReward) : GameObject(_x, _y, _typeReward)
 {
 	typeReward = _typeReward;
 	lifeTime = 0;

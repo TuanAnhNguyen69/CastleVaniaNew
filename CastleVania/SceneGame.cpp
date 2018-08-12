@@ -64,7 +64,8 @@ void SceneGame::LoadLevel(int level)
 	cameraPosition = camera->viewport;
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
-	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
@@ -341,9 +342,10 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		break;
 	case DIK_Q:
 		player->UpGradeMorningStar();
-	/*case DIK_1:
+	case DIK_1:
 		player->UseBoomerang();
 		break;
+	
 	case DIK_2:
 		player->UseKnife();
 		break;
@@ -351,7 +353,7 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		player->UseAxe();
 		break;
 	case DIK_4:
-		player->UseHolyWater();*/
+		player->UseHolyWater();
 		break;
 	}
 

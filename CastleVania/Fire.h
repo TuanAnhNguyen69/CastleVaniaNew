@@ -17,6 +17,6 @@ public:
 	void Draw(GCamera *camera);
 
 	//Va cham, chua dinh nghia
-	void Collision();
+	void CollSimon(GameObject* simon, int dt);
 };
 

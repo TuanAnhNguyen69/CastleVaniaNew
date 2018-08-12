@@ -1,5 +1,5 @@
 #include "Fire.h"
-
+#include "Simon.h"
 
 
 Fire::Fire() : Enemy()
@@ -52,7 +52,22 @@ void Fire::Draw(GCamera *camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-void Fire::Collision()
+void Fire::CollSimon(GameObject* simon, int dt)
 {
-	//Chua dinh nghia
+	Box box = this->GetBox();
+	Box boxSimon = simon->GetBox();
+	Box broadphasebox = getSweptBroadphaseBox(box, dt);
+	if (AABBCheck(broadphasebox, boxSimon))
+	{
+		ECollisionDirection colDirection;
+		float collisionTime = sweptAABB(box, boxSimon, colDirection, dt);
+		if (collisionTime < 1.0f && collisionTime > 0.0)
+		{
+			if (simon->id == EnumID::Simon_ID)
+			{
+				simon->ReceiveDamage(this->damage);
+				dynamic_cast<Simon*>(simon)->KnockBack();
+			}	
+		}
+	}
 }

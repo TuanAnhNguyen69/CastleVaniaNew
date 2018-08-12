@@ -52,32 +52,19 @@ void Boomerang::Update(int dt)
 	
 }
 
-void Boomerang::Collision(list<GameObject*> &obj, int dt)
+void Boomerang::CollSimon(GameObject* simon, int dt)
 {
-	list<GameObject*> listObject;
-	list<GameObject*>::iterator it;
-	for (it = obj.begin(); it != obj.end(); it++)
+	Box box = this->GetBox();
+	Box boxSimon = simon->GetBox();
+	Box broadphasebox = getSweptBroadphaseBox(box, dt);
+	if (AABBCheck(broadphasebox, boxSimon))
 	{
-		GameObject* other = (*it);
-
-		Box box = this->GetBox();
-		Box boxOther = other->GetBox();
-		Box broadphasebox = getSweptBroadphaseBox(box, dt);
-		if (AABBCheck(broadphasebox, boxOther))
+		ECollisionDirection colDirection;
+		float collisionTime = sweptAABB(box, boxSimon, colDirection, dt);
+		if (collisionTime < 1.0f && collisionTime > 0.0)
 		{
-			ECollisionDirection colDirection;
-			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-			if (collisionTime < 1.0f && collisionTime > 0.0)
-			{
-				switch (other->id)
-				{
-				case EnumID::Simon_ID:
-					this->active = false;
-					break;
-				default:
-					break;
-				}
-			}
+			if (simon->id == EnumID::Simon_ID)
+				this->active = false;
 		}
 	}
 }

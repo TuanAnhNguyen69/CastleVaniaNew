@@ -146,9 +146,6 @@
     <ClCompile Include="Panther.cpp">
       <Filter>Objects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Objects\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Objects\Enemies</Filter>
     </ClCompile>
@@ -305,9 +302,6 @@
       <Filter>Objects\Weapons\Sub_Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Panther.h">
-      <Filter>Objects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
       <Filter>Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">

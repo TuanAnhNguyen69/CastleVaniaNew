@@ -63,6 +63,12 @@ void Simon::UpGradeMorningStar() {
 }
 void Simon::Draw(GCamera* camera)
 {
+	for (list<Weapon*>::iterator wp = sub_weapon->begin(); wp != sub_weapon->end(); wp++)
+	{
+		if ((*wp)->active)
+			(*wp)->Draw(camera);
+	}
+
 	//Rot xuong vuc
 	if(y - height < (camera->viewport.y - G_ScreenHeight))
 	{
@@ -286,6 +292,7 @@ void Simon::RunLeft()
 	{
 		isStop = false;
 		vX = -SPEED_X;
+		vLast = vX;
 	}
 	isSit = false;
 	action = Action::SimonRunLeft;
@@ -681,10 +688,28 @@ void Simon::goDownStair()
 
 void Simon::Collision(list<GameObject*> &obj, float dt)
 {
+	list<GameObject*>::iterator _itBegin;
+
+	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
+	{
+		morningStar->Collision(obj, dt);
+		list<Weapon*>::iterator _wb;
+		for (_wb = sub_weapon->begin(); _wb != sub_weapon->end(); _wb++)
+		{
+			(*_wb)->Collision(obj, dt);
+
+			if ((*_wb)->id == EnumID::Boomerang_Weapon_ID)
+				(*_wb)->CollSimon(this, dt);
+		}
+
+		if ((*_itBegin)->id == EnumID::BonePillar_ID || (*_itBegin)->id == EnumID::Medusa_ID)
+			(*_itBegin)->CollSimon(this, dt);
+	}
+
 	colStair = false;
 	onTopStair = false;
 	list<GameObject*> listObject;
-	list<GameObject*>::iterator _itBegin;
+	
 	bool isCollideBottom = false;
 	Box fallBox = this->GetBox();
 	fallBox.h = fallBox.h + 10;
@@ -701,7 +726,8 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 			isCollideBottom = AABBCheck(fallBox, boxOther);
 		}
 
-		if (other->id == EnumID::Brick_ID) {
+		if (other->id == EnumID::Brick_ID) 
+		{
 			if (AABBCheck(broadphasebox, boxOther))
 			{
 				ECollisionDirection colDirection;

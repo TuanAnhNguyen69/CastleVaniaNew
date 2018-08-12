@@ -46,6 +46,7 @@ void Enemy::Collision(list<GameObject*> &obj, int dt)
 
 }
 
+
 void Enemy::SetActive(float _xSimon, float _ySimon)
 {
 

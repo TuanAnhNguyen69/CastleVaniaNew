@@ -1,4 +1,5 @@
 #include "Snake.h"
+#include "Simon.h"
 
 
 
@@ -60,4 +61,50 @@ void Snake::Update(int dt)
 
 void Snake::Collision(list<GameObject*> &obj, int dt)
 {
+	list<GameObject*>::iterator it;
+	for (it = obj.begin(); it != obj.end(); it++)
+	{
+		GameObject* other = (*it);
+
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+
+		if (other->id == EnumID::Brick_ID)
+		{
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0)
+				{
+					if (colDirection == ECollisionDirection::Colls_Bot)
+					{
+						this->vY = 0;
+						this->y = other->y + this->height;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Snake::CollSimon(GameObject* simon, int dt)
+{
+	Box box = this->GetBox();
+	Box boxSimon = simon->GetBox();
+	Box broadphasebox = getSweptBroadphaseBox(box, dt);
+	if (AABBCheck(broadphasebox, boxSimon))
+	{
+		ECollisionDirection colDirection;
+		float collisionTime = sweptAABB(box, boxSimon, colDirection, dt);
+		if (collisionTime < 1.0f && collisionTime > 0.0)
+		{
+			if (simon->id == EnumID::Simon_ID)
+			{
+				simon->ReceiveDamage(this->damage);
+				dynamic_cast<Simon*>(simon)->KnockBack();
+			}
+		}
+	}
 }
