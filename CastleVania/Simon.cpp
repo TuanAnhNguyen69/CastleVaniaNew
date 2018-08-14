@@ -426,8 +426,11 @@ void Simon::Stop()
 bool Simon::AutoMove(int &rangeMove, int dt)
 {
 	action = SimonRunLeft;
-	if (rangeMove == 0)
+
+	if (rangeMove == 0) {
+		action = SimonStand;
 		return true;
+	}
 	if (rangeMove > 0)
 	{
 		rangeMove -= AUTO_MOVE_RANGE;
@@ -441,10 +444,25 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	return false;
 }
 
-void Simon::onCollideDoor(Door * obj, ECollisionDirection direction)
+void Simon::onCollideDoor(Door * door, ECollisionDirection direction, float collisionTime, int dt)
 {
-	door = obj;
-	if (obj->id == EnumID::Tele_ID) {
+	if (door->hasBeenOpened) {
+		if (isJump) {
+			vY = 0;
+			action = Action::SimonStand;
+		}
+		if (isLeft) {
+			this->x += this->vX * collisionTime * dt + 7;
+		}
+		else {
+			this->x += this->vX * collisionTime * dt - 7;
+		}
+		this->vX = 0;
+		action = Action::SimonRunLeft;
+		return;
+	}
+	this->door = door;
+	if (door->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
 			doorDirection = TeleUp;
 		}
@@ -455,7 +473,7 @@ void Simon::onCollideDoor(Door * obj, ECollisionDirection direction)
 		return;
 	}
 
-	if (obj->id == EnumID::Door_ID) {
+	if (door->id == EnumID::Door_ID) {
 		if (direction == ECollisionDirection::Colls_Left) {
 			doorDirection = DoorLeft;
 		}
@@ -786,7 +804,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					break;
 				case EnumID::Tele_ID:
 				case EnumID::Door_ID:
-					onCollideDoor((Door*)other, colDirection);
+					onCollideDoor((Door*)other, colDirection, collisionTime, dt);
 					break;
 				case EnumID::Boomerang_Weapon_ID:
 					other->active = false;

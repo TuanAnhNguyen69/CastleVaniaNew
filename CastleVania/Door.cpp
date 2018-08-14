@@ -16,6 +16,7 @@ Door::Door(float _posX, float _posY, int _width, int _height) :
 	animating = false;
 	playedClose = false;
 	playedOpen = false;
+	hasBeenOpened = false;
 }
 
 Door::~Door()
@@ -49,7 +50,7 @@ void Door::RenderOpen()
 			_timeCount = 0;
 			animating = false;
 			isOpen = true;
-
+			hasBeenOpened = true;
 		}
 	}
 }

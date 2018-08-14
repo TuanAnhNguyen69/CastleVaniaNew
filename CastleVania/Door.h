@@ -10,6 +10,7 @@ public:
 	int _timeCount;
 	bool isOpen;
 	bool animating;
+	bool hasBeenOpened;
 	Door(void);
 	Door(float _posX, float _posY, int _width, int _height);
 	~Door(void);
