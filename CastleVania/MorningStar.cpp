@@ -31,7 +31,7 @@ void MorningStar::resetSprite()
 
 void MorningStar::Draw(GCamera* camera)
 {
-	D3DXVECTOR2 pos = camera->Transform(x, y);
+	D3DXVECTOR2 pos = camera->Transform(drawX, drawY);
 	if (!isLeft)
 	{
 		sprite->DrawFlipX(pos.x, pos.y);
@@ -53,6 +53,22 @@ Box MorningStar::GetBox()
 		return Box(0, 0, 0, 0);
 	float width, height;
 	int morningState = this->sprite->GetIndex();
+	int posX, posY;
+	int lv3Length = 0;
+	if (level == 3) {
+		if (morningState <= 8) {
+			morningState = 0;
+		}
+		else if (morningState >= 12) {
+			morningState = 2;
+		}
+		else {
+			morningState = 1;
+		}
+		lv3Length = 5;
+	}
+
+	posX = x;
 	switch (morningState % 3)
 	{
 	case 0:
@@ -64,20 +80,26 @@ Box MorningStar::GetBox()
 		height = 40;
 		break;
 	case 2:
-		width = 16;
-		height = 48;
+		width = 42 + lv3Length;
+		height = 16;
+		if (!isLeft) {
+			posX = x + 32;
+		}
+		else {
+			posX = x - width;
+		}
 		break;
 	default:
-		width = 42;
-		height = 16;
 		break;
 	}
-	return Box(x, y, width, height);
+	return Box(posX, y, width, height);
 }
 
 void MorningStar::update(int _posX, int _posY, int deltaTime)
 {
 	sprite->Update(deltaTime);
+	this->x = _posX;
+	this->y = _posY;
 	float morningStarX = 0;
 	float morningStarY = 0;
 	int morningState = this->sprite->GetIndex();
@@ -92,47 +114,48 @@ void MorningStar::update(int _posX, int _posY, int deltaTime)
 			morningState = 1;
 		}
 	}
-	
+
 	if (!isLeft) {
 		switch (morningState % 3)
 		{
 		case 0:
-			morningStarX = _posX - 90 + 20;
+			morningStarX = _posX - 90 + 20 - 16;
 			morningStarY = _posY;
 			break;
 		case 1:
-			morningStarX = _posX - 105 + 20;
+			morningStarX = _posX - 105 + 20 - 16;
 			morningStarY = _posY;
 			break;
 		case 2:
-			morningStarX = _posX + 32 - 145 + 20;
+			morningStarX = _posX + 32 - 145 + 20 - 16;
 			morningStarY = _posY;
 			break;
 		default:
 			int i = 0;
 			break;
 		}
-	} else 	{
+	}
+	else {
 		switch (morningState % 3)
 		{
 		case 0:
-			morningStarX = _posX + 32 - 150; // 40
+			morningStarX = _posX + 32 - 150 - 8; // 40
 			morningStarY = _posY;
 			break;
 		case 1:
-			morningStarX = _posX + 32 - 135; // 30
+			morningStarX = _posX + 32 - 135 - 8; // 30
 			morningStarY = _posY;
 			break;
 		case 2:
-			morningStarX = _posX - 95; //5
+			morningStarX = _posX - 95 - 8; //5
 			morningStarY = _posY;
 			break;
 		default:
 			break;
 		}
 	}
-	this->x = morningStarX;
-	this->y = morningStarY;
+	this->drawX = morningStarX;
+	this->drawY = morningStarY;
 }
 
 void MorningStar::UpdateLevel()
@@ -165,7 +188,7 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 	for (_itBegin = obj.rbegin(); _itBegin != obj.rend(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
-
+		if (other->active) {
 			Box box = this->GetBox();
 			Box boxOther = other->GetBox();
 
@@ -173,40 +196,40 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt){
 			// edit AABB later
 			if (AABBCheck(box, boxOther) == true)
 			{
-					if ( other->canBeKilled )
+				if (other->canBeKilled)
+				{
+					/*if (other->id == EnumID::Medusa_ID)
 					{
-						/*if (other->id == EnumID::Medusa_ID)
+						Medusa* qm = (Medusa*)other;
+						if (qm->HasGetUp)
 						{
-							Medusa* qm = (Medusa*)other;
-							if (qm->HasGetUp)
-							{
-								other->ReceiveDamage(damage);
-								if (other->hp <= 0)
-								{
-									point += other->point;
-								}
-							}
-							else
-								qm->getUp();
-						}*/
-						/*else*/
-						if (other->id == EnumID::Breakable_ID) {
-							point += other->point;
-						}
-						else
-						{
-							//other->ReceiveDamage(damage);
-							//if (other->hp <= 0)
+							other->ReceiveDamage(damage);
+							if (other->hp <= 0)
 							{
 								point += other->point;
 							}
-							
 						}
-						
+						else
+							qm->getUp();
+					}*/
+					/*else*/
+					if (other->id == EnumID::Breakable_ID) {
+						point += other->point;
 					}
+					else
+					{
+						other->ReceiveDamage(damage);
+						if (other->isDeath)
+						{
+							point += other->point;
+							other->active = false;
+						}
+					}
+				}
 				return;
 			}
 		}
+	}
 }
 
 MorningStar::~MorningStar(void)

@@ -15,22 +15,22 @@ Stair::Stair(float _posX, float _posY, int _width, int _height, EnumID _id) :
 	switch (_id)
 	{
 	case StairLeft_ID:
-		type = EStairType::Left;
+		stairType = EStairType::Left;
 		break;
 	case StairRight_ID:
-		type = EStairType::Right;
+		stairType = EStairType::Right;
 		break;
 	case StairTopLeft_ID:
-		type = EStairType::TopLeft;
+		stairType = EStairType::TopLeft;
 		break;
 	case StairTopRight_ID:
-		type = EStairType::TopRight;
+		stairType = EStairType::TopRight;
 		break;
 	case StairBotLeft_ID:
-		type = EStairType::BotLeft;
+		stairType = EStairType::BotLeft;
 		break;
 	default:
-		type = EStairType::BotRight;
+		stairType = EStairType::BotRight;
 		break;
 	}
 }

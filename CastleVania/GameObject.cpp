@@ -120,6 +120,7 @@ void GameObject::Draw(GCamera* camera)
 
 void GameObject::ReceiveDamage(int _damage)
 {
+	hp -= damage;
 }
 
 void GameObject::SetActive(float _xSimon, float _ySimon)

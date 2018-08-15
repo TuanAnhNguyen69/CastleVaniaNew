@@ -54,9 +54,11 @@ void Enemy::SetActive(float _xSimon, float _ySimon)
 
 void Enemy::ReceiveDamage(int _damage)
 {
-	if (hp > 0)
+	if (hp > 0) {
 		hp -= _damage;
-	else
+	}
+	
+	if (hp <= 0)
 	{
 		isDeath = true;
 	}

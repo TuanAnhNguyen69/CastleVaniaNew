@@ -16,6 +16,8 @@ public:
 	MorningStar(int posX, int posY, int MorningStarRate);
 	int level;
 	int damage;
+	int drawX;
+	int drawY;
 
 	GSprite* lv1;
 	GSprite* lv2;

@@ -47,7 +47,7 @@ void SceneGame::LoadLevel(int level)
 	//player = new Player(345, 1310); //-> Stage 6 
 	//player = new Player(287, 1310);
 
-	player = new Simon(4000, 150);
+	player = new Simon(3788, 150);
 	//player = new Simon(3776, 130, 32, 64); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
@@ -64,7 +64,7 @@ void SceneGame::LoadLevel(int level)
 	cameraPosition = camera->viewport;
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1.3OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1.4OBJ.txt");
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 

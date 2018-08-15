@@ -4,7 +4,6 @@ class Enemy :
 	public ActiveObject
 {
 public:
-	int hp;
 	int damage;
 
 	//virtual void Update(int dt);

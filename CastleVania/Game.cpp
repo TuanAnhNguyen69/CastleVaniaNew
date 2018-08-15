@@ -222,16 +222,16 @@ void CGame::GameRun()
 
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);			
+		} 
+		else {
+			DWORD now = GetTickCount();
+			_DeltaTime = now - frame_start;
+			if (_DeltaTime >= tick_per_frame)
+			{
+				frame_start = now;
+				RenderFrame();
+			}
 		}
-
-		DWORD now = GetTickCount();
-		_DeltaTime = now - frame_start; 
-		if (_DeltaTime >= tick_per_frame)
-		{
-			frame_start = now;
-			RenderFrame();
-		}
-
 		ProcessKeyBoard();
 
 		ProcessInput(G_Device, _DeltaTime);

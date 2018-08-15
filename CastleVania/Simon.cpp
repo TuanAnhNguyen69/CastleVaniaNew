@@ -275,10 +275,10 @@ void Simon::RunLeft()
 	morningStar->updateDirection(true);
 	isLeft = true;
 	if (onStair) {
-		if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+		if (stair->stairType == EStairType::BotLeft || stair->stairType == EStairType::TopLeft) {
 			goUpStair();
 		}
-		else if (stair->type == EStairType::BotRight || stair->type == EStairType::TopRight) {
+		else if (stair->stairType == EStairType::BotRight || stair->stairType == EStairType::TopRight) {
 			goDownStair();
 		}
 		return;
@@ -306,10 +306,10 @@ void Simon::RunRight()
 	morningStar->updateDirection(false);
 	isLeft = false;
 	if (onStair) {
-		if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+		if (stair->stairType == EStairType::BotLeft || stair->stairType == EStairType::TopLeft) {
 			goDownStair();
 		}
-		else if (stair->type == EStairType::BotRight || stair->type == EStairType::TopRight) {
+		else if (stair->stairType == EStairType::BotRight || stair->stairType == EStairType::TopRight) {
 			goUpStair();
 		}
 		return;
@@ -381,11 +381,8 @@ void Simon::OnAttack(int deltaTime)
 	}
 	isAttack = true;
 	sprite->Update(deltaTime);
-	if (isSit) {
-		morningStar->update(x, y - 14, deltaTime);
-		return;
-	}
-	morningStar->update(x, y, deltaTime);
+	Box box = this->GetBox();
+	morningStar->update(box.x, box.y, deltaTime);
 }
 
 void Simon::Stop()
@@ -606,7 +603,7 @@ void Simon::goUpStair()
 	standOnStair = false;
 	action = Action::SimonUpStair;
 
-	if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft) {
+	if (stair->stairType == EStairType::BotLeft || stair->stairType == EStairType::TopLeft) {
 		isLeft = true;
 		vX = -0.2;
 	}
@@ -620,7 +617,7 @@ void Simon::goUpStair()
 
 float Simon::getStairStartPos() {
 
-	switch (stair->type)
+	switch (stair->stairType)
 	{
 	case EStairType::BotRight:
 		return stair->x - stair->width / 2; 
@@ -662,7 +659,7 @@ void Simon::goDownStair()
 	if (isJump)
 		return;
 
-	if (isOnBrick && !colStair && (stair->type != EStairType::BotLeft || stair->type != EStairType::BotRight)) {
+	if (isOnBrick && !colStair && (stair->stairType != EStairType::BotLeft || stair->stairType != EStairType::BotRight)) {
 		return;
 	}
 
@@ -688,7 +685,7 @@ void Simon::goDownStair()
 	standOnStair = false;
 	action = Action::SimonDownStair;
 
-	if (stair->type == EStairType::BotLeft || stair->type == EStairType::TopLeft || stair->type == EStairType::Left) {
+	if (stair->stairType == EStairType::BotLeft || stair->stairType == EStairType::TopLeft || stair->stairType == EStairType::Left) {
 		isLeft = false;
 		vX = 0.2;
 	}
@@ -705,22 +702,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 {
 	list<GameObject*>::iterator _itBegin;
 
-	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
-	{
-		morningStar->Collision(obj, dt);
-		list<Weapon*>::iterator _wb;
-		for (_wb = sub_weapon->begin(); _wb != sub_weapon->end(); _wb++)
-		{
-			(*_wb)->Collision(obj, dt);
-
-			if ((*_wb)->id == EnumID::Boomerang_Weapon_ID)
-				(*_wb)->CollSimon(this, dt);
-		}
-
-		if ((*_itBegin)->id == EnumID::BonePillar_ID || (*_itBegin)->id == EnumID::Medusa_ID)
-			(*_itBegin)->CollSimon(this, dt);
-	}
-
 	colStair = false;
 	onTopStair = false;
 	list<GameObject*> listObject;
@@ -731,97 +712,111 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
-		
-		Box box = this->GetBox();
-		Box boxOther = other->GetBox();
-		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+		if (other->active) {
+			Box box = this->GetBox();
+			Box boxOther = other->GetBox();
+			Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
-		// Check if simon is standing on brick
-		if (!isCollideBottom && other->id == EnumID::Brick_ID) {
-			isCollideBottom = AABBCheck(fallBox, boxOther);
-		}
+			// Check if simon is standing on brick
+			if (!isCollideBottom && other->id == EnumID::Brick_ID) {
+				isCollideBottom = AABBCheck(fallBox, boxOther);
+			}
 
-		if (other->id == EnumID::Brick_ID) 
-		{
-			if (AABBCheck(broadphasebox, boxOther))
+			if (other->id == EnumID::Brick_ID)
 			{
-				ECollisionDirection colDirection;
-				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-				if ( collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+				if (AABBCheck(broadphasebox, boxOther))
 				{
- 					onCollideBrick(boxOther, dt, colDirection, collisionTime);
+					ECollisionDirection colDirection;
+					float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+					if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+					{
+						onCollideBrick(boxOther, dt, colDirection, collisionTime);
+					}
 				}
 			}
-		}
-		else {
-			listObject.push_back(*_itBegin);
+			else {
+				listObject.push_back(*_itBegin);
+			}
 		}
 	}
 
-	//fallBox.w = fallBox.h + 10;
+	if (action == SimonAttack) {
+		morningStar->Collision(listObject, dt);
+	}
+
+	list<Weapon*>::iterator _wb;
+
+	for (_wb = sub_weapon->begin(); _wb != sub_weapon->end(); _wb++)
+	{
+		(*_wb)->Collision(obj, dt);
+
+		if ((*_wb)->id == EnumID::Boomerang_Weapon_ID)
+			(*_wb)->CollSimon(this, dt);
+	}
 	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
+		if (other->active) {
+			(other)->SetActive(x, y);
+			other->Update(x, y, dt);
 
-		//Set Active cho Enemy
-		(other)->SetActive(x, y);
-		other->Update(x, y, dt);
+			Box box = this->GetBox();
+			Box boxOther = other->GetBox();
+			box.vx -= boxOther.vx;
+			box.vy -= boxOther.vy;
+			Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
-		Box box = this->GetBox();
-		Box boxOther = other->GetBox();
-		box.vx -= boxOther.vx;
-		box.vy -= boxOther.vy;
-		Box broadphasebox = getSweptBroadphaseBox(box, dt);
-		if ((other->id == EnumID::StairBotRight_ID || other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairBotLeft_ID || other->id == EnumID::StairTopLeft_ID))
-		{
-			if (AABBCheck(fallBox, boxOther)) {
-				onCollideStair((Stair*)other);
-				if (box.y - box.h + 10 - other->y >= 0 && !isJump && (other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairTopLeft_ID)) {
-					onTopStair = true;
-				}
-			}
-		}
+			if ((*_itBegin)->id == EnumID::BonePillar_ID || (*_itBegin)->id == EnumID::Medusa_ID)
+				(*_itBegin)->CollSimon(this, dt);
 
-
-		
-		if (AABBCheck(broadphasebox, boxOther))
-		{
-			
-			ECollisionDirection colDirection;
-			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-			if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+			if ((other->id == EnumID::StairBotRight_ID || other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairBotLeft_ID || other->id == EnumID::StairTopLeft_ID))
 			{
-				if (other->id == EnumID::StairTopRight_ID) {
-					int a = 0;
-				}
-				switch (other->id)
-				{
-				case EnumID::StairBotLeft_ID:
-				case EnumID::StairBotRight_ID:
-				case EnumID::StairTopLeft_ID:
-				case EnumID::StairTopRight_ID:
+				if (AABBCheck(fallBox, boxOther)) {
 					onCollideStair((Stair*)other);
-					break;
-				case EnumID::Tele_ID:
-				case EnumID::Door_ID:
-					onCollideDoor((Door*)other, colDirection, collisionTime, dt);
-					break;
-				case EnumID::Boomerang_Weapon_ID:
-					other->active = false;
-					//other->Update(dt);
-					break;
-				default:
-					break;
-				}
-
-				if (other->type == ObjectType::Enemy_Type)
-				{
-					this->ReceiveDamage((other)->damage);
-					KnockBack();
+					if (box.y - box.h + 10 - other->y >= 0 && !isJump && (other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairTopLeft_ID)) {
+						onTopStair = true;
+					}
 				}
 			}
-		}
 
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+				{
+					if (other->id == EnumID::StairTopRight_ID) {
+						int a = 0;
+					}
+					switch (other->id)
+					{
+					case EnumID::StairBotLeft_ID:
+					case EnumID::StairBotRight_ID:
+					case EnumID::StairTopLeft_ID:
+					case EnumID::StairTopRight_ID:
+						onCollideStair((Stair*)other);
+						break;
+					case EnumID::Tele_ID:
+					case EnumID::Door_ID:
+						onCollideDoor((Door*)other, colDirection, collisionTime, dt);
+						break;
+					case EnumID::Boomerang_Weapon_ID:
+						other->active = false;
+						//other->Update(dt);
+						break;
+					default:
+						break;
+					}
+
+					if (other->type == ObjectType::Enemy_Type)
+					{
+						this->ReceiveDamage((other)->damage);
+						KnockBack();
+					}
+				}
+			}
+		}	
 	}
 
 	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack && !onTopStair) {
