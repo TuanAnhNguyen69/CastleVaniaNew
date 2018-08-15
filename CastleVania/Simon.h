@@ -171,7 +171,7 @@ public:
 	bool colDoor;
 	EDoorDirection doorDirection;
 	Door * door;
-	void onCollideDoor(Door *obj, ECollisionDirection direction);
+	void onCollideDoor(Door *obj, ECollisionDirection direction, float collisionTime, int dt);
 
 
 	Box GetBox();

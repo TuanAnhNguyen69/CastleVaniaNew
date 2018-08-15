@@ -1,7 +1,7 @@
 #include "SceneGame.h"
 
 #define BACKGROUND_FILE "Resources/black.png"
-#define CAMERA_MOVE_SPEED 4
+#define CAMERA_MOVE_SPEED 5
 SceneGame::SceneGame(void) : Scene(EnumSceneState::Scene_Game)
 {
 	levelNow = 1;
@@ -47,7 +47,7 @@ void SceneGame::LoadLevel(int level)
 	//player = new Player(345, 1310); //-> Stage 6 
 	//player = new Player(287, 1310);
 
-	player = new Simon(3740, 150);
+	player = new Simon(4000, 150);
 	//player = new Simon(3776, 130, 32, 64); // stage 1
 								  //stage2
 								  //player = new Player(3170, 670);
@@ -66,6 +66,7 @@ void SceneGame::LoadLevel(int level)
 	gameUI->initTimer(100);
 	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
 	qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
+
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
 
@@ -85,27 +86,27 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 		}
 		if (firstMoveCameraDone)
 		{
-			if (door->isAnimating())
+			if (!door->isOpen && !door->hasBeenOpened)
 				door->RenderOpen();
-			if (!door->isAnimating())
-			{
-				player->AutoMove(rangeMovePlayer, t);
-				if (rangeMovePlayer == 0)
-				{
+			if (door->isOpen)
+			{	
+				if (player->AutoMove(rangeMovePlayer, t))
+				{	
 					player->doorDirection = EDoorDirection::NoneDoor;
 					door->RenderClose();
-
-					//player->_allowPress = false;// lúc đang đóng cửa player không hoạt động
-					if (!door->isAnimating())
-					{
-						MoveCamera(rangeMoveCamera2);
-					}
-					else
-					{
-						player->canPress = true;
-					}
+					player->canPress = false;// lúc đang đóng cửa player không hoạt động
 				}
 			}
+			
+			if (!door->isOpen && door->hasBeenOpened) {
+				if (!secondMoveCameraDone) {
+					MoveCamera(rangeMoveCamera2);
+				} 
+			}
+		}
+		if (secondMoveCameraDone) {
+			player->canPress = true;
+			stateCamera = ECameraState::Update_Camera;
 		}
 	}
 		
@@ -209,9 +210,9 @@ void SceneGame::ChangeCamera(EDoorDirection directDoor)
 			beginMoveCamera = true;
 			firstMoveCameraDone = false;
 			secondMoveCameraDone = false;
-			rangeMoveCamera = -264;//-264;
-			rangeMoveCamera2 = -264;
-			rangeMovePlayer = -120; // -120;
+			rangeMoveCamera = -260;//-264;
+			rangeMoveCamera2 = -260;
+			rangeMovePlayer = -130; // -120;
 			doorDirect = -1;
 			stageNow++;
 		}
@@ -222,11 +223,12 @@ void SceneGame::ChangeCamera(EDoorDirection directDoor)
 			beginMoveCamera = true;
 			firstMoveCameraDone = false;
 			secondMoveCameraDone = false;
-			rangeMoveCamera = 264;
-			rangeMoveCamera2 = 264;
-			rangeMovePlayer = 120;
+			rangeMoveCamera = 260;
+			rangeMoveCamera2 = 260;
+			rangeMovePlayer = 130;
 			doorDirect = 1;
 			stageNow++;
+
 		}
 		break;
 		default:
@@ -275,9 +277,7 @@ void SceneGame::MoveCamera(int &_moveRange)
 			secondMoveCameraDone = true;
 			stageNow++;
 
-			stateCamera = ECameraState::Update_Camera;
 			player->doorDirection = EDoorDirection::NoneDoor;
-			door->ResetDoor();
 			//---------Luu vi tri stage moi de hoi sinh -----------------
 			stageReset = stageNow;
 			revivePosition.x = player->x;

@@ -445,10 +445,12 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	return false;
 }
 
-void Simon::onCollideDoor(Door * obj, ECollisionDirection direction)
+void Simon::onCollideDoor(Door * obj, ECollisionDirection direction, float collisionTime, int dt)
 {
+	/*
 	door = obj;
 	door->animating = true;
+	*/
 
 	if (obj->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
@@ -657,8 +659,8 @@ void Simon::OnMovingPlatform(Box _boxOther, int dt, ECollisionDirection _colDire
 	*/
 	if (_isMove && (action == Action::SimonAttack || action == Action::SimonSit || action == Action::SimonStand))
 	{
-		this->x += _boxOther.vx*15.69;
-		this->vX = _boxOther.vx;
+		//this->x += _boxOther.vx*15.69;
+		//this->vX = _boxOther.vx;
 		this->x += _boxOther.vx*dt;
 	}
 	
@@ -873,7 +875,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					break;
 				case EnumID::Tele_ID:
 				case EnumID::Door_ID:
-					onCollideDoor((Door*)other, colDirection);
+					onCollideDoor((Door*)other, colDirection, collisionTime, dt);
 					break;
 				case EnumID::BigHeart_ID:
 					hearts += 5;

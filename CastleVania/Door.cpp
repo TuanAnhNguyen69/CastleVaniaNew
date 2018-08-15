@@ -16,6 +16,7 @@ Door::Door(float _posX, float _posY, int _width, int _height) :
 	animating = false;
 	playedClose = false;
 	playedOpen = false;
+	hasBeenOpened = false;
 }
 
 Door::~Door()
@@ -24,8 +25,9 @@ Door::~Door()
 
 void Door::RenderOpen()
 {
-	if (animating)
+	if (!isOpen)
 	{
+		animating = true;
 		if (!playedOpen)
 		{
 			//SoundManager::GetInst()->PlaySoundEffect(ESoundEffect::ES_Door);
@@ -48,15 +50,16 @@ void Door::RenderOpen()
 			_timeCount = 0;
 			animating = false;
 			isOpen = true;
-
+			hasBeenOpened = true;
 		}
 	}
 }
 
 void Door::RenderClose()
 {
-	if (animating)
+	if (isOpen)
 	{
+		animating = true;
 		if (!playedClose)
 		{
 			//SoundManager::GetInst()->PlaySoundEffect(ESoundEffect::ES_Door);

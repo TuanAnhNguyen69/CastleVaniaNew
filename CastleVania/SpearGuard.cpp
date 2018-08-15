@@ -17,6 +17,7 @@ SpearGuard::SpearGuard(float _x, float _y)
 	type = ObjectType::Enemy_Type;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::SpearGuard_ID), 0, 3, 80);
 	x0 = x;
+	this->vY = -0.4;
 }
 SpearGuard::~SpearGuard()
 {
@@ -25,10 +26,7 @@ SpearGuard::~SpearGuard()
 void SpearGuard::Update(int dt)
 {
 	x += vX * dt;
-	if (abs(x0 - x) >= SPEARGUARD_RANGE)
-	{
-		vX = -vX;
-	}
+	y += vY * dt;
 	sprite->Update(dt);
 }
 
@@ -50,7 +48,7 @@ void SpearGuard::Draw(GCamera* camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-void SpearGuard::Collision(list<GameObject*> &obj, int dt)
+void SpearGuard::Collision(list<GameObject*> obj, int dt)
 {
 	list<GameObject*>::iterator it;
 	for (it = obj.begin(); it != obj.end(); it++)
@@ -73,7 +71,12 @@ void SpearGuard::Collision(list<GameObject*> &obj, int dt)
 						colDirection == ECollisionDirection::Colls_Right)
 					{
 						this->vX = -vX;
-					}		
+					}
+
+					if (colDirection == ECollisionDirection::Colls_Bot) {
+						this->vY = 0;
+						this->y = other->y + this->height + 1;
+					}
 				}
 			}
 		}
