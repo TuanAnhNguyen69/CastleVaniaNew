@@ -27,6 +27,9 @@ Simon::Simon(int _x, int _y)
 	standOnStair = false;
 	colStair = false;
 	onTopStair = false;
+
+	//isOnMovingPlatform = false;
+
 	canPress = true;
 	timeOnStair = 0;
 	knockBackTime = 0;
@@ -96,7 +99,7 @@ void Simon::Draw(GCamera* camera)
 		break;
 	case SimonRunRight:
 	case SimonRunLeft:
-		sprite = simonMove;
+
 		break;
 	case SimonJump:
 		sprite = simonJump;
@@ -423,11 +426,8 @@ void Simon::Stop()
 bool Simon::AutoMove(int &rangeMove, int dt)
 {
 	action = SimonRunLeft;
-
-	if (rangeMove == 0) {
-		action = SimonStand;
+	if (rangeMove == 0)
 		return true;
-	}
 	if (rangeMove > 0)
 	{
 		rangeMove -= AUTO_MOVE_RANGE;
@@ -436,30 +436,20 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	else
 	{
 		rangeMove += AUTO_MOVE_RANGE;
-		x -= AUTO_MOVE_RANGE;
+		y -= AUTO_MOVE_RANGE;
 	}
+	sprite->Update(dt);
 	return false;
 }
 
-void Simon::onCollideDoor(Door * door, ECollisionDirection direction, float collisionTime, int dt)
+void Simon::onCollideDoor(Door * obj, ECollisionDirection direction, float collisionTime, int dt)
 {
-	if (door->hasBeenOpened) {
-		if (isJump) {
-			vY = 0;
-			action = Action::SimonStand;
-		}
-		if (isLeft) {
-			this->x += this->vX * collisionTime * dt + 7;
-		}
-		else {
-			this->x += this->vX * collisionTime * dt - 7;
-		}
-		this->vX = 0;
-		action = Action::SimonRunLeft;
-		return;
-	}
-	this->door = door;
-	if (door->id == EnumID::Tele_ID) {
+	/*
+	door = obj;
+	door->animating = true;
+	*/
+
+	if (obj->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
 			doorDirection = TeleUp;
 		}
@@ -470,7 +460,7 @@ void Simon::onCollideDoor(Door * door, ECollisionDirection direction, float coll
 		return;
 	}
 
-	if (door->id == EnumID::Door_ID) {
+	if (obj->id == EnumID::Door_ID) {
 		if (direction == ECollisionDirection::Colls_Left) {
 			doorDirection = DoorLeft;
 		}
@@ -633,6 +623,46 @@ float Simon::getStairStartPos() {
 	}
 }
 
+
+void Simon::OnMovingPlatform(Box _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove)
+{
+	//float _compareHeigh = abs((_boxOther.y) - (y+ height));
+	//if (vY < 0 && _compareHeigh < 5)
+	if (_colDirection == ECollisionDirection::Colls_Bot)
+	{
+		this->vY = 0;
+		this->y = _boxOther.y + this->height - 2;
+		isKnockedBack = false;
+		canPress = true;
+		isJump = false;
+		action = Action::SimonStand;
+		//isOnMovingPlatform = true;
+		g = GRAVITATIONAL;
+		
+		return;
+	}
+	/*
+	if (isKnockedBack)
+	{
+		isKnockedBack = false;
+		return;
+	}
+	if (isJump)
+	{
+		action = Action::SimonStand;
+		sprite->SelectIndex(0);
+		isJump = false;
+	}
+	*/
+	if (_isMove && (action == Action::SimonAttack || action == Action::SimonSit || action == Action::SimonStand))
+	{
+		//this->x += _boxOther.vx*15.69;
+		//this->vX = _boxOther.vx;
+		this->x += _boxOther.vx*dt;
+	}
+	
+}
+
 void Simon::KnockBack()
 {
 	if (isKnockedBack || !canPress) {
@@ -702,13 +732,15 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 {
 	list<GameObject*>::iterator _itBegin;
 
+#pragma region Va chạm với Brick
+	list<GameObject*> listObject;
 	colStair = false;
 	onTopStair = false;
-	list<GameObject*> listObject;
 	
 	bool isCollideBottom = false;
 	Box fallBox = this->GetBox();
 	fallBox.h = fallBox.h + 10;
+
 	for (_itBegin = obj.begin(); _itBegin != obj.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
@@ -753,6 +785,42 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 		if ((*_wb)->id == EnumID::Boomerang_Weapon_ID)
 			(*_wb)->CollSimon(this, dt);
 	}
+
+#pragma region Va chạm với Moving Platform
+
+	bool isOnMovingPlatform = false;
+
+	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
+	{
+		GameObject* other = (*_itBegin);
+
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
+
+		if (!isOnMovingPlatform && other->id == EnumID::MovingPlatform_ID) {
+			isOnMovingPlatform = AABBCheck(fallBox, boxOther);
+		}
+
+		if (other->id == EnumID::MovingPlatform_ID)
+		{
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
+				{
+					OnMovingPlatform(boxOther, dt, colDirection, collisionTime, isOnMovingPlatform);
+					//this->x += (other->vX)*15;
+					//this->vX = other->vX;
+				}
+			}
+		}
+	}
+
+#pragma endregion
+
+	//fallBox.w = fallBox.h + 10;
 	for (_itBegin = listObject.begin(); _itBegin != listObject.end(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
@@ -765,7 +833,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 			box.vx -= boxOther.vx;
 			box.vy -= boxOther.vy;
 			Box broadphasebox = getSweptBroadphaseBox(box, dt);
-
 			if ((*_itBegin)->id == EnumID::BonePillar_ID || (*_itBegin)->id == EnumID::Medusa_ID)
 				(*_itBegin)->CollSimon(this, dt);
 
@@ -776,7 +843,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					if (box.y - box.h + 10 - other->y >= 0 && !isJump && (other->id == EnumID::StairTopRight_ID || other->id == EnumID::StairTopLeft_ID)) {
 						onTopStair = true;
 					}
-				}
+								}
 			}
 
 			if (AABBCheck(broadphasebox, boxOther))
@@ -805,6 +872,42 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 						other->active = false;
 						//other->Update(dt);
 						break;
+					case EnumID::BigHeart_ID:
+						hearts += 5;
+						other->Remove();
+						break;
+					case EnumID::SmallHeart_ID:
+						hearts += 1;
+						other->Remove();
+						break;
+					case EnumID::MoneyBag400_ID:
+						point += 400;
+						other->Remove();
+						break;
+					case EnumID::MoneyBag700_ID:
+						point += 700;
+						other->Remove();
+						break;
+					case EnumID::PorkChop_ID:
+						hp += 10;
+						other->Remove();
+						break;
+					case EnumID::Axe_ID:
+						weaponID = EnumID::Axe_ID;
+						other->Remove();
+						break;
+					case EnumID::Boomerang_ID:
+						weaponID = EnumID::Boomerang_ID;
+						other->Remove();
+						break;
+					case EnumID::HolyWater_ID:
+						weaponID = EnumID::HolyWater_ID;
+						other->Remove();
+						break;
+					case EnumID::Knife_ID:
+						weaponID = EnumID::Knife_ID;
+						other->Remove();
+						break;
 					default:
 						break;
 					}
@@ -815,11 +918,16 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 						KnockBack();
 					}
 				}
+
+				if (other->type == ObjectType::Item)
+				{
+					other->isDrop = true;
+				}
 			}
 		}	
 	}
 
-	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack && !onTopStair) {
+	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack && !onTopStair && !isOnMovingPlatform) {
 		fall();
 	}
 

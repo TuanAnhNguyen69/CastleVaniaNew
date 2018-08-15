@@ -41,7 +41,7 @@ void Enemy::Update(int dt)
 }
 */
 
-void Enemy::Collision(list<GameObject*> obj, int dt)
+void Enemy::Collision(list<GameObject*> &obj, int dt)
 {
 
 }
@@ -61,6 +61,7 @@ void Enemy::ReceiveDamage(int _damage)
 	if (hp <= 0)
 	{
 		isDeath = true;
+		this->active = false;
 	}
 		
 }

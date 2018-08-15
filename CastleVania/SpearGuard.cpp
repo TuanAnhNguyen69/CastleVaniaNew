@@ -48,7 +48,7 @@ void SpearGuard::Draw(GCamera* camera)
 		sprite->Draw(pos.x, pos.y);
 }
 
-void SpearGuard::Collision(list<GameObject*> obj, int dt)
+void SpearGuard::Collision(list<GameObject*> &obj, int dt)
 {
 	list<GameObject*>::iterator it;
 	for (it = obj.begin(); it != obj.end(); it++)

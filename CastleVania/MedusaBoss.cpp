@@ -150,9 +150,8 @@ void MedusaBoss::Collision(list<GameObject*> &obj, int dt)
 					if (colDirection == ECollisionDirection::Colls_Left ||
 						colDirection == ECollisionDirection::Colls_Right)
 					{
-						//this->vX = -vX;
-						//this->vX = -vX;
-						this->active = false;
+						this->vX = - this->vX;
+						//this->active = false;
 					}
 				}
 			}
@@ -171,4 +170,10 @@ void MedusaBoss::CollSimon(GameObject* simon, int dt)
 	{
 		(*snake)->CollSimon(simon, dt);
 	}
+}
+
+Box MedusaBoss::GetBox()
+{
+	Box box(x, y, width, height, vX, vY);
+	return box;
 }

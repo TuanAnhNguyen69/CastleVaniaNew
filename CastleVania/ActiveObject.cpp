@@ -74,7 +74,7 @@ void ActiveObject::Draw(GCamera* camera)
 }
 
 
-void ActiveObject::Collision(list<GameObject*> obj, int dt)
+void ActiveObject::Collision(list<GameObject*> &obj, int dt)
 {
 }
 

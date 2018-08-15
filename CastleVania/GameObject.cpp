@@ -20,6 +20,7 @@ GameObject::GameObject(float _x, float _y, EnumID _id)
 	vY = 0;
 	id = _id;
 
+	isDrop = false;
 	hp = 1;
 	point = 1;
 	type = ObjectType::None;
@@ -46,6 +47,9 @@ void GameObject::CreateSprite()
 	case EnumID::Brick_ID:
 	case EnumID::Tele_ID:
 		sprite = NULL;
+		break;
+	case EnumID::MovingPlatform_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
 		break;
 	case EnumID::Simon_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 0, 3, 100);
@@ -95,6 +99,20 @@ void GameObject::CreateSprite()
 	case EnumID::Snake_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
 		break;
+	case EnumID::Cross_ID:
+	case EnumID::BigHeart_ID:
+	case EnumID::SmallHeart_ID:
+	case EnumID::Axe_ID:
+	case EnumID::Boomerang_ID:
+	case EnumID::HolyWater_ID:
+	case EnumID::PorkChop_ID:
+	case EnumID::MoneyBag400_ID:
+	case EnumID::MoneyBag700_ID:
+	case EnumID::MorningStar_ID:
+	case EnumID::DoubleShot_ID:
+	case EnumID::TripleShot_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
+		break;
 	}
 }
 
@@ -121,6 +139,9 @@ void GameObject::Draw(GCamera* camera)
 void GameObject::ReceiveDamage(int _damage)
 {
 	hp -= damage;
+	if (hp <= 0) {
+		this->active = false;
+	}
 }
 
 void GameObject::SetActive(float _xSimon, float _ySimon)
@@ -128,7 +149,7 @@ void GameObject::SetActive(float _xSimon, float _ySimon)
 
 }
 
-void GameObject::Collision(list<GameObject*> obj, int dt)
+void GameObject::Collision(list<GameObject*> &obj, int dt)
 {
 }
 

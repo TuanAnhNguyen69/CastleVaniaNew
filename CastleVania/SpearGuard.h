@@ -21,6 +21,6 @@ public:
 	SpearGuard(float _x, float _y);
 	~SpearGuard();
 
-	void Collision(list<GameObject*> obj, int dt);
+	void Collision(list<GameObject*> &obj, int dt);
 };
 

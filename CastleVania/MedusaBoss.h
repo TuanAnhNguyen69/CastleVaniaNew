@@ -33,6 +33,8 @@ public:
 
 	void CollSimon(GameObject* simon, int dt);
 
+	Box GetBox();
+
 	MedusaBoss();
 	MedusaBoss(float _x, float _y);
 	~MedusaBoss();

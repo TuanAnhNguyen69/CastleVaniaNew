@@ -117,13 +117,16 @@ public:
 	int score;
 	int live;
 	int weaponCount;
-	EnumID weaponID;
-	MorningStar* morningStar;
+	EnumID weaponID;	
+	MorningStar* morningStar = new MorningStar();
+
 	virtual void Draw(GCamera* camera);
 	virtual void Update(int dt);
 	virtual void Collision(list<GameObject*> &obj, float dt);
 	//Simon(int _posX, int _posY, int _width, int _height);
 	Simon(int _x, int _y);
+
+	
 
 	//di chuyen
 	void RunLeft();
@@ -157,6 +160,8 @@ public:
 	Stair* stair;	//loại stair
 	EStairType stairType;
 
+	
+
 	//Tu dong di chuyen khi di vao cong
 	bool AutoMove(int &rangeMove, int dt);
 
@@ -182,6 +187,10 @@ public:
 	void UpdateOnStair(int);
 	float getStairStartPos();
 	void OutStair();
+
+	//Xử lý moving platform
+	//bool isOnMovingPlatform;
+	void OnMovingPlatform(Box _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove);
 
 	void KnockBack();
 	int knockBackTime;

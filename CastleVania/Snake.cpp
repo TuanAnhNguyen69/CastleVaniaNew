@@ -24,8 +24,9 @@ Snake::Snake(float _x, float _y, float _direction)
 	else
 		vX = -SNAKE_SPEED;
 
-	vY = 0.5;
+	vY = -0.3;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(id),0, 1, 100);
+	isGround = false;
 }
 
 
@@ -53,9 +54,11 @@ void Snake::Update(int dt)
 {
 	lifeTime += dt;
 	x += vX * dt;
-	y -= vY * dt;
 	if (lifeTime >= 900)
 		active = false;
+	if (isGround)
+		vY = 0;
+	y += vY * dt;
 }
 
 
@@ -80,8 +83,9 @@ void Snake::Collision(list<GameObject*> &obj, int dt)
 				{
 					if (colDirection == ECollisionDirection::Colls_Bot)
 					{
-						this->vY = 0;
+						isGround = true;
 						this->y = other->y + this->height;
+						return;
 					}
 				}
 			}
