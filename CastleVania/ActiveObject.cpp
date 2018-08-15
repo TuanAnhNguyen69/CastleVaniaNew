@@ -45,7 +45,7 @@ void ActiveObject::Update(int dt)
 
 Box ActiveObject::GetBox()
 {
-	Box box(x, y, width, height, vX, 0);
+	Box box(x, y, width, height, vX, vY);
 	return box;
 }
 
@@ -74,7 +74,7 @@ void ActiveObject::Draw(GCamera* camera)
 }
 
 
-void ActiveObject::Collision(list<GameObject*> obj, int dt)
+void ActiveObject::Collision(list<GameObject*> &obj, int dt)
 {
 }
 

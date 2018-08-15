@@ -20,6 +20,6 @@ public:
 	bool IntoScreen(float _posX, float _posY, GCamera* camera);
 
 	//Va cham, chua dinh nghia
-	virtual void Collision(list<GameObject*> obj, int dt);
+	virtual void Collision(list<GameObject*> &obj, int dt);
 };
 

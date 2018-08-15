@@ -5,6 +5,7 @@
 #include <vector>
 #include "RewardItem.h"
 #include "Enemy.h"
+#include "MedusaBoss.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class MorningStar :
 {
 public:
 	MorningStar(void);
-	MorningStar(int posX, int posY, int MorningStarRate);
+	MorningStar(float _x, float _y, int _MorningStarRate);
 	int level;
 	int damage;
 
@@ -33,7 +34,7 @@ public:
 	void update(int posX, int posY, int dt);
 	void updateDirection(bool);
 	void UpdateLevel();
-	bool getdata();
+	//bool getdata();
 	void Collision(list<GameObject*> &obj, int dt);
 	~MorningStar(void);
 };

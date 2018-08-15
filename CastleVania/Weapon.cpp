@@ -57,11 +57,21 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 		GameObject* other = (*it);
 
 		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
-		
-		if (other->type = ObjectType::Enemy_Type)
+		if (other->type == ObjectType::Enemy_Type)
 		{
-			other->ReceiveDamage(this->damage);
+			if (AABBCheck(broadphasebox, boxOther))
+			{
+				ECollisionDirection colDirection;
+				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+				if (collisionTime < 1.0f && collisionTime > 0.0)
+				{
+					other->ReceiveDamage(this->damage);
+					return;
+				}
+			}
 		}
 	}
 }

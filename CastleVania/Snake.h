@@ -8,6 +8,7 @@ class Snake :
 {
 public:
 	
+	bool isGround;
 	int lifeTime;
 
 	Snake();

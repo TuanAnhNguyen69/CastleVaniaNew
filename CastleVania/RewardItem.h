@@ -9,7 +9,9 @@ class RewardItem :
 {
 	EnumID typeReward;
 	int lifeTime;
-
+	bool isGround;
+	GSprite* spriteDrop;
+	GSprite* spriteNull;
 public:
 	RewardItem();
 
@@ -21,6 +23,6 @@ public:
 	void Update(int deltaTime);
 
 	//Va cham, chua dinh nghia
-	void Coliision();
+	void Collision(list<GameObject*> &obj, int dt);
 };
 

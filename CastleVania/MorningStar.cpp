@@ -5,7 +5,7 @@ MorningStar::MorningStar(void) :GameObject()
 	
 }
 
-MorningStar::MorningStar(int posX, int posY, int timeAnimation) : GameObject(posX, posY, id)
+MorningStar::MorningStar(float _x, float _y, int timeAnimation) : GameObject(_x, _y, EnumID::MorningStar_Weapon_ID)
 {
 	isLeft = true;
 	damage = 1;
@@ -72,7 +72,7 @@ Box MorningStar::GetBox()
 		height = 16;
 		break;
 	}
-	return Box(x, y, width, height);
+	return Box(x, y, width, height, vX, vY);
 }
 
 void MorningStar::update(int _posX, int _posY, int deltaTime)
@@ -160,53 +160,59 @@ void MorningStar::UpdateLevel()
 	}
 }
 
-void MorningStar::Collision(list<GameObject*> &obj, int dt){
+void MorningStar::Collision(list<GameObject*> &obj, int dt)
+{
 	list<GameObject*>::reverse_iterator _itBegin;
 	for (_itBegin = obj.rbegin(); _itBegin != obj.rend(); _itBegin++)
 	{
 		GameObject* other = (*_itBegin);
 
-			Box box = this->GetBox();
-			Box boxOther = other->GetBox();
+		Box box = this->GetBox();
+		Box boxOther = other->GetBox();
+		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
+		// edit AABB later
+		if (AABBCheck(box, boxOther) == true)
+		{
 
-			// edit AABB later
-			if (AABBCheck(box, boxOther) == true)
+			ECollisionDirection colDirection;
+			float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
+			if (collisionTime < 1.0f && collisionTime > 0.0)
 			{
-					if ( other->canBeKilled )
+				if (other->type == ObjectType::Enemy_Type)
+				{
+					if (other->id == EnumID::Medusa_ID)
 					{
-						/*if (other->id == EnumID::Medusa_ID)
+						MedusaBoss* ms = (MedusaBoss*)other;
+						if (ms->getUp)
 						{
-							Medusa* qm = (Medusa*)other;
-							if (qm->HasGetUp)
-							{
-								other->ReceiveDamage(damage);
-								if (other->hp <= 0)
-								{
-									point += other->point;
-								}
-							}
-							else
-								qm->getUp();
-						}*/
-						/*else*/
-						if (other->id == EnumID::Breakable_ID) {
-							point += other->point;
-						}
-						else
-						{
-							//other->ReceiveDamage(damage);
-							//if (other->hp <= 0)
+							other->ReceiveDamage(this->damage);
+							if (other->hp <= 0)
 							{
 								point += other->point;
 							}
-							
 						}
-						
+						else
+							ms->getUp = true;
 					}
+					else
+					{
+						other->ReceiveDamage(this->damage);
+						if (other->hp <= 0)
+						{
+							point += other->point;
+						}
+
+					}
+				}
+				if (other->type == ObjectType::Item)
+				{
+					other->isDrop = true;
+				}
 				return;
 			}
 		}
+	}
 }
 
 MorningStar::~MorningStar(void)
