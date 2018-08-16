@@ -9,6 +9,8 @@
 #include "HolyWater.h"
 #include "Fire.h"
 #include "Door.h"
+#include "MovingPlatform.h"
+
 
 /*
 #define AX_GO 0.0004
@@ -136,7 +138,6 @@ public:
 	void Jump();
 	void Attack();
 	void OnAttack(int dt);
-	void onMovingOnStair(int dt);
 
 	//Sub weapon
 	EnumID swID;
@@ -189,8 +190,9 @@ public:
 	void OutStair();
 
 	//Xử lý moving platform
-	//bool isOnMovingPlatform;
-	void OnMovingPlatform(Box _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove);
+	bool isOnMovingPlatform;
+	void OnColideMovingPlatform(MovingPlatform* _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove);
+	MovingPlatform * movingPlatform;
 
 	void KnockBack();
 	int knockBackTime;

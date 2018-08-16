@@ -27,6 +27,7 @@ Simon::Simon(int _x, int _y)
 	standOnStair = false;
 	colStair = false;
 	onTopStair = false;
+	isOnMovingPlatform = false;
 
 	//isOnMovingPlatform = false;
 
@@ -356,6 +357,7 @@ void Simon::Sit()
 	{
 		vX = 0;
 		isSit = true;
+		isOnMovingPlatform = false;
 		action = Action::SimonSit;
 	}
 }
@@ -391,6 +393,10 @@ void Simon::OnAttack(int deltaTime)
 void Simon::Stop()
 {
 	vX = 0;
+	if (isOnMovingPlatform && movingPlatform != NULL) {
+		vX += movingPlatform->vX;
+	}
+
 	switch (action)
 	{
 		case Action::SimonStand:
@@ -502,10 +508,12 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 		}*/
 		this->vY = 0;
 		action = Action::SimonStand;
+		movingPlatform = NULL;
 		isOnBrick = true;
 		upStair = false;
 		onStair = false;
 		timeOnStair = 0;
+		isOnMovingPlatform = false;
 		isKnockedBack = false;
 		canPress = true;
 		isJump = false;
@@ -515,7 +523,7 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 
 	if (colDirection == ECollisionDirection::Colls_Left && !onStair)
 	{
-		if (isJump) {
+		if (isJump || isOnMovingPlatform) {
 			vY = 0;
 			action = Action::SimonStand;
 		}
@@ -527,7 +535,7 @@ void Simon::onCollideBrick(Box other, int dt, ECollisionDirection colDirection, 
 
 	if (colDirection == ECollisionDirection::Colls_Right && !onStair)
 	{
-		if (isJump) {
+		if (isJump || isOnMovingPlatform) {
 			vY = 0;
 			action = Action::SimonStand;
 		}
@@ -624,43 +632,24 @@ float Simon::getStairStartPos() {
 }
 
 
-void Simon::OnMovingPlatform(Box _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove)
+void Simon::OnColideMovingPlatform(MovingPlatform* _boxOther, int dt, ECollisionDirection _colDirection, int _collTime, bool _isMove)
 {
-	//float _compareHeigh = abs((_boxOther.y) - (y+ height));
-	//if (vY < 0 && _compareHeigh < 5)
+
 	if (_colDirection == ECollisionDirection::Colls_Bot)
 	{
+ 		movingPlatform = _boxOther;
 		this->vY = 0;
-		this->y = _boxOther.y + this->height - 2;
+		this->y = _boxOther->y + this->height - 2;
 		isKnockedBack = false;
+		isOnMovingPlatform = true;
 		canPress = true;
 		isJump = false;
 		action = Action::SimonStand;
 		//isOnMovingPlatform = true;
 		g = GRAVITATIONAL;
-		
+		this->vX = _boxOther->vX;
 		return;
 	}
-	/*
-	if (isKnockedBack)
-	{
-		isKnockedBack = false;
-		return;
-	}
-	if (isJump)
-	{
-		action = Action::SimonStand;
-		sprite->SelectIndex(0);
-		isJump = false;
-	}
-	*/
-	if (_isMove && (action == Action::SimonAttack || action == Action::SimonSit || action == Action::SimonStand))
-	{
-		//this->x += _boxOther.vx*15.69;
-		//this->vX = _boxOther.vx;
-		this->x += _boxOther.vx*dt;
-	}
-	
 }
 
 void Simon::KnockBack()
@@ -796,6 +785,8 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 		Box box = this->GetBox();
 		Box boxOther = other->GetBox();
+		box.vx -= boxOther.vx;
+		box.vy -= boxOther.vy;
 		Box broadphasebox = getSweptBroadphaseBox(box, dt);
 
 		if (!isOnMovingPlatform && other->id == EnumID::MovingPlatform_ID) {
@@ -810,7 +801,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
 				if (collisionTime < 1.0f && collisionTime > 0.0) //collisiontime > 0 &&
 				{
-					OnMovingPlatform(boxOther, dt, colDirection, collisionTime, isOnMovingPlatform);
+					OnColideMovingPlatform((MovingPlatform*) other, dt, colDirection, collisionTime, isOnMovingPlatform);
 					//this->x += (other->vX)*15;
 					//this->vX = other->vX;
 				}

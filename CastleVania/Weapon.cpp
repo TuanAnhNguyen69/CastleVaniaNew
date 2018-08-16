@@ -69,7 +69,7 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 				{
 					ECollisionDirection colDirection;
 					float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-					if (collisionTime < 0.8f && collisionTime > 0.0)
+					if (collisionTime < 1.0f && collisionTime > 0.0)
 					{
 						other->ReceiveDamage(this->damage);
 						return;

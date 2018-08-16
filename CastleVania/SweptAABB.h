@@ -82,8 +82,8 @@ inline float sweptAABB(const Box& b1, const Box& b2, ECollisionDirection& result
 	}
 	if (b1.vy < 0.0f)
 	{
-		yInvEntry = (b1.y - b1.h) - b2.y;
-		yInvExit = (b2.y - b2.h) - (b1.y - b1.h);
+ 		yInvEntry = (b1.y - b1.h) - b2.y;
+		yInvExit = (b2.y - b2.h) - (b1.y);
 	}
 	else
 	{

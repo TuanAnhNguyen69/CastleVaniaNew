@@ -65,7 +65,7 @@ void SceneGame::LoadLevel(int level)
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
 	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1.4OBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
 
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
