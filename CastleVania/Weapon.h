@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "GSprite.h"
 #include "GTexture.h"
+#include "MedusaBoss.h"
 #include <vector>
 
 class Weapon :

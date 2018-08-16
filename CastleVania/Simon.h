@@ -112,6 +112,8 @@ protected:
 	//Gia toc trong truong
 	float g;
 
+	bool isPickUpSpiritBall;
+
 public:
 	Simon();
 	~Simon();
@@ -140,12 +142,13 @@ public:
 	void OnAttack(int dt);
 
 	//Sub weapon
-	EnumID swID;
 	list<Weapon*> *sub_weapon;			//danh sách các đối tượng weapon được tạo ra khi dùng
 	void UseBoomerang();
 	void UseKnife();
 	void UseAxe();
 	void UseHolyWater();
+	void UseWeapon();
+	void OnUseWeapon(int dt);
 
 	//Stair
 	bool onTopStair;

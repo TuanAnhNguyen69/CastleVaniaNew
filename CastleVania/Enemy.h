@@ -9,8 +9,9 @@ public:
 	//virtual void Update(int dt);
 	virtual void Draw(GCamera *camera);
 	virtual void Collision(list<GameObject*> &obj, int dt);
+	//virtual void ColliSimon(GameObject* simon, int dt);
 
-	virtual void ReceiveDamage(int damage);
+	//virtual void ReceiveDamage(int damage);
 	virtual void Pause();
 
 	virtual void SetActive(float _xSimon, float _ySimon);

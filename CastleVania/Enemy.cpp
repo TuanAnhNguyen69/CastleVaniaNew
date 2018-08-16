@@ -10,6 +10,7 @@ Enemy::Enemy() : ActiveObject()
 Enemy::Enemy(float _x, float _y, float _vX, float _vY, EnumID _id) :
 	ActiveObject(_x, _y, _vX, _vY, _id) 
 {
+	damage = 0;
 	type = ObjectType::Enemy_Type;
 }
 
@@ -52,6 +53,7 @@ void Enemy::SetActive(float _xSimon, float _ySimon)
 
 }
 
+/*
 void Enemy::ReceiveDamage(int _damage)
 {
 	if (hp > 0) {
@@ -65,6 +67,7 @@ void Enemy::ReceiveDamage(int _damage)
 	}
 		
 }
+*/
 
 void Enemy::Pause()
 {

@@ -18,7 +18,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
     <SccProvider>SAK</SccProvider>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -127,6 +127,7 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SpearGuard.cpp" />
+    <ClCompile Include="SpiritBall.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="State_1.cpp" />
     <ClCompile Include="Tele.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="SpearGuard.h" />
+    <ClInclude Include="SpiritBall.h" />
     <ClInclude Include="Stair.h" />
     <ClInclude Include="State_1.h" />
     <ClInclude Include="SweptAABB.h" />

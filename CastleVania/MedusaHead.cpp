@@ -17,6 +17,7 @@ MedusaHead::MedusaHead(float _x, float _y)
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
 	sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MedusaHead_ID), 0, 1, 100);
+	fly = false;
 }
 
 MedusaHead::~MedusaHead()
@@ -50,8 +51,21 @@ void MedusaHead::Draw(GCamera* camera)
 
 void MedusaHead::Update(int dt)
 {
-	MovePath(dt);
+	if(fly)
+		MovePath(dt);
 	sprite->Update(dt);
+}
+
+void MedusaHead::SetActive(float _xSimon, float _ySimon)
+{
+	if (abs(x - _xSimon) <= 200 && abs(y - _ySimon) <= 150)
+	{
+		fly = true;
+		if (x - _xSimon > 0)
+			vX = -MEDUSAHEAD_SPEED;
+		else
+			vX = MEDUSAHEAD_SPEED;
+	}
 }
 
 void MedusaHead::Collision()

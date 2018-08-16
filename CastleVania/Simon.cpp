@@ -9,7 +9,7 @@ Simon::Simon():Enemy()
 Simon::Simon(int _x, int _y) 
 	: Enemy(_x, _y, 0, -SPEED_Y, EnumID::Simon_ID)
 {
-	hp = 10;
+	hp = 20;
 	action = Action::SimonStand;
 	score = 10;
 	g = GRAVITATIONAL;
@@ -30,17 +30,16 @@ Simon::Simon(int _x, int _y)
 	isOnMovingPlatform = false;
 
 	//isOnMovingPlatform = false;
-
+	isPickUpSpiritBall = false;
 	canPress = true;
 	timeOnStair = 0;
 	knockBackTime = 0;
 	type = ObjectType::None;
 
 	sub_weapon = new list<Weapon*>();
-	swID = EnumID::None_ID;
 	live = 10;
 	weaponCount = 10;
-	weaponID = EnumID::Boomerang_ID;
+	weaponID = EnumID::None_ID;
 	morningStar = new MorningStar(x, y, 42);
 
 	doorDirection = NoneDoor;
@@ -105,6 +104,23 @@ void Simon::Draw(GCamera* camera)
 	case SimonJump:
 		sprite = simonJump;
 		break;
+	case SimonUseWeapon:
+		if (isSit) {
+			sprite = simonSitAttack;
+		}
+		else if (onStair) {
+			if (upStair) {
+				sprite = simonAttackUpStair;
+			}
+			else if (!upStair) {
+				sprite = simonAttackDownStair;
+			}
+		}
+		else {
+			sprite = simonAttack;
+		}
+		break;
+
 	case SimonAttack:
 		if (isSit) {
 			sprite = simonSitAttack;
@@ -177,6 +193,10 @@ void Simon::Update(int deltaTime)
 
 	switch (action)
 	{
+	case Action::SimonUseWeapon:
+		OnUseWeapon(deltaTime);
+		sprite->Update(deltaTime);
+		break;
 	case Action::SimonAttack:
 		this->OnAttack(deltaTime);
 		break;
@@ -390,17 +410,35 @@ void Simon::OnAttack(int deltaTime)
 	morningStar->update(box.x, box.y, deltaTime);
 }
 
+void Simon::OnUseWeapon(int dt)
+{
+	if (isSit && simonSitAttack->GetIndex() >= 17)
+	{
+		action = Action::SimonSit;
+		sprite->Reset();
+		morningStar->resetSprite();
+	}
+	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23) || (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20) || (!isSit && simonAttack->GetIndex() >= 7)) {
+		action = Action::SimonStand;
+		sprite->Reset();
+		morningStar->resetSprite();
+	}
+	isAttack = true;
+	sprite->Update(dt);
+	Box box = this->GetBox();
+}
+
 void Simon::Stop()
 {
 	vX = 0;
 	if (isOnMovingPlatform && movingPlatform != NULL) {
 		vX += movingPlatform->vX;
 	}
-
 	switch (action)
 	{
 		case Action::SimonStand:
 		case Action::SimonAttack:
+		case Action::SimonUseWeapon:
 		case Action::SimonFall:
 		case Action::SimonJump:
 			return;
@@ -899,15 +937,18 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 						weaponID = EnumID::Knife_ID;
 						other->Remove();
 						break;
+					case EnumID::SpiritBall_ID:
+						hp = 20;
+						isPickUpSpiritBall = true;
+						break;
 					default:
 						break;
-					}
-
-					if (other->type == ObjectType::Enemy_Type)
-					{
-						this->ReceiveDamage((other)->damage);
-						KnockBack();
-					}
+					}	
+				}
+				if (other->type == ObjectType::Enemy_Type)
+				{
+					this->ReceiveDamage(other->damage);
+					KnockBack();
 				}
 
 				if (other->type == ObjectType::Item)
@@ -956,4 +997,32 @@ void Simon::UseAxe()
 void Simon::UseHolyWater()
 {
 	sub_weapon->push_back(new HolyWater(x, y - 13, vLast));
+}
+
+void Simon::UseWeapon()
+{
+	if (weaponID == EnumID::None_ID)
+		return;
+	if (action == Action::SimonUseWeapon || !canPress)
+		return;
+	if (!isJump)
+		vX = 0;
+	action = Action::SimonUseWeapon;
+	switch (weaponID)
+	{
+	case EnumID::Axe_Weapon_ID:
+		UseAxe();
+		break;
+	case EnumID::Boomerang_Weapon_ID:
+		UseBoomerang();
+		break;
+	case EnumID::HolyWater_Weapon_ID:
+		UseHolyWater();
+		break;
+	case EnumID::Knife_Weapon_ID:
+		UseKnife();
+		break;
+	default:
+		break;
+	}
 }

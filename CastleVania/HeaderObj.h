@@ -28,6 +28,7 @@
 
 // Item
 #include "RewardItem.h"
+#include "SpiritBall.h"
 
 // Weapon
 #include "Weapon.h"

@@ -8,9 +8,11 @@ class MedusaBoss :
 	public Enemy
 {
 public:
+
+	float x0;
 	bool getUp;
 	int reloadTime;
-
+	int lifeTime;
 	GSprite* spriteSleep;
 	GSprite* spriteAttack;
 

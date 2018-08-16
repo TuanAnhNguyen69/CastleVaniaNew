@@ -129,7 +129,8 @@ enum Action
 	SimonUpStair,
 	SimonDownStair,
 	SimonDead,
-	SimonHit
+	SimonHit,
+	SimonUseWeapon,
 };
 
 enum ECollisionDirection

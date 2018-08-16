@@ -8,7 +8,7 @@ MedusaBoss::MedusaBoss() : Enemy()
 {
 }
 
-MedusaBoss::MedusaBoss(float _x, float _y) :  Enemy(_x, _y, MEDUSA_SPEED, 0, EnumID::Bat_ID)
+MedusaBoss::MedusaBoss(float _x, float _y) :  Enemy(_x, _y, MEDUSA_SPEED, 0, EnumID::Medusa_ID)
 {
 	damage = 2;
 	hp = 20;
@@ -16,14 +16,14 @@ MedusaBoss::MedusaBoss(float _x, float _y) :  Enemy(_x, _y, MEDUSA_SPEED, 0, Enu
 	active = true;
 	canBeKilled = true;
 	type = ObjectType::Enemy_Type;
-	getUp = true;
+	getUp = false;
 	spriteSleep = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Medusa_ID), 4, 4, 100);
 	spriteAttack = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Medusa_ID), 0, 3, 100);
 
-	sprite = spriteSleep;
-
+	//sprite = spriteSleep;
+	x0 = _x;
 	isLeft = false;
-
+	lifeTime = 0;
 	listSnake = new list<ActiveObject*>();
 	reloadTime = 0;
 }
@@ -81,11 +81,20 @@ void MedusaBoss::Draw(GCamera * camera)
 
 void MedusaBoss::Update(int dt)
 {
-
+	
+	
 }
 
 void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 {
+	/*
+	lifeTime += dt;
+	if (lifeTime > 500)
+	{
+		this->isDeath = true;
+		this->active = false;
+	}
+	*/
 	if (active)
 	{
 		if (getUp)
@@ -102,10 +111,10 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 			{
 				isLeft = true;
 			}
-				
-			if (abs(x - _xSimon) > 161)
+			
+			if (abs(x - x0) > 180)
 				vX = -vX;
-
+			
 			if (_ySimon > y)
 				vY = 0.2;
 			else
@@ -122,6 +131,8 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 
 			UpdateSnake(dt);
 		}
+		else
+			sprite = spriteSleep;
 	}
 	
 
@@ -152,6 +163,12 @@ void MedusaBoss::Collision(list<GameObject*> &obj, int dt)
 					{
 						this->vX = - this->vX;
 						//this->active = false;
+					}
+					if (colDirection == ECollisionDirection::Colls_Bot)
+					{
+						this->y = other->y + this->height;
+						vY = 1;
+						return;
 					}
 				}
 			}

@@ -12,12 +12,11 @@ Snake::Snake(float _x, float _y, float _direction)
 	: Enemy(_x, _y, 0, 0, EnumID::Snake_ID)
 {
 	hp = 1;
-	damage = 1;
+	damage = 2;
 
 	lifeTime = 0;
 	active = true;
 	canBeKilled = true;
-	damage = 4;
 	type = ObjectType::Enemy_Type;
 	if (_direction > 0)
 		vX = SNAKE_SPEED;

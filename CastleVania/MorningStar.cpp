@@ -205,7 +205,7 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 			// edit AABB later
 			if (AABBCheck(box, boxOther))
 			{
-				if (other->canBeKilled)
+				//if (other->canBeKilled)
 				{
 					if (other->type == ObjectType::Enemy_Type)
 					{
@@ -230,17 +230,23 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 							if (other->hp <= 0)
 							{
 								point += other->point;
-								other->active = false;
+								//other->active = false;
 							}
 
 						}
 					}
-					if (other->type == ObjectType::Item)
+					if (other->id == Candle_ID)
 					{
-						other->isDrop = true;
+						other->Remove();
 					}
 					return;
 				}
+				if (other->type == ObjectType::Item)
+				{
+					other->isDrop = true;
+					//return;
+				}
+				
 			}
 		}
 	}

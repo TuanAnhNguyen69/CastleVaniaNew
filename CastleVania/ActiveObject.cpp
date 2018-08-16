@@ -23,6 +23,7 @@ ActiveObject::ActiveObject(float _x, float _y, float _vX, float _vY, EnumID id) 
 	vY = _vY;
 	canMove = true;
 	active = true;
+	//damage = 0;
 }
 
 ActiveObject::~ActiveObject()

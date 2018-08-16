@@ -11,6 +11,7 @@ class MedusaHead :
 	public Enemy
 {
 public:
+	bool fly;
 	MedusaHead();
 	MedusaHead(float _x, float _y);
 	~MedusaHead();
@@ -18,6 +19,7 @@ public:
 	void MovePath(int dt);
 	void Draw(GCamera* camera);
 	void Update(int dt);
+	void SetActive(float _x_Simon, float _y_Simon);
 
 	//Va cham, chua dinh nghia
 	void Collision();

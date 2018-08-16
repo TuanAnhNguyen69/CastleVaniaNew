@@ -37,8 +37,8 @@ void RewardItem::Update(int deltaTime)
 		if (lifeTime > 1500)
 			this->Remove();
 	}
-	//else
-		//sprite = NULL;
+	else
+		sprite = NULL;
 	if (isGround)
 		vY = 0;
 	if (sprite == NULL)

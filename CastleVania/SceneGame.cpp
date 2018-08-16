@@ -65,7 +65,9 @@ void SceneGame::LoadLevel(int level)
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
 	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
-	qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
 
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 }
@@ -342,6 +344,10 @@ void SceneGame::OnKeyDown(int KeyCode) {
 		break;
 	case DIK_Q:
 		player->UpGradeMorningStar();
+		break;
+	case DIK_L:
+		player->UseWeapon();
+		break;
 	case DIK_1:
 		player->UseBoomerang();
 		break;

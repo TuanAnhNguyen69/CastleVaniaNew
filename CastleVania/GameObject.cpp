@@ -19,13 +19,11 @@ GameObject::GameObject(float _x, float _y, EnumID _id)
 	vX = 0;
 	vY = 0;
 	id = _id;
-
 	isDrop = false;
-	hp = 1;
-	point = 1;
 	type = ObjectType::None;
 	canMove = false;
 	active = true;
+	//damage = 0;
 
 	CreateSprite();
 	if (sprite != NULL)
@@ -99,6 +97,9 @@ void GameObject::CreateSprite()
 	case EnumID::Snake_ID:
 		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 16);
 		break;
+	case EnumID::SpiritBall_ID:
+		sprite = new GSprite(TextureManager::getInstance()->getTexture(id), 50);
+		break;
 	case EnumID::Cross_ID:
 	case EnumID::BigHeart_ID:
 	case EnumID::SmallHeart_ID:
@@ -138,9 +139,12 @@ void GameObject::Draw(GCamera* camera)
 
 void GameObject::ReceiveDamage(int _damage)
 {
-	hp -= damage;
-	if (hp <= 0) {
+	if (hp > 0)
+		hp -= _damage;
+	if (hp <= 0)
+	{
 		this->active = false;
+		isDeath = true;
 	}
 }
 

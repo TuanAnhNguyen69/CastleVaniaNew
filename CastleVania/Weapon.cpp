@@ -67,12 +67,30 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 			{
 				if (AABBCheck(broadphasebox, boxOther))
 				{
-					ECollisionDirection colDirection;
-					float collisionTime = sweptAABB(box, boxOther, colDirection, dt);
-					if (collisionTime < 1.0f && collisionTime > 0.0)
+					if (other->id == EnumID::Medusa_ID)
+					{
+						MedusaBoss* ms = (MedusaBoss*)other;
+						if (ms->getUp)
+						{
+							other->ReceiveDamage(this->damage);
+							if (other->hp <= 0)
+							{
+								point += other->point;
+							}
+						}
+						else {
+							ms->getUp = true;
+						}
+					}
+					else
 					{
 						other->ReceiveDamage(this->damage);
-						return;
+						if (other->hp <= 0)
+						{
+							point += other->point;
+							//other->active = false;
+						}
+
 					}
 				}
 			}

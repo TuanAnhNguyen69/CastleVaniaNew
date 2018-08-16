@@ -158,13 +158,17 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 			case EnumID::MorningStar_ID:
 			case EnumID::PorkChop_ID:
 			case EnumID::SmallHeart_ID:
-			case EnumID::SpiritBall_ID:
 			case EnumID::TreasureChest_ID:
 				objects->push_back(new RewardItem(posX, posY, static_cast<EnumID>(id)));
 				break;
 			case EnumID::StopWatch_ID:
 				objects->push_back(new RewardItem(posX, posY, static_cast<EnumID>(id)));
 				break;
+				/*
+			case EnumID::SpiritBall_ID:
+				objects->push_back(new SpiritBall(posX, posY));
+				break;
+				*/
 			}
 		}
 	}
@@ -212,6 +216,19 @@ void ObjectsManager::Update(int deltaTime)
 	list<GameObject*>::iterator it = objects->begin();
 	while (it != objects->end())
 	{	
+		/*
+		if ((*it)->id == EnumID::Medusa_ID)
+		{
+			if (((MedusaBoss*)*it)->active == false)
+			{
+				objects->push_back(new SpiritBall((*it)->x, (*it)->y));
+				objects->erase(it++);
+			}
+			else 
+				++it;
+		}
+		*/
+		
 		{
 			(*it)->Update(deltaTime);
 			++it;
@@ -225,6 +242,21 @@ void ObjectsManager::Update(Simon* simon, int deltaTime)
 	list<GameObject*>::iterator it = objects->begin();
 	while (it != objects->end())
 	{
+		
+		if ((*it)->id == EnumID::Medusa_ID)
+		{
+			if (((MedusaBoss*)*it)->active == false)
+			{
+				for (list<GameObject*>::iterator sprBall = objects->begin(); sprBall != objects->end(); sprBall++)
+				{
+					if ((*sprBall)->id == EnumID::SpiritBall_ID)
+						(*sprBall)->active = true;
+				}
+			}
+			else
+				++it;
+		}
+		else
 		{
 			(*it)->Update(deltaTime);
 			++it;

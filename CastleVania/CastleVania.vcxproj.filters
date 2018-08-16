@@ -152,6 +152,9 @@
     <ClCompile Include="MedusaBoss.cpp">
       <Filter>Objects\Bosses</Filter>
     </ClCompile>
+    <ClCompile Include="SpiritBall.cpp">
+      <Filter>Objects\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="MedusaBoss.h">
       <Filter>Objects\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="SpiritBall.h">
+      <Filter>Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
