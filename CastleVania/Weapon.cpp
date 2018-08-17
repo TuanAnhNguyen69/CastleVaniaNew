@@ -77,6 +77,7 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 							{
 								point += other->point;
 							}
+							Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 						}
 						else {
 							ms->getUp = true;
@@ -90,7 +91,7 @@ void Weapon::Collision(list<GameObject*> &obj, int dt)
 							point += other->point;
 							//other->active = false;
 						}
-
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 					}
 				}
 			}

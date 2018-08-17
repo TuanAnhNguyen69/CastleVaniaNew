@@ -28,6 +28,7 @@ Simon::Simon(int _x, int _y)
 	colStair = false;
 	onTopStair = false;
 	isOnMovingPlatform = false;
+	immuteTime = 0;
 
 	//isOnMovingPlatform = false;
 	isPickUpSpiritBall = false;
@@ -39,8 +40,10 @@ Simon::Simon(int _x, int _y)
 	sub_weapon = new list<Weapon*>();
 	live = 10;
 	weaponCount = 10;
-	weaponID = EnumID::None_ID;
+	weaponID = EnumID::HolyWater_Weapon_ID;
 	morningStar = new MorningStar(x, y, 42);
+
+	isUseCross = false;
 
 	doorDirection = NoneDoor;
 
@@ -167,6 +170,9 @@ void Simon::Draw(GCamera* camera)
 		break;
 	}
 
+	if (isDeath)
+		simonDeath->Draw(pos.x, pos.y);
+
 	if (!isLeft) {
 		sprite->DrawFlipX(pos.x, pos.y);
 	}
@@ -191,6 +197,9 @@ void Simon::Update(int deltaTime)
 		}
 	}
 
+	if (immuteTime > 0) {
+		immuteTime--;
+	}
 	switch (action)
 	{
 	case Action::SimonUseWeapon:
@@ -389,10 +398,16 @@ void Simon::Attack()
 	if (!isJump)
 		vX = 0;
 	action = Action::SimonAttack;
+	//Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
+	Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
 }
 
 void Simon::OnAttack(int deltaTime)
 {
+	if (isKnockedBack) {
+		return;
+	}
+
 	if (isSit && simonSitAttack->GetIndex() >= 17)
 	{
 		action = Action::SimonSit;
@@ -403,7 +418,8 @@ void Simon::OnAttack(int deltaTime)
 	}
 	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23)
 		|| (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20)
-		|| (!isSit && simonAttack->GetIndex() >= 7)) {
+		|| (isJump && simonAttack->GetIndex() >= 7)
+		|| (simonAttack->GetIndex() >= 7)) {
 
 		action = Action::SimonStand;
 		isAttack = false;
@@ -425,7 +441,9 @@ void Simon::OnUseWeapon(int dt)
 		sprite->Reset();
 		morningStar->resetSprite();
 	}
-	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23) || (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20) || (!isSit && simonAttack->GetIndex() >= 7)) {
+	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23)
+		|| (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20)
+		|| (!isSit && simonAttack->GetIndex() >= 7)) {
 		action = Action::SimonStand;
 		sprite->Reset();
 		morningStar->resetSprite();
@@ -487,7 +505,7 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 	else
 	{
 		rangeMove += AUTO_MOVE_RANGE;
-		y -= AUTO_MOVE_RANGE;
+		x -= AUTO_MOVE_RANGE;
 	}
 	sprite->Update(dt);
 	return false;
@@ -495,10 +513,10 @@ bool Simon::AutoMove(int &rangeMove, int dt)
 
 void Simon::onCollideDoor(Door * obj, ECollisionDirection direction, float collisionTime, int dt)
 {
-	/*
+	
 	door = obj;
 	door->animating = true;
-	*/
+	
 
 	if (obj->id == EnumID::Tele_ID) {
 		if (direction == ECollisionDirection::Colls_Top) {
@@ -703,6 +721,11 @@ void Simon::KnockBack()
 		return;
 	}
 
+	if (isAttack) {
+		morningStar->resetSprite();
+		isAttack = false;
+	}
+
 	if (isLeft) {
 		vX = SPEED_X;
 	}
@@ -712,6 +735,7 @@ void Simon::KnockBack()
 	g = -GRAVITATIONAL;
 	vY = sqrt(-2 * g * MAX_HEIGHT_KNOCKBACK);
 	action = Action::SimonHit;
+	immuteTime = 30;
 	isKnockedBack = true;
 }
 
@@ -948,20 +972,25 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					case EnumID::SpiritBall_ID:
 						hp = 20;
 						isPickUpSpiritBall = true;
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::ESpiritBallSound);
 						break;
+					case EnumID::Cross_ID:
+						isUseCross = true;
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::ECrossSound);
 					default:
 						break;
 					}	
 				}
-				if (other->type == ObjectType::Enemy_Type)
+				if (other->type == ObjectType::Enemy_Type && immuteTime == 0)
 				{
 					this->ReceiveDamage(other->damage);
 					KnockBack();
+					Sound::GetInstance()->PlayEffectSound(EEffectSound::EHurtedSound);
 				}
 
 				if (other->type == ObjectType::Item)
 				{
-					other->isDrop = true;
+					Sound::GetInstance()->PlayEffectSound(EEffectSound::ECollectItemSound);
 				}
 			}
 		}	
@@ -973,9 +1002,20 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 }
 
-void Simon::Die()
+void Simon::Die(int &time)
 {
-
+	if (isDeath)
+	{
+		canPress = false;
+		time -= 1;
+		simonDeath->SelectIndex(0);
+		if (time == 0)
+		{
+			canPress = true;
+			isRevival = true;
+		}
+		Sound::GetInstance()->PlayEffectSound(EEffectSound::EDeathSound);
+	}
 }
 
 void Simon::fall()
@@ -1033,4 +1073,5 @@ void Simon::UseWeapon()
 	default:
 		break;
 	}
+	Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
 }

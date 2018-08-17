@@ -10,7 +10,6 @@ Enemy::Enemy() : ActiveObject()
 Enemy::Enemy(float _x, float _y, float _vX, float _vY, EnumID _id) :
 	ActiveObject(_x, _y, _vX, _vY, _id) 
 {
-	damage = 0;
 	type = ObjectType::Enemy_Type;
 }
 

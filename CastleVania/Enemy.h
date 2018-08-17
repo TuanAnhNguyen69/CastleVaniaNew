@@ -4,8 +4,6 @@ class Enemy :
 	public ActiveObject
 {
 public:
-	int damage;
-
 	//virtual void Update(int dt);
 	virtual void Draw(GCamera *camera);
 	virtual void Collision(list<GameObject*> &obj, int dt);

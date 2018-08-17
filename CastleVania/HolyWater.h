@@ -1,6 +1,6 @@
 #pragma once
 #include "Weapon.h"
-
+#include "Sound.h"
 #define HOLYWATER_ALPHA 45
 #define HOLYWATER_SPEED 0.5
 #define G 0.01f

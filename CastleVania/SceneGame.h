@@ -28,6 +28,8 @@ protected:
 	GCamera *camera;
 	Simon* player;
 	
+	Sound* sound;
+
 	bool beginMoveCamera;
 
 	// Score

@@ -19,6 +19,7 @@ public:
 	int damage;
 	int drawX;
 	int drawY;
+	int curentIndex;
 
 	GSprite* lv1;
 	GSprite* lv2;

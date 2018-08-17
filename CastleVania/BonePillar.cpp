@@ -10,8 +10,8 @@ BonePillar::BonePillar(float _x, float _y, bool _isLeft) : Enemy(_x, _y, 0, 0, E
 {
 	listFire = new list<ActiveObject*>();
 	type = ObjectType::Enemy_Type;
-	hp = 6;
-	damage = 2;
+	hp = 8;
+	damage = 0;
 	point = 400;
 	active = true;
 	reloadTime = 0;

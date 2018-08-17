@@ -10,6 +10,7 @@
 #include "Fire.h"
 #include "Door.h"
 #include "MovingPlatform.h"
+#include "Sound.h"
 
 
 /*
@@ -30,7 +31,7 @@
 
 #define SPEED_X 0.4f
 #define SPEED_Y 0.4f
-#define MAX_HEIGHT 70.0f
+#define MAX_HEIGHT 60.0f
 #define GRAVITATIONAL 0.02f			//gia toc trong truong
 
 #define MAX_HEIGHT_KNOCKBACK 32.0f
@@ -111,6 +112,8 @@ protected:
 
 	//Gia toc trong truong
 	float g;
+
+	bool isUseCross;
 
 	bool isPickUpSpiritBall;
 
@@ -204,7 +207,10 @@ public:
 	EDoorDirection GetDirectDoor();
 
 	void UpGradeMorningStar();
-	void Die();
+	void Die(int &time);
+	bool isRevival;
+	int immuteTime;
+
 	void fall();
 };
 

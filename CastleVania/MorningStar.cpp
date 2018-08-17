@@ -10,7 +10,7 @@ MorningStar::MorningStar(float _x, float _y, int timeAnimation) : GameObject(_x,
 	isLeft = true;
 	damage = 1;
 	level = 1;
-	damage = 1;
+	curentIndex = 0;
 	lv1 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 0, 2, timeAnimation);
 	lv2 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 3, 5, timeAnimation);
 	lv3 = new GSprite(TextureManager::getInstance()->getTexture(EnumID::MorningStar_Weapon_ID), 6, 14, timeAnimation / 3);
@@ -52,11 +52,11 @@ Box MorningStar::GetBox()
 	if (currentState < 0 || currentState > 8)
 		return Box(0, 0, 0, 0);
 	float width, height;
-	int morningState = this->sprite->GetIndex();
+	int morningState = curentIndex % 3;
 	int posX, posY;
 	int lv3Length = 0;
 	if (level == 3) {
-		if (morningState <= 8) {
+		if (curentIndex <= 8) {
 			morningState = 0;
 		}
 		else if (morningState >= 12) {
@@ -65,11 +65,10 @@ Box MorningStar::GetBox()
 		else {
 			morningState = 1;
 		}
-		lv3Length = 5;
+		lv3Length = 50;
 	}
-
 	posX = x;
-	switch (morningState % 3)
+ 	switch (morningState % 3)
 	{
 	case 0:
 		width = 16;
@@ -81,7 +80,7 @@ Box MorningStar::GetBox()
 		break;
 	case 2:
 		width = 42 + lv3Length;
-		height = 16;
+		height = 32;
 		if (!isLeft) {
 			posX = x + 32;
 		}
@@ -103,6 +102,7 @@ void MorningStar::update(int _posX, int _posY, int deltaTime)
 	float morningStarX = 0;
 	float morningStarY = 0;
 	int morningState = this->sprite->GetIndex();
+	curentIndex = this->sprite->GetIndex();
 	if (level == 3) {
 		if (morningState <= 8) {
 			morningState = 0;
@@ -170,13 +170,15 @@ void MorningStar::UpdateLevel()
 	{
 	case 1:
 		sprite = lv1;
+		damage = 2;
 		break;
 	case 2:
 		sprite = lv2;
-
+		damage = 4;
 		break;
 	case 3:
 		sprite = lv3;
+		damage = 6;
 		break;
 	default:
 		break;
@@ -197,8 +199,7 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 			box.vy -= boxOther.vy;
 
 			Box broadphasebox = getSweptBroadphaseBox(box, dt);
-
-			if (other->id == SpearGuard_ID) {
+			if (box.w > 42) {
 				int a = 0;
 			}
 
@@ -219,6 +220,8 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 								{
 									point += other->point;
 								}
+								//sound->PlayEffectSound(EEffectSound::EHitSound);
+								Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 							}
 							else {
 								ms->getUp = true;
@@ -232,12 +235,13 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 								point += other->point;
 								//other->active = false;
 							}
-
+							Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 						}
 					}
 					if (other->id == Candle_ID)
 					{
 						other->Remove();
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 					}
 					return;
 				}

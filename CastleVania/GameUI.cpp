@@ -6,9 +6,12 @@ void GameUI::_initialize()
 	// init weaponSprite
 	// _currentWeapon dùng để vẽ hình weapon trên UI thôi
 	weapons = vector<GSprite*>();
+	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Knife_ID), 1));
 	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Boomerang_ID), 1));
-	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::StopWatch_ID), 1));
-
+	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Axe_ID), 1));
+	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::HolyWater_ID), 1));
+	 
+	_currentWeapon = 3;
 	// init hp sprite
 	_hpSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::HP_ID), 1);
 
@@ -58,15 +61,17 @@ void GameUI::drawScore()
 	_arial->render("Score", 5, 0);
 	_arial->render(_playerScore, 100, 0);
 	_arial->render("TIME", 230, 0);
-	_arial->render(_gameTimer / 1000, 310, 0);
+	_arial->render(_gameTimer / 333, 310, 0);
 	_arial->render("STAGE", 400, 0);
 	_arial->render(_gameStage, 490, 0);
 	_arial->render("PLAYER", 5, 20);
 	_arial->render("ENEMY", 5, 40);
 
 
-
+	_arial->render(_liveCount, 420, 30);
+	_arial->render(_weaponCount, 430, 50);
 	//_arial->render("PASS GAME :))", 5, 60);
+	/*
 	_arial->render("viewport.x: ", 5, 60);
 	_arial->render(_viewPortX, 100, 60);
 
@@ -79,8 +84,7 @@ void GameUI::drawScore()
 	_arial->render(_playerY, 240, 60);
 
 
-	_arial->render(_liveCount, 420, 30);
-	_arial->render(_weaponCount, 430, 50);
+	
 
 	_arial->render("VX: ", 150, 80);
 	_arial->render(_playerVX, 250, 80);
@@ -91,16 +95,17 @@ void GameUI::drawScore()
 	//_arial->render("onstair: ", 290, 80);
 	_arial->render(_onstair, 390, 100);
 	_arial->render(_checkCameraHaft, 100, 100);
+	*/
 }
 
 void GameUI::initTimer(int deltaTime_)
 {
-	_gameTimer = deltaTime_ * 1000;
+	_gameTimer = deltaTime_ * 333;
 }
 
 int GameUI::getTimer()
 {
-	return _gameTimer / 1000;
+	return _gameTimer / 333;
 }
 
 void GameUI::SetTimer(int x)
@@ -148,11 +153,16 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 
 	switch (weaponID_)
 	{
-
-	case Boomerang_ID:
+	case EnumID::Knife_ID:
+		_currentWeapon = 0;
+		break;
+	case EnumID::Boomerang_ID:
 		_currentWeapon = 1;
 		break;
-	case StopWatch_ID:
+	case EnumID::Axe_ID:
+		_currentWeapon = 2;
+		break;
+	case EnumID::HolyWater_ID:
 		_currentWeapon = 3;
 		break;
 	default:
@@ -186,11 +196,17 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 	_viewPortX = viewPortX;
 	switch (weaponID_)
 	{
-		/*case Watch_ID:
+	case EnumID::Knife_ID:
 		_currentWeapon = 0;
-		break;*/
-	case Boomerang_ID:
+		break;
+	case EnumID::Boomerang_ID:
 		_currentWeapon = 1;
+		break;
+	case EnumID::Axe_ID:
+		_currentWeapon = 2;
+		break;
+	case EnumID::HolyWater_ID:
+		_currentWeapon = 3;
 		break;
 	default:
 		_currentWeapon = -1;
@@ -233,15 +249,18 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 	else _onstair = 0;
 	switch (weaponID_)
 	{
-
-
-	case Boomerang_ID:
+	case EnumID::Knife_ID:
+		_currentWeapon = 0;
+		break;
+	case EnumID::Boomerang_ID:
 		_currentWeapon = 1;
 		break;
-	case StopWatch_ID:
+	case EnumID::Axe_ID:
+		_currentWeapon = 2;
+		break;
+	case EnumID::HolyWater_ID:
 		_currentWeapon = 3;
 		break;
-
 	default:
 		_currentWeapon = -1;
 		break;
