@@ -219,7 +219,8 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 								{
 									point += other->point;
 								}
-								sound->PlayEffectSound(EEffectSound::EHitSound);
+								//sound->PlayEffectSound(EEffectSound::EHitSound);
+								Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 							}
 							else {
 								ms->getUp = true;
@@ -233,13 +234,13 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 								point += other->point;
 								//other->active = false;
 							}
-							sound->PlayEffectSound(EEffectSound::EHitSound);
+							Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 						}
 					}
 					if (other->id == Candle_ID)
 					{
 						other->Remove();
-						sound->PlayEffectSound(EEffectSound::EHitSound);
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 					}
 					return;
 				}

@@ -12,7 +12,7 @@ Snake::Snake(float _x, float _y, float _direction)
 	: Enemy(_x, _y, 0, 0, EnumID::Snake_ID)
 {
 	hp = 1;
-	damage = 2;
+	damage = 1;
 
 	lifeTime = 0;
 	active = true;
@@ -99,9 +99,9 @@ void Snake::CollSimon(GameObject* simon, int dt)
 	Box broadphasebox = getSweptBroadphaseBox(box, dt);
 	if (AABBCheck(broadphasebox, boxSimon))
 	{
-		ECollisionDirection colDirection;
-		float collisionTime = sweptAABB(box, boxSimon, colDirection, dt);
-		if (collisionTime < 1.0f && collisionTime > 0.0)
+		//ECollisionDirection colDirection;
+		//float collisionTime = sweptAABB(box, boxSimon, colDirection, dt);
+		//if (collisionTime < 1.0f && collisionTime > 0.0)
 		{
 			if (simon->id == EnumID::Simon_ID)
 			{

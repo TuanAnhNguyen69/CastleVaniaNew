@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "Snake.h"
 
-#define MEDUSA_SPEED 0.25f
+#define MEDUSA_SPEED 0.13f
 
 class MedusaBoss :
 	public Enemy

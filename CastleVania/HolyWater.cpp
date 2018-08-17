@@ -96,8 +96,7 @@ void HolyWater::Collision(list<GameObject*> &obj, int dt)
 					this->y = other->y + this->height;
 					//this->y += this->vY * collisionTime * dt;
 					this->vY = 0;
-					sound->PlayEffectSound(EEffectSound::EHolyWaterSound);
-					//Sound::GetInstance()->PlayEffectSound(EEffectSound::EHolyWaterSound);
+					Sound::GetInstance()->PlayEffectSound(EEffectSound::EHolyWaterSound);
 					break;
 				default:
 					break;

@@ -15,7 +15,6 @@ class GameObject
 public:
 	
 	GSprite* sprite;
-	Sound* sound;
 
 	//toa do left top
 	float x;

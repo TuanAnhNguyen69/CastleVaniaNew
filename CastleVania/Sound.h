@@ -62,8 +62,8 @@ private:
 public:
 	Sound();
 	static Sound* GetInstance();
-	bool BGSound_On;
-	bool EffectSound_On;
+	static bool BGSound_On;
+	static bool EffectSound_On;
 
 	void PlayBGSound(EBGSound);
 	void PlayEffectSound(EEffectSound);

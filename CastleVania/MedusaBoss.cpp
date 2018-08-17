@@ -121,7 +121,7 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 				vY = 0;
 
 			reloadTime += dt;
-			if (reloadTime % 30 == 0)
+			if (reloadTime % 60 == 0)
 			{
 				if (isLeft)
 					listSnake->push_back(new Snake(x, y - 30, 1));

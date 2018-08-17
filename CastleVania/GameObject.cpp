@@ -24,7 +24,6 @@ GameObject::GameObject(float _x, float _y, EnumID _id)
 	canMove = false;
 	active = true;
 	//damage = 0;
-	sound = new Sound();
 	CreateSprite();
 	if (sprite != NULL)
 	{

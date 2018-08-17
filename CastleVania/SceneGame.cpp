@@ -64,12 +64,13 @@ void SceneGame::LoadLevel(int level)
 	revivePosition.y = player->y;
 	cameraPosition = camera->viewport;
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
-	gameUI->initTimer(100);
+	gameUI->initTimer(300);
 	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
-	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
-	//qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
-	sound->PlayBGSound(EBGSound::EEndGameSound);
+	//sound->PlayBGSound(EBGSound::ESceneGameSound);
+	Sound::GetInstance()->PlayBGSound(EBGSound::ESceneGameSound);
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 
 

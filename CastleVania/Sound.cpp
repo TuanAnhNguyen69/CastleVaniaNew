@@ -1,13 +1,13 @@
 #include "Sound.h"
 
 Sound* Sound::instance = NULL;
-//bool Sound::BGSound_On = true;
-//bool Sound::EffectSound_On = true;
+bool Sound::BGSound_On = true;
+bool Sound::EffectSound_On = true;
 
 Sound::Sound()
 {
-	BGSound_On = true;
-	EffectSound_On = true;
+	//BGSound_On = true;
+	//EffectSound_On = true;
 
 	audio = new GAudio();
 	audio->Init_DirectSound(G_hWnd);
@@ -18,9 +18,9 @@ Sound::Sound()
 	boss_S = audio->LoadSound("Resource/music/Boss.wav");
 	endGame_S = audio->LoadSound("Resource/music/Game_Over.wav");
 
-	//hit_S = audio->LoadSound("Resource/sound/Title_Theme_Prelude.wav");
+	hit_S = audio->LoadSound("Resource/sound/hit.wav");
 	collect_S = audio->LoadSound("Resource/sound/collectitem.wav");
-	morningStar_S = audio->LoadSound("Resource/sound/hit.wav");
+	morningStar_S = audio->LoadSound("Resource/sound/usingwhip.wav");
 	holyWater_S = audio->LoadSound("Resource/sound/holywater.wav");
 	hurted_S = audio->LoadSound("Resource/sound/hurted.wav");
 	death_S = audio->LoadSound("Resource/sound/death.wav");

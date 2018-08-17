@@ -27,7 +27,7 @@ MedusaHead::~MedusaHead()
 void MedusaHead::MovePath(int dt)
 {
 	x += vX * dt;
-	y = std::sin(x * 0.03) * 3 + y;
+	y = std::sin(x * 0.03) * 3.5 + y;
 }
 
 
@@ -61,10 +61,12 @@ void MedusaHead::SetActive(float _xSimon, float _ySimon)
 	if (abs(x - _xSimon) <= 200 && abs(y - _ySimon) <= 150)
 	{
 		fly = true;
+		/*
 		if (x - _xSimon > 0)
 			vX = -MEDUSAHEAD_SPEED;
 		else
 			vX = MEDUSAHEAD_SPEED;
+		*/
 	}
 }
 

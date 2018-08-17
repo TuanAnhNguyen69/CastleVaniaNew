@@ -395,7 +395,7 @@ void Simon::Attack()
 		vX = 0;
 	action = Action::SimonAttack;
 	//Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
-	sound->PlayEffectSound(EEffectSound::EMorningStarSound);
+	Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
 }
 
 void Simon::OnAttack(int deltaTime)
@@ -947,11 +947,11 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					case EnumID::SpiritBall_ID:
 						hp = 20;
 						isPickUpSpiritBall = true;
-						sound->PlayEffectSound(EEffectSound::ESpiritBallSound);
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::ESpiritBallSound);
 						break;
 					case EnumID::Cross_ID:
 						isUseCross = true;
-						sound->PlayEffectSound(EEffectSound::ECrossSound);
+						Sound::GetInstance()->PlayEffectSound(EEffectSound::ECrossSound);
 					default:
 						break;
 					}	
@@ -960,12 +960,12 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				{
 					this->ReceiveDamage(other->damage);
 					KnockBack();
-					sound->PlayEffectSound(EEffectSound::EHurtedSound);
+					Sound::GetInstance()->PlayEffectSound(EEffectSound::EHurtedSound);
 				}
 
 				if (other->type == ObjectType::Item)
 				{
-					sound->PlayEffectSound(EEffectSound::ECollectItemSound);
+					Sound::GetInstance()->PlayEffectSound(EEffectSound::ECollectItemSound);
 				}
 			}
 		}	
@@ -989,7 +989,7 @@ void Simon::Die(int &time)
 			canPress = true;
 			isRevival = true;
 		}
-		sound->PlayEffectSound(EEffectSound::EDeathSound);
+		Sound::GetInstance()->PlayEffectSound(EEffectSound::EDeathSound);
 	}
 }
 
@@ -1048,5 +1048,5 @@ void Simon::UseWeapon()
 	default:
 		break;
 	}
-	sound->PlayEffectSound(EEffectSound::EMorningStarSound);
+	Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
 }

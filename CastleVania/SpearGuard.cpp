@@ -10,7 +10,7 @@ SpearGuard::SpearGuard(float _x, float _y)
 	: Enemy(_x, _y, SPEARGUARD_SPEED, 0, EnumID::SpearGuard_ID)
 {
 	active = true;
-	hp = 1;
+	hp = 6;
 	damage = 2;
 	point = 400;
 	canBeKilled = true;
