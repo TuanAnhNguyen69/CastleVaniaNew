@@ -53,6 +53,7 @@ void BonePillar::Update(int dt)
 {
 	if(active)
 	{
+		Dying(dt);
 		reloadTime += dt;
 		if (reloadTime % 30 == 0)
 		{

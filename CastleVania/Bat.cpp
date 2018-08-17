@@ -59,11 +59,15 @@ void Bat::Draw(GCamera* camera)
 
 void Bat::Update(int dt)
 {
-	if(getUp)
+	if (active)
 	{
-		this->MovePath(dt);
-		sprite->Update(dt);
-	}
+		Dying(dt);
+		if (getUp)
+		{
+			this->MovePath(dt);
+			sprite->Update(dt);
+		}
+	}	
 }
 
 void Bat::SetActive(float _xSimon, float _ySimon)

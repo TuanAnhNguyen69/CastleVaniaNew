@@ -12,6 +12,8 @@ Enemy::Enemy(float _x, float _y, float _vX, float _vY, EnumID _id) :
 {
 	damage = 0;
 	type = ObjectType::Enemy_Type;
+	spriteDead = new GSprite(TextureManager::getInstance()->getTexture(EnumID::Dead_ID), 16);
+	dieTime = 0;
 }
 
 Enemy::~Enemy()
@@ -45,6 +47,20 @@ void Enemy::Update(int dt)
 void Enemy::Collision(list<GameObject*> &obj, int dt)
 {
 
+}
+
+void Enemy::Dying(int dt)
+{
+	if (isDeath)
+	{
+		vX = 0;
+		vY = 0;
+		sprite = spriteDead;
+		dieTime += dt;
+		if (dieTime > 250)
+			active = false;
+		return;
+	}
 }
 
 

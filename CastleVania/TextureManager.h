@@ -75,6 +75,7 @@ private:
 	GTexture* rewardItem;
 	GTexture* hp;
 	GTexture* gameScore;
+	GTexture* dead;
 
 
 	static TextureManager *single; 

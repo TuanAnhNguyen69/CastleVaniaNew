@@ -27,6 +27,7 @@ void SpearGuard::Update(int dt)
 {
 	if (!active)
 		return;
+	Dying(dt);
 	if (abs(x - x0) > 100)
 		vX = -vX;
 	x += vX * dt;

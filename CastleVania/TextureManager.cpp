@@ -93,7 +93,8 @@ TextureManager::TextureManager(void)
 
 	//Other
 	hitEffect = new GTexture("Resource/sprites/Effect/0.png", 1, 1, 1);
-	
+	dead = new GTexture("Resource/sprites/Effect/dead.png", 3, 1, 3);
+
 	//HP
 	//Score
 
@@ -220,6 +221,8 @@ GTexture* TextureManager::getTexture(EnumID id)
 		return Water;
 	case EnumID::Barrier_ID:
 		return Barrier;*/
+	case EnumID::Dead_ID:
+		return dead;
 	case EnumID::HP_ID:
 		return hp;
 	case EnumID::GameUI_ID:
