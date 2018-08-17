@@ -57,16 +57,11 @@ ObjectsManager::ObjectsManager(string fileName) : ObjectsManager()
 		int id;
 		int x = 0;
 
-
-		// duyệt từng dòng của file Stage
 		for (int i = 0; i < count; i++)
 		{
 		float enumValue;
 		map >> id >> posX >> posY >> width >> height;
 		posY = G_MapHeight - posY;
-		if (id != 19 && id != 21 && id != 25) {
-			int a = 0;
-		}
 		// ứng với giá trị value tương ứng để khởi tạo các object tương tứng
 		switch (id)
 		{
@@ -213,8 +208,8 @@ void ObjectsManager::Collision(int dt)
 // Gọi về hàm update của từng game object để vẽ hình
 void ObjectsManager::Update(int deltaTime)
 {
-	list<GameObject*>::iterator it = objects->begin();
-	while (it != objects->end())
+	list<GameObject*>::iterator it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{	
 		/*
 		if ((*it)->id == EnumID::Medusa_ID)
@@ -239,8 +234,8 @@ void ObjectsManager::Update(Simon* simon, int deltaTime)
 {
 	inSightObjects = new list<GameObject*>();
 	quadtree->Retrieve(inSightObjects, simon);
-	list<GameObject*>::iterator it = objects->begin();
-	while (it != objects->end())
+	list<GameObject*>::iterator it = inSightObjects->begin();
+	while (it != inSightObjects->end())
 	{
 		
 		if ((*it)->id == EnumID::Medusa_ID)

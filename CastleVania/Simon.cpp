@@ -354,7 +354,7 @@ void Simon::RunRight()
 
 void Simon::Jump()
 {
- 	if (isSit || !canPress || onStair)
+ 	if (isSit || !canPress || onStair || isAttack)
 		return;
 	if (!isJump)
 	{
@@ -367,7 +367,7 @@ void Simon::Jump()
 
 void Simon::Sit()
 {
-	if (onStair || onTopStair || !canPress) {
+	if (onStair || onTopStair || !canPress || isAttack) {
 		goDownStair();
 		return;
 	}
@@ -396,13 +396,20 @@ void Simon::OnAttack(int deltaTime)
 	if (isSit && simonSitAttack->GetIndex() >= 17)
 	{
 		action = Action::SimonSit;
+		isAttack = false;
 		sprite->Reset();
 		morningStar->resetSprite();
+		return;
 	}
-	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23) || (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20) || (!isSit && simonAttack->GetIndex() >= 7)) {
+	else if ((onStair && upStair && simonAttackUpStair->GetIndex() >= 23)
+		|| (onStair && !upStair && simonAttackDownStair->GetIndex() >= 20)
+		|| (!isSit && simonAttack->GetIndex() >= 7)) {
+
 		action = Action::SimonStand;
+		isAttack = false;
 		sprite->Reset();
 		morningStar->resetSprite();
+		return;
 	}
 	isAttack = true;
 	sprite->Update(deltaTime);
@@ -695,11 +702,12 @@ void Simon::KnockBack()
 	if (isKnockedBack || !canPress) {
 		return;
 	}
+
 	if (isLeft) {
-		vX = SPEED_X * 10;
+		vX = SPEED_X;
 	}
 	else {
-		vX = -SPEED_X * 10;
+		vX = -SPEED_X;
 	}
 	g = -GRAVITATIONAL;
 	vY = sqrt(-2 * g * MAX_HEIGHT_KNOCKBACK);

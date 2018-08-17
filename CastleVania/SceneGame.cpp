@@ -64,8 +64,8 @@ void SceneGame::LoadLevel(int level)
 	cameraPosition = camera->viewport;
 	gameUI = new GameUI(G_Device, 22, G_ScreenWidth, G_ScreenHeight);
 	gameUI->initTimer(100);
-	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
-	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
+	qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
 
