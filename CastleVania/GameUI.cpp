@@ -50,7 +50,7 @@ void GameUI::drawTable()
 	// draw weapon
 	if (_currentWeapon != -1)
 	{
-		weapons.at(_currentWeapon)->Draw(345, 48);
+		weapons.at(_currentWeapon)->Draw(330, 30);
 	}
 
 }
@@ -153,16 +153,16 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 
 	switch (weaponID_)
 	{
-	case EnumID::Knife_ID:
+	case EnumID::Knife_Weapon_ID:
 		_currentWeapon = 0;
 		break;
-	case EnumID::Boomerang_ID:
+	case EnumID::Boomerang_Weapon_ID:
 		_currentWeapon = 1;
 		break;
-	case EnumID::Axe_ID:
+	case EnumID::Axe_Weapon_ID:
 		_currentWeapon = 2;
 		break;
-	case EnumID::HolyWater_ID:
+	case EnumID::HolyWater_Weapon_ID:
 		_currentWeapon = 3;
 		break;
 	default:
@@ -196,16 +196,16 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 	_viewPortX = viewPortX;
 	switch (weaponID_)
 	{
-	case EnumID::Knife_ID:
+	case EnumID::Knife_Weapon_ID:
 		_currentWeapon = 0;
 		break;
-	case EnumID::Boomerang_ID:
+	case EnumID::Boomerang_Weapon_ID:
 		_currentWeapon = 1;
 		break;
-	case EnumID::Axe_ID:
+	case EnumID::Axe_Weapon_ID:
 		_currentWeapon = 2;
 		break;
-	case EnumID::HolyWater_ID:
+	case EnumID::HolyWater_Weapon_ID:
 		_currentWeapon = 3;
 		break;
 	default:
@@ -249,16 +249,16 @@ void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int p
 	else _onstair = 0;
 	switch (weaponID_)
 	{
-	case EnumID::Knife_ID:
+	case EnumID::Knife_Weapon_ID:
 		_currentWeapon = 0;
 		break;
-	case EnumID::Boomerang_ID:
+	case EnumID::Boomerang_Weapon_ID:
 		_currentWeapon = 1;
 		break;
-	case EnumID::Axe_ID:
+	case EnumID::Axe_Weapon_ID:
 		_currentWeapon = 2;
 		break;
-	case EnumID::HolyWater_ID:
+	case EnumID::HolyWater_Weapon_ID:
 		_currentWeapon = 3;
 		break;
 	default:

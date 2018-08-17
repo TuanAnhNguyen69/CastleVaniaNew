@@ -59,7 +59,6 @@ void Enemy::Dying(int dt)
 		dieTime += dt;
 		if (dieTime > 250)
 			active = false;
-		return;
 	}
 }
 
