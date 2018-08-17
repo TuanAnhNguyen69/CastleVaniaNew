@@ -126,6 +126,7 @@
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpearGuard.cpp" />
     <ClCompile Include="SpiritBall.cpp" />
     <ClCompile Include="Stair.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Snake.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="SpearGuard.h" />
     <ClInclude Include="SpiritBall.h" />
     <ClInclude Include="Stair.h" />

@@ -13,6 +13,7 @@ SceneGame::SceneGame(void) : Scene(EnumSceneState::Scene_Game)
 	score = 0;
 	totalResets = 3;
 	gameUI = NULL;
+	sound = new Sound();
 }
 
 SceneGame::~SceneGame()
@@ -68,9 +69,12 @@ void SceneGame::LoadLevel(int level)
 	qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
-
+	sound->PlayBGSound(EBGSound::EEndGameSound);
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
+
+
 }
+
 
 void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 
@@ -114,34 +118,62 @@ void SceneGame::RenderFrame(LPDIRECT3DDEVICE9 d3ddv, int t) {
 		
 #pragma endregion 
 
-		if (gameUI->getTimer() <= 0)
-		{
-			if (levelNow == 1)
-				gameUI->initTimer(200);
-			else gameUI->initTimer(300);
-		}
+//#pragma region Xử lý simon Die
 
-		player->Update(t);
-		gameUI->updateScore(stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->GetBox().x, player->GetBox().y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
-		qGameObject->Update(player, t);
-		player->Collision(*(qGameObject->inSightObjects), t);
-		qGameObject->Collision(t);
-
-		bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
-		//if (G_Device->BeginScene())
+	if (player->hp <= 0 && !player->isDeath)
+	{
+		resetTime = 100;
+		player->isDeath = true;
+	}
+	if (player->isDeath)
+	{
+		if (resetTime > 0)
 		{
-			// Clear back buffer with BLACK
-			G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
-			G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-			//----- start drawing
-			bg->Draw(camera);
-			qGameObject->Draw(camera);
-			//---- end drawing
-			gameUI->drawTable();
-			player->Draw(camera);
-			G_SpriteHandler->End();
-			gameUI->drawScore();
+			player->Die(resetTime);
 		}
+		else
+		{
+			player->isDeath = false;
+			player = new Simon(revivePosition.x, revivePosition.y);
+			if (gameUI->getTimer() <= 0)
+				gameUI->initTimer(300);
+			camera->viewport = cameraPosition;
+			totalResets--;
+			if (totalResets == 0)
+				sceneState = EnumSceneState::Scene_End;
+		}
+	}
+
+//#pragma endregion
+
+	if (gameUI->getTimer() <= 0)
+	{
+		if (levelNow == 1)
+			gameUI->initTimer(200);
+		else gameUI->initTimer(300);
+	}
+
+	player->Update(t);
+	gameUI->updateScore(stageNow, player->score, t, player->hp, player->live, player->weaponCount, player->weaponID, 20, player->GetBox().x, player->GetBox().y, player->vX * t, player->vY * t, camera->viewport.x, camera->viewport.y, t);
+	qGameObject->Update(player, t);
+	player->Collision(*(qGameObject->inSightObjects), t);
+	qGameObject->Collision(t);
+
+	bg->GetAvailableTiles(camera->viewport.x, camera->viewport.y);
+	//if (G_Device->BeginScene())
+	{
+		// Clear back buffer with BLACK
+		G_Device->ColorFill(G_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
+		G_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		//----- start drawing
+		bg->Draw(camera);
+		qGameObject->Draw(camera);
+		//---- end drawing
+		gameUI->drawTable();
+		player->Draw(camera);
+		G_SpriteHandler->End();
+		gameUI->drawScore();
+	}
 }
 
 void SceneGame::SetSizeMap() {

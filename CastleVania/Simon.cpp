@@ -39,8 +39,10 @@ Simon::Simon(int _x, int _y)
 	sub_weapon = new list<Weapon*>();
 	live = 10;
 	weaponCount = 10;
-	weaponID = EnumID::None_ID;
+	weaponID = EnumID::HolyWater_Weapon_ID;
 	morningStar = new MorningStar(x, y, 42);
+
+	isUseCross = false;
 
 	doorDirection = NoneDoor;
 
@@ -166,6 +168,9 @@ void Simon::Draw(GCamera* camera)
 	default:
 		break;
 	}
+
+	if (isDeath)
+		simonDeath->Draw(pos.x, pos.y);
 
 	if (!isLeft) {
 		sprite->DrawFlipX(pos.x, pos.y);
@@ -389,6 +394,8 @@ void Simon::Attack()
 	if (!isJump)
 		vX = 0;
 	action = Action::SimonAttack;
+	//Sound::GetInstance()->PlayEffectSound(EEffectSound::EMorningStarSound);
+	sound->PlayEffectSound(EEffectSound::EMorningStarSound);
 }
 
 void Simon::OnAttack(int deltaTime)
@@ -940,7 +947,11 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					case EnumID::SpiritBall_ID:
 						hp = 20;
 						isPickUpSpiritBall = true;
+						sound->PlayEffectSound(EEffectSound::ESpiritBallSound);
 						break;
+					case EnumID::Cross_ID:
+						isUseCross = true;
+						sound->PlayEffectSound(EEffectSound::ECrossSound);
 					default:
 						break;
 					}	
@@ -949,11 +960,12 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 				{
 					this->ReceiveDamage(other->damage);
 					KnockBack();
+					sound->PlayEffectSound(EEffectSound::EHurtedSound);
 				}
 
 				if (other->type == ObjectType::Item)
 				{
-					other->isDrop = true;
+					sound->PlayEffectSound(EEffectSound::ECollectItemSound);
 				}
 			}
 		}	
@@ -965,9 +977,20 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 }
 
-void Simon::Die()
+void Simon::Die(int &time)
 {
-
+	if (isDeath)
+	{
+		canPress = false;
+		time -= 1;
+		simonDeath->SelectIndex(0);
+		if (time == 0)
+		{
+			canPress = true;
+			isRevival = true;
+		}
+		sound->PlayEffectSound(EEffectSound::EDeathSound);
+	}
 }
 
 void Simon::fall()
@@ -1025,4 +1048,5 @@ void Simon::UseWeapon()
 	default:
 		break;
 	}
+	sound->PlayEffectSound(EEffectSound::EMorningStarSound);
 }

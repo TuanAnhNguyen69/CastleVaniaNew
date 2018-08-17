@@ -155,6 +155,9 @@
     <ClCompile Include="SpiritBall.cpp">
       <Filter>Objects\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>FrameWork\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font.h">
@@ -315,6 +318,9 @@
     </ClInclude>
     <ClInclude Include="SpiritBall.h">
       <Filter>Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>FrameWork\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -135,8 +135,6 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 			sprite = spriteSleep;
 	}
 	
-
-	
 }
 
 void MedusaBoss::Collision(list<GameObject*> &obj, int dt)

@@ -7,6 +7,7 @@
 #include "GCamera.h"
 #include "SweptAABB.h"
 #include <list>
+#include "Sound.h"
 
 using namespace std;
 class GameObject
@@ -14,6 +15,7 @@ class GameObject
 public:
 	
 	GSprite* sprite;
+	Sound* sound;
 
 	//toa do left top
 	float x;

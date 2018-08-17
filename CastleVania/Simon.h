@@ -10,6 +10,7 @@
 #include "Fire.h"
 #include "Door.h"
 #include "MovingPlatform.h"
+#include "Sound.h"
 
 
 /*
@@ -112,6 +113,8 @@ protected:
 	//Gia toc trong truong
 	float g;
 
+	bool isUseCross;
+
 	bool isPickUpSpiritBall;
 
 public:
@@ -204,7 +207,9 @@ public:
 	EDoorDirection GetDirectDoor();
 
 	void UpGradeMorningStar();
-	void Die();
+	void Die(int &time);
+	bool isRevival;
+
 	void fall();
 };
 
