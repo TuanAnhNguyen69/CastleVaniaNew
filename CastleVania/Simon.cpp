@@ -40,7 +40,7 @@ Simon::Simon(int _x, int _y)
 	sub_weapon = new list<Weapon*>();
 	live = 10;
 	weaponCount = 10;
-	weaponID = EnumID::HolyWater_Weapon_ID;
+	weaponID = EnumID::None_ID;
 	morningStar = new MorningStar(x, y, 42);
 
 	isUseCross = false;
@@ -929,46 +929,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 					case EnumID::Door_ID:
 						onCollideDoor((Door*)other, colDirection, collisionTime, dt);
 						break;
-					case EnumID::Boomerang_Weapon_ID:
-						other->active = false;
-						//other->Update(dt);
-						break;
-					case EnumID::BigHeart_ID:
-						hearts += 5;
-						other->Remove();
-						break;
-					case EnumID::SmallHeart_ID:
-						hearts += 1;
-						other->Remove();
-						break;
-					case EnumID::MoneyBag400_ID:
-						point += 400;
-						other->Remove();
-						break;
-					case EnumID::MoneyBag700_ID:
-						point += 700;
-						other->Remove();
-						break;
-					case EnumID::PorkChop_ID:
-						hp += 10;
-						other->Remove();
-						break;
-					case EnumID::Axe_ID:
-						weaponID = EnumID::Axe_ID;
-						other->Remove();
-						break;
-					case EnumID::Boomerang_ID:
-						weaponID = EnumID::Boomerang_ID;
-						other->Remove();
-						break;
-					case EnumID::HolyWater_ID:
-						weaponID = EnumID::HolyWater_ID;
-						other->Remove();
-						break;
-					case EnumID::Knife_ID:
-						weaponID = EnumID::Knife_ID;
-						other->Remove();
-						break;
 					case EnumID::SpiritBall_ID:
 						hp = 20;
 						isPickUpSpiritBall = true;
@@ -981,6 +941,46 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 						break;
 					}	
 				}
+
+				if (other->type == ObjectType::Item)
+				{
+					RewardItem* rw = (RewardItem*)other;
+					if (rw->isDrop == false || rw->isGround == false)
+						return;
+					switch (other->id)
+					{
+					case EnumID::BigHeart_ID:
+						hearts += 5;
+						break;
+					case EnumID::SmallHeart_ID:
+						hearts += 1;
+						break;
+					case EnumID::MoneyBag400_ID:
+						point += 400;
+						break;
+					case EnumID::MoneyBag700_ID:
+						point += 700;
+						break;
+					case EnumID::PorkChop_ID:
+						hp += 10;
+						break;
+					case EnumID::Axe_ID:
+						weaponID = EnumID::Axe_Weapon_ID;
+						break;
+					case EnumID::Boomerang_ID:
+						weaponID = EnumID::Boomerang_Weapon_ID;
+						break;
+					case EnumID::HolyWater_ID:
+						weaponID = EnumID::HolyWater_Weapon_ID;
+						break;
+					case EnumID::Knife_ID:
+						weaponID = EnumID::Knife_Weapon_ID;
+						break;
+					default:
+						break;
+					}	
+				}
+
 				if (other->type == ObjectType::Enemy_Type && immuteTime == 0)
 				{
 					this->ReceiveDamage(other->damage);
@@ -990,6 +990,7 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 
 				if (other->type == ObjectType::Item)
 				{
+					other->Remove();
 					Sound::GetInstance()->PlayEffectSound(EEffectSound::ECollectItemSound);
 				}
 			}
@@ -999,7 +1000,6 @@ void Simon::Collision(list<GameObject*> &obj, float dt)
 	if (!isCollideBottom && !isJump && !onStair && !isKnockedBack && !onTopStair && !isOnMovingPlatform) {
 		fall();
 	}
-
 }
 
 void Simon::Die(int &time)

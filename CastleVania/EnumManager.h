@@ -97,6 +97,8 @@ enum EnumID
 	//Enemy lv1
 	Panther_ID,
 	Zombie_ID,
+
+	Dead_ID,
 };
 
 enum EStairType

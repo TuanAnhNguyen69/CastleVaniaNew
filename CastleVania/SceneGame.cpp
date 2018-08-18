@@ -67,9 +67,9 @@ void SceneGame::LoadLevel(int level)
 	gameUI->initTimer(300);
 	//qGameObject = new ObjectsManager("Resource/map/lv-2OBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testMedusaOBJ.txt");
-	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
+	//qGameObject = new ObjectsManager("Resource/map/testEnemy1OBJ.txt");
 	//qGameObject = new ObjectsManager("Resource/map/testMovingPlatformOBJ.txt");
-	//sound->PlayBGSound(EBGSound::ESceneGameSound);
+	qGameObject = new ObjectsManager("Resource/map/lv-2.1OBJ.txt");
 	Sound::GetInstance()->PlayBGSound(EBGSound::ESceneGameSound);
 	camera->SetSizeMap(4096, 3572);	//openDoor = new OpenDoor(posDoor.x, posDoor.y);
 

@@ -9,10 +9,11 @@ class RewardItem :
 {
 	EnumID typeReward;
 	int lifeTime;
-	bool isGround;
+	
 	GSprite* spriteDrop;
 	GSprite* spriteNull;
 public:
+	bool isGround;
 	RewardItem();
 
 	//Khoi tao RewardItem khong phai la Crown

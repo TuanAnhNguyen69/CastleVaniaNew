@@ -142,7 +142,6 @@ void GameObject::ReceiveDamage(int _damage)
 		hp -= _damage;
 	if (hp <= 0)
 	{
-		this->active = false;
 		isDeath = true;
 	}
 }

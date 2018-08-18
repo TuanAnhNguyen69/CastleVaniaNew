@@ -42,32 +42,36 @@ void Panther::Draw(GCamera* camera)
 
 void Panther::Update(int dt)
 {
-	x += vX * dt;
-	if (x <= width / 2 + 5 || x >= G_MapWidth - width / 2 - 5)
-		vX = -vX;
-	
-	if(isJump)
+	if (active)
 	{
-		y += vY;
-		if (y >= PANTHER_JUMP_HEIGHT)
-			vY = -vY;
-
-		//Neu cham dat, chua dinh nghia
-		if (false)
-		{
-			isJump = false;
-			isGrounding = true;
-			vY = 0.0f;
-		}
-	}
-	else
-		sprite->Update(dt);
-
-	if (hasJump && isGrounding)
-	{
-		vX = -vX;
+		Dying(dt);
 		x += vX * dt;
-		sprite->Update(dt);
+		if (x <= width / 2 + 5 || x >= G_MapWidth - width / 2 - 5)
+			vX = -vX;
+
+		if (isJump)
+		{
+			y += vY;
+			if (y >= PANTHER_JUMP_HEIGHT)
+				vY = -vY;
+
+			//Neu cham dat, chua dinh nghia
+			if (false)
+			{
+				isJump = false;
+				isGrounding = true;
+				vY = 0.0f;
+			}
+		}
+		else
+			sprite->Update(dt);
+
+		if (hasJump && isGrounding)
+		{
+			vX = -vX;
+			x += vX * dt;
+			sprite->Update(dt);
+		}
 	}
 }
 

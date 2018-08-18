@@ -51,9 +51,14 @@ void MedusaHead::Draw(GCamera* camera)
 
 void MedusaHead::Update(int dt)
 {
-	if(fly)
-		MovePath(dt);
-	sprite->Update(dt);
+	if (active)
+	{
+		Dying(dt);
+		if (fly)
+			MovePath(dt);
+		sprite->Update(dt);
+	}
+	
 }
 
 void MedusaHead::SetActive(float _xSimon, float _ySimon)

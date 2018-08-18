@@ -31,6 +31,7 @@ void RewardItem::Update(int deltaTime)
 	sprite = spriteDrop;
 	if (isDrop)
 	{
+		//Xu ly thoi gian ton tai cua RewardItem
 		lifeTime += deltaTime;
 		y += vY * deltaTime;
 		//sprite = spriteDrop;
@@ -44,7 +45,7 @@ void RewardItem::Update(int deltaTime)
 	if (sprite == NULL)
 		return;
 	
-	//Xu ly thoi gian ton tai cua RewardItem
+	
 	
 	sprite->Update(deltaTime);
 }

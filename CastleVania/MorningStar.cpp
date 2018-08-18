@@ -243,7 +243,7 @@ void MorningStar::Collision(list<GameObject*> &obj, int dt)
 						other->Remove();
 						Sound::GetInstance()->PlayEffectSound(EEffectSound::EHitSound);
 					}
-					return;
+					//return;
 				}
 				if (other->type == ObjectType::Item)
 				{

@@ -4,10 +4,15 @@ class Enemy :
 	public ActiveObject
 {
 public:
+	int dieTime;
+	GSprite* spriteDead;
+
 	//virtual void Update(int dt);
 	virtual void Draw(GCamera *camera);
 	virtual void Collision(list<GameObject*> &obj, int dt);
 	//virtual void ColliSimon(GameObject* simon, int dt);
+
+	virtual void Dying(int dt);
 
 	//virtual void ReceiveDamage(int damage);
 	virtual void Pause();

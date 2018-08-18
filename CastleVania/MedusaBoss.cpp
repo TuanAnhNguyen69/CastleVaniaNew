@@ -95,6 +95,8 @@ void MedusaBoss::Update(float _xSimon, float _ySimon, int dt)
 		this->active = false;
 	}
 	*/
+	Dying(dt);
+
 	if (active)
 	{
 		if (getUp)
